@@ -1,0 +1,17 @@
+# https://github.com/brigade/scss-lint/blob/master/config/default.yml
+
+linters:
+  ColorVariable:
+    enabled: false
+  HexNotation:
+    enabled: false
+  IdSelector:
+    enabled: false
+  MergeableSelector:
+    enabled: false
+  PropertySortOrder:
+    enabled: false
+  QualifyingElement:
+    enabled: false
+  VendorPrefix:
+    enabled: false

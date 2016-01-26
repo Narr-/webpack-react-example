@@ -1,0 +1,8 @@
+.DS_Store
+node_modules
+temp
+tmp
+static
+*.log
+log
+coverage
