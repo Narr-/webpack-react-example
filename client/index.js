@@ -16,7 +16,8 @@ const initialTodos = iList([
   iMap({
     text: 'Use Redux',
     completed: true,
-    id: 0
+    id: 0,
+    isEditing: true
   })
 ]);
 const initialFilter = SHOW_COMPLETED;

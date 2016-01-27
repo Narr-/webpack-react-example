@@ -19,7 +19,7 @@ export default function ({ dev }) {
     entry: {
       vendor: [
         'bootstrap-sass/assets/stylesheets/_bootstrap.scss',
-        'react', 'react-dom', 'react-redux', 'redux',
+        'react', 'react-dom', 'react-redux', 'redux', 'redux-form',
         'immutable', 'classnames'
       ],
       main: ['./index.js']

@@ -2,6 +2,7 @@ import { combineReducers } from 'redux';
 import todos from './todos';
 import { SHOW_ALL } from '../constants/TodoFilters';
 import { SET_VISIBILITY_FILTER } from '../constants/ActionTypes';
+import { reducer as formReducer } from 'redux-form';
 
 const rootReducer = combineReducers({
   todos,
@@ -12,7 +13,8 @@ const rootReducer = combineReducers({
       default:
         return state;
     }
-  }
+  },
+  form: formReducer
 });
 
 export default rootReducer;

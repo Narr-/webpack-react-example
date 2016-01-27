@@ -4,7 +4,7 @@ import {
 from 'immutable';
 
 import {
-  ADD_TODO, DELETE_TODO, EDIT_TODO, COMPLETE_TODO, COMPLETE_ALL, CLEAR_COMPLETED
+  ADD_TODO, DELETE_TODO, EDIT_TODO, COMPLETE_TODO, COMPLETE_ALL, CLEAR_COMPLETED, SET_EDITING_STATUS
 }
 from '../constants/ActionTypes';
 
@@ -40,6 +40,11 @@ export default function todos(state = initialState, action) {
 
     case CLEAR_COMPLETED:
       return state.filter(todo => todo.get('completed') === false);
+
+    case SET_EDITING_STATUS:
+      return state.map(todo =>
+        todo.get('id') === action.id ? todo.set('isEditing', !todo.get('isEditing')) : todo
+      );
 
     default:
       return state;

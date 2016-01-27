@@ -13,12 +13,7 @@ const TODO_FILTERS = {
 class MainSection extends Component {
   constructor() { // constructor(props, context), super(props, context)
     super();
-    this.handleShow = this.handleShow.bind(this);
     this.handleClearCompleted = this.handleClearCompleted.bind(this);
-  }
-
-  handleShow(filter) {
-    this.props.actions.setVisibilityFilter(filter);
   }
 
   handleClearCompleted() {
@@ -36,13 +31,13 @@ class MainSection extends Component {
           type="checkbox"
           checked={completedCount === todos.size}
           onChange={actions.completeAll}
-        /> //
+        />
       );
     }
-  }
+  } //
 
   renderFooter(completedCount) {
-    const { todos, filter } = this.props;
+    const { todos, actions, filter } = this.props;
     const activeCount = todos.size - completedCount;
     if (todos.size > 0) {
       return (
@@ -50,12 +45,12 @@ class MainSection extends Component {
           completedCount={completedCount}
           activeCount={activeCount}
           filter={filter}
-          onShow={this.handleShow}
+          onShow={actions.setVisibilityFilter}
           onClearCompleted={this.handleClearCompleted}
-        /> //
+        />
       );
     }
-  }
+  } //
 
   render() {
     const { todos, actions, filter } = this.props;
@@ -72,6 +67,7 @@ class MainSection extends Component {
               editTodo={actions.editTodo}
               deleteTodo={actions.deleteTodo}
               completeTodo={actions.completeTodo}
+              setEditStatus={actions.setEditStatus}
             />
           )}
         </ul>

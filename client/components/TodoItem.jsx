@@ -1,19 +1,16 @@
 import React, { Component, PropTypes } from 'react';
-import TodoTextInput from './TodoTextInput';
+import TodoEditInput from './TodoEditInput';
 import classnames from 'classnames';
 
 class TodoItem extends Component {
   constructor() {
     super();
-    this.state = {
-      editing: false
-    };
     this.handleDoubleClick = this.handleDoubleClick.bind(this);
     this.handleSave = this.handleSave.bind(this);
   }
 
   handleDoubleClick() {
-    this.setState({ editing: true });
+    this.props.setEditStatus(this.props.todo.get('id'));
   }
 
   handleSave(id, text) {
@@ -22,23 +19,22 @@ class TodoItem extends Component {
     } else {
       this.props.editTodo(id, text);
     }
-    this.setState({ editing: false });
+    this.props.setEditStatus(this.props.todo.get('id'));
   }
 
   render() {
     const { todo, completeTodo, deleteTodo } = this.props;
     const handleSave = this.handleSave;
     let element;
-    if (this.state.editing) {
+    if (todo.get('isEditing')) {
       element = (
-        <TodoTextInput
-          text={todo.get('text')}
-          editing={this.state.editing}
+        <TodoEditInput
           onSave={function onSaveHandler(text) {
             handleSave(todo.get('id'), text);
           }}
-        /> //
-      );
+          initialValues={{ todoEditInput: todo.get('text') }}
+        />
+      ); //
     } else {
       element = (
         <div className="view">
@@ -65,7 +61,8 @@ class TodoItem extends Component {
     return (
       <li className={classnames({
         completed: todo.get('completed'),
-        editing: this.state.editing })}
+        editing: todo.get('isEditing')
+      })}
       >
         {element}
       </li>
@@ -77,7 +74,8 @@ TodoItem.propTypes = {
   todo: PropTypes.object.isRequired,
   editTodo: PropTypes.func.isRequired,
   deleteTodo: PropTypes.func.isRequired,
-  completeTodo: PropTypes.func.isRequired
+  completeTodo: PropTypes.func.isRequired,
+  setEditStatus: PropTypes.func.isRequired
 };
 
 export default TodoItem;

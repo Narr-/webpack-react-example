@@ -41,13 +41,13 @@ export function clearCompleted() {
   };
 }
 
-export function setVisibilityFilter(filter) {
+export function setEditStatus(id) {
   return {
-    type: types.SET_VISIBILITY_FILTER,
-    filter
+    type: types.SET_EDITING_STATUS,
+    id
   };
 }
 
 export default {
-  addTodo, deleteTodo, editTodo, completeTodo, completeAll, clearCompleted, setVisibilityFilter
+  addTodo, deleteTodo, editTodo, completeTodo, completeAll, clearCompleted, setEditStatus
 };

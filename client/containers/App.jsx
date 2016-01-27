@@ -5,6 +5,7 @@ import Immutable from 'immutable';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import todoActions from '../actions/todos';
+import filterActions from '../actions/filters';
 
 class App extends Component {
   render() {
@@ -33,7 +34,7 @@ function mapStateToProps(state) {
 
 function mapDispatchToProps(dispatch) {
   return {
-    appActions: bindActionCreators(todoActions, dispatch)
+    appActions: bindActionCreators(Object.assign({}, todoActions, filterActions), dispatch)
   };
 }
 
