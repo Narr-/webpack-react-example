@@ -36,6 +36,10 @@ if (NODE_ENV === 'production') {
   app.use(webpackHotMiddleware(compiler));
 }
 
+app.get('*', (req, res) => {
+  res.sendFile(path.join(__dirname, '../static', 'index.html'));
+});
+
 const server = http.createServer(app);
 
 server

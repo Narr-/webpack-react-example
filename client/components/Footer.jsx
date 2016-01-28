@@ -1,11 +1,17 @@
 import React, { PropTypes, Component } from 'react';
-import classnames from 'classnames';
 import { SHOW_ALL, SHOW_COMPLETED, SHOW_ACTIVE } from '../constants/TodoFilters';
+import { Link } from 'react-router';
 
 const FILTER_TITLES = {
   [SHOW_ALL]: 'All',
   [SHOW_ACTIVE]: 'Active',
   [SHOW_COMPLETED]: 'Completed'
+};
+
+const FILTER_LINKS = {
+  [SHOW_ALL]: '',
+  [SHOW_ACTIVE]: 'active',
+  [SHOW_COMPLETED]: 'completed'
 };
 
 class Footer extends Component {
@@ -21,20 +27,22 @@ class Footer extends Component {
 
   renderFilterLink(filter) {
     // Destructuring Assignment in ECMAScript 6 => http://fitzgeraldnick.com/weblog/50/
-    const { filter: selectedFilter, onShow } = this.props;
+    const { filter: selectedFilter } = this.props;
     const title = FILTER_TITLES[filter];
+    const path = FILTER_LINKS[filter];
 
     return (
-      <a className={classnames({ selected: filter === selectedFilter })}
-        style={{ cursor: 'pointer' }}
-        onClick={function onClickHandler() {
-          if (filter !== selectedFilter) {
-            onShow(filter);
+      <Link
+        activeClassName="selected"
+        to={`/${path}`}
+        onClick={function onClickHandler(e) {
+          if (`SHOW_${selectedFilter.toUpperCase()}` === filter) {
+            e.preventDefault();
           }
         }}
       >
         {title}
-      </a>
+      </Link>
     );
   }
 
@@ -73,8 +81,7 @@ Footer.propTypes = {
   completedCount: PropTypes.number.isRequired,
   activeCount: PropTypes.number.isRequired,
   filter: PropTypes.string.isRequired,
-  onClearCompleted: PropTypes.func.isRequired,
-  onShow: PropTypes.func.isRequired
+  onClearCompleted: PropTypes.func.isRequired
 };
 
 export default Footer;

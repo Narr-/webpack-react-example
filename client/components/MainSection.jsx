@@ -37,7 +37,7 @@ class MainSection extends Component {
   } //
 
   renderFooter(completedCount) {
-    const { todos, actions, filter } = this.props;
+    const { todos, filter } = this.props;
     const activeCount = todos.size - completedCount;
     if (todos.size > 0) {
       return (
@@ -45,7 +45,6 @@ class MainSection extends Component {
           completedCount={completedCount}
           activeCount={activeCount}
           filter={filter}
-          onShow={actions.setVisibilityFilter}
           onClearCompleted={this.handleClearCompleted}
         />
       );
@@ -56,7 +55,7 @@ class MainSection extends Component {
     const { todos, actions, filter } = this.props;
     const completedCount = todos.reduce((count, todo) =>
       todo.get('completed') ? count + 1 : count, 0);
-    const filteredTodos = todos.filter(TODO_FILTERS[filter]);
+    const filteredTodos = todos.filter(TODO_FILTERS[`SHOW_${filter.toUpperCase()}`]);
 
     return (
       <section className="main">
