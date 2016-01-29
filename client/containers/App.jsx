@@ -5,6 +5,7 @@ import Immutable from 'immutable';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import todoActions from '../actions/todos';
+import { createSelector } from 'reselect';
 
 class App extends Component {
   render() {
@@ -26,11 +27,18 @@ App.propTypes = {
   params: PropTypes.object.isRequired
 };
 
-function mapStateToProps(state) { // select
-  return {
-    todos: state.todos
-  };
-}
+const todosSelector = (state, props) =>
+  ({
+    todos: state.todos,
+    status: props.params.status
+  });
+
+export const visibleTodosSelector = createSelector(
+  todosSelector,
+  todosSelectorRtnVal => ({
+    todos: todosSelectorRtnVal.todos
+  })
+);
 
 function mapDispatchToProps(dispatch) {
   return {
@@ -39,6 +47,6 @@ function mapDispatchToProps(dispatch) {
 }
 
 export default connect(
-  mapStateToProps,
+  visibleTodosSelector,
   mapDispatchToProps
 )(App);
