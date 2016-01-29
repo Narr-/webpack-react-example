@@ -16,7 +16,8 @@ export default function todos(state = initialState, action) {
       return state.unshift(iMap({
         id: state.reduce((maxId, todo) => Math.max(todo.get('id'), maxId), -1) + 1,
         completed: false,
-        text: action.text
+        text: action.text,
+        isEditing: false
       }));
 
     case DELETE_TODO:

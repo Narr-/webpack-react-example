@@ -26,7 +26,7 @@ App.propTypes = {
   params: PropTypes.object.isRequired
 };
 
-function mapStateToProps(state) {
+function mapStateToProps(state) { // select
   return {
     todos: state.todos
   };

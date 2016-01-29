@@ -30773,9 +30773,9 @@
       }
     },
     "react": {
-      "version": "0.14.6",
-      "from": "react@>=0.14.6 <0.15.0",
-      "resolved": "https://registry.npmjs.org/react/-/react-0.14.6.tgz",
+      "version": "0.14.7",
+      "from": "react@>=0.14.7 <0.15.0",
+      "resolved": "https://registry.npmjs.org/react/-/react-0.14.7.tgz",
       "dependencies": {
         "envify": {
           "version": "3.4.0",
@@ -30867,14 +30867,14 @@
       }
     },
     "react-dom": {
-      "version": "0.14.6",
-      "from": "react-dom@>=0.14.6 <0.15.0",
-      "resolved": "https://registry.npmjs.org/react-dom/-/react-dom-0.14.6.tgz"
+      "version": "0.14.7",
+      "from": "react-dom@>=0.14.7 <0.15.0",
+      "resolved": "https://registry.npmjs.org/react-dom/-/react-dom-0.14.7.tgz"
     },
     "react-redux": {
-      "version": "4.1.0",
-      "from": "react-redux@>=4.1.0 <5.0.0",
-      "resolved": "https://registry.npmjs.org/react-redux/-/react-redux-4.1.0.tgz",
+      "version": "4.1.1",
+      "from": "react-redux@>=4.1.1 <5.0.0",
+      "resolved": "https://registry.npmjs.org/react-redux/-/react-redux-4.1.1.tgz",
       "dependencies": {
         "hoist-non-react-statics": {
           "version": "1.0.3",
@@ -30884,19 +30884,17 @@
         "invariant": {
           "version": "2.2.0",
           "from": "invariant@>=2.0.0 <3.0.0",
-          "resolved": "https://registry.npmjs.org/invariant/-/invariant-2.2.0.tgz",
+          "resolved": "https://registry.npmjs.org/invariant/-/invariant-2.2.0.tgz"
+        },
+        "loose-envify": {
+          "version": "1.1.0",
+          "from": "loose-envify@>=1.1.0 <2.0.0",
+          "resolved": "https://registry.npmjs.org/loose-envify/-/loose-envify-1.1.0.tgz",
           "dependencies": {
-            "loose-envify": {
-              "version": "1.1.0",
-              "from": "loose-envify@>=1.0.0 <2.0.0",
-              "resolved": "https://registry.npmjs.org/loose-envify/-/loose-envify-1.1.0.tgz",
-              "dependencies": {
-                "js-tokens": {
-                  "version": "1.0.2",
-                  "from": "js-tokens@>=1.0.1 <2.0.0",
-                  "resolved": "https://registry.npmjs.org/js-tokens/-/js-tokens-1.0.2.tgz"
-                }
-              }
+            "js-tokens": {
+              "version": "1.0.2",
+              "from": "js-tokens@>=1.0.1 <2.0.0",
+              "resolved": "https://registry.npmjs.org/js-tokens/-/js-tokens-1.0.2.tgz"
             }
           }
         }
@@ -30977,9 +30975,23 @@
       "resolved": "https://registry.npmjs.org/react-router-redux/-/react-router-redux-2.1.0.tgz"
     },
     "redux": {
-      "version": "3.1.1",
-      "from": "redux@3.1.1",
-      "resolved": "https://registry.npmjs.org/redux/-/redux-3.1.1.tgz"
+      "version": "3.1.2",
+      "from": "redux@>=3.1.2 <4.0.0",
+      "resolved": "https://registry.npmjs.org/redux/-/redux-3.1.2.tgz",
+      "dependencies": {
+        "loose-envify": {
+          "version": "1.1.0",
+          "from": "loose-envify@>=1.1.0 <2.0.0",
+          "resolved": "https://registry.npmjs.org/loose-envify/-/loose-envify-1.1.0.tgz",
+          "dependencies": {
+            "js-tokens": {
+              "version": "1.0.2",
+              "from": "js-tokens@>=1.0.1 <2.0.0",
+              "resolved": "https://registry.npmjs.org/js-tokens/-/js-tokens-1.0.2.tgz"
+            }
+          }
+        }
+      }
     },
     "redux-form": {
       "version": "4.1.5",
@@ -32404,15 +32416,15 @@
                       "from": "ansi-styles@^2.1.0",
                       "resolved": "https://registry.npmjs.org/ansi-styles/-/ansi-styles-2.1.0.tgz"
                     },
-                    "asn1": {
-                      "version": "0.2.3",
-                      "from": "asn1@>=0.2.3 <0.3.0",
-                      "resolved": "https://registry.npmjs.org/asn1/-/asn1-0.2.3.tgz"
-                    },
                     "are-we-there-yet": {
                       "version": "1.0.4",
                       "from": "are-we-there-yet@~1.0.0",
                       "resolved": "https://registry.npmjs.org/are-we-there-yet/-/are-we-there-yet-1.0.4.tgz"
+                    },
+                    "asn1": {
+                      "version": "0.2.3",
+                      "from": "asn1@>=0.2.3 <0.3.0",
+                      "resolved": "https://registry.npmjs.org/asn1/-/asn1-0.2.3.tgz"
                     },
                     "assert-plus": {
                       "version": "0.1.5",
@@ -32644,15 +32656,15 @@
                       "from": "jsonpointer@2.0.0",
                       "resolved": "https://registry.npmjs.org/jsonpointer/-/jsonpointer-2.0.0.tgz"
                     },
-                    "jsprim": {
-                      "version": "1.2.2",
-                      "from": "jsprim@^1.2.2",
-                      "resolved": "https://registry.npmjs.org/jsprim/-/jsprim-1.2.2.tgz"
-                    },
                     "lodash._basetostring": {
                       "version": "3.0.1",
                       "from": "lodash._basetostring@^3.0.0",
                       "resolved": "https://registry.npmjs.org/lodash._basetostring/-/lodash._basetostring-3.0.1.tgz"
+                    },
+                    "jsprim": {
+                      "version": "1.2.2",
+                      "from": "jsprim@^1.2.2",
+                      "resolved": "https://registry.npmjs.org/jsprim/-/jsprim-1.2.2.tgz"
                     },
                     "lodash._createpadding": {
                       "version": "3.6.1",
@@ -32689,15 +32701,15 @@
                       "from": "mime-types@~2.1.7",
                       "resolved": "https://registry.npmjs.org/mime-types/-/mime-types-2.1.7.tgz"
                     },
-                    "minimist": {
-                      "version": "0.0.8",
-                      "from": "minimist@0.0.8",
-                      "resolved": "https://registry.npmjs.org/minimist/-/minimist-0.0.8.tgz"
-                    },
                     "mkdirp": {
                       "version": "0.5.1",
                       "from": "mkdirp@>=0.3.0 <0.4.0||>=0.4.0 <0.5.0||>=0.5.0 <0.6.0",
                       "resolved": "https://registry.npmjs.org/mkdirp/-/mkdirp-0.5.1.tgz"
+                    },
+                    "minimist": {
+                      "version": "0.0.8",
+                      "from": "minimist@0.0.8",
+                      "resolved": "https://registry.npmjs.org/minimist/-/minimist-0.0.8.tgz"
                     },
                     "node-uuid": {
                       "version": "1.4.7",
@@ -32714,15 +32726,15 @@
                       "from": "oauth-sign@~0.8.0",
                       "resolved": "https://registry.npmjs.org/oauth-sign/-/oauth-sign-0.8.0.tgz"
                     },
-                    "once": {
-                      "version": "1.1.1",
-                      "from": "once@~1.1.1",
-                      "resolved": "https://registry.npmjs.org/once/-/once-1.1.1.tgz"
-                    },
                     "pinkie": {
                       "version": "2.0.1",
                       "from": "pinkie@^2.0.0",
                       "resolved": "https://registry.npmjs.org/pinkie/-/pinkie-2.0.1.tgz"
+                    },
+                    "once": {
+                      "version": "1.1.1",
+                      "from": "once@~1.1.1",
+                      "resolved": "https://registry.npmjs.org/once/-/once-1.1.1.tgz"
                     },
                     "pinkie-promise": {
                       "version": "2.0.0",
@@ -32734,15 +32746,15 @@
                       "from": "qs@~5.2.0",
                       "resolved": "https://registry.npmjs.org/qs/-/qs-5.2.0.tgz"
                     },
-                    "readable-stream": {
-                      "version": "1.1.13",
-                      "from": "readable-stream@^1.1.13",
-                      "resolved": "https://registry.npmjs.org/readable-stream/-/readable-stream-1.1.13.tgz"
-                    },
                     "request": {
                       "version": "2.67.0",
                       "from": "request@2.x",
                       "resolved": "https://registry.npmjs.org/request/-/request-2.67.0.tgz"
+                    },
+                    "readable-stream": {
+                      "version": "1.1.13",
+                      "from": "readable-stream@^1.1.13",
+                      "resolved": "https://registry.npmjs.org/readable-stream/-/readable-stream-1.1.13.tgz"
                     },
                     "semver": {
                       "version": "5.1.0",
@@ -32774,25 +32786,25 @@
                       "from": "strip-json-comments@~1.0.4",
                       "resolved": "https://registry.npmjs.org/strip-json-comments/-/strip-json-comments-1.0.4.tgz"
                     },
-                    "tar": {
-                      "version": "2.2.1",
-                      "from": "tar@~2.2.0",
-                      "resolved": "https://registry.npmjs.org/tar/-/tar-2.2.1.tgz"
-                    },
                     "supports-color": {
                       "version": "2.0.0",
                       "from": "supports-color@^2.0.0",
                       "resolved": "https://registry.npmjs.org/supports-color/-/supports-color-2.0.0.tgz"
                     },
-                    "tunnel-agent": {
-                      "version": "0.4.1",
-                      "from": "tunnel-agent@~0.4.1",
-                      "resolved": "https://registry.npmjs.org/tunnel-agent/-/tunnel-agent-0.4.1.tgz"
+                    "tar": {
+                      "version": "2.2.1",
+                      "from": "tar@~2.2.0",
+                      "resolved": "https://registry.npmjs.org/tar/-/tar-2.2.1.tgz"
                     },
                     "tough-cookie": {
                       "version": "2.2.1",
                       "from": "tough-cookie@~2.2.0",
                       "resolved": "https://registry.npmjs.org/tough-cookie/-/tough-cookie-2.2.1.tgz"
+                    },
+                    "tunnel-agent": {
+                      "version": "0.4.1",
+                      "from": "tunnel-agent@~0.4.1",
+                      "resolved": "https://registry.npmjs.org/tunnel-agent/-/tunnel-agent-0.4.1.tgz"
                     },
                     "tweetnacl": {
                       "version": "0.13.2",
