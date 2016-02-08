@@ -1,13 +1,11 @@
-import webpackConfig from '../webpack.config';
-import webpack from 'webpack';
-import webpackDevMiddleware from 'webpack-dev-middleware';
-import webpackHotMiddleware from 'webpack-hot-middleware';
-
-import { NODE_ENV, PORT } from './config';
-import loggerMaker from './util/logger';
+import loggerMaker from './utils/logger';
+import { PORT } from './config';
 import express from 'express';
 import morgan from 'morgan';
 import compression from 'compression';
+import session from 'express-session';
+import bodyParser from 'body-parser';
+import routers from './routes';
 import path from 'path';
 import http from 'http';
 
@@ -18,24 +16,19 @@ app.use(morgan('combined', {
   stream: logger.stream
 }));
 app.use(compression());
+app.use(session({
+  secret: 'webpack-react',
+  resave: false,
+  saveUninitialized: false
+}));
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({
+  extended: false
+}));
 
-if (NODE_ENV === 'production') {
-  app.use(express.static(path.join(__dirname, '../static')));
-} else {
-  const wConfig = webpackConfig({
-    dev: true
-  });
-  const compiler = webpack(wConfig);
-  app.use(webpackDevMiddleware(compiler, {
-    // quiet: true,
-    // publicPath: wConfig.output.publicPath,
-    stats: {
-      colors: true
-    }
-  }));
-  app.use(webpackHotMiddleware(compiler));
-}
+app.use(express.static(path.join(__dirname, '../static')));
 
+app.use('/api', routers.api);
 app.get('*', (req, res) => {
   res.sendFile(path.join(__dirname, '../static', 'index.html'));
 });
@@ -52,5 +45,3 @@ server
       logger.error('The port is already in use..!!');
     }
   });
-
-export default app;

@@ -1,37 +1,16 @@
 import types from '../constants/ActionTypes';
 
-export function addTodo(text) {
+export function addTodo(id, text) {
   return {
     type: types.ADD_TODO,
-    text
+    id, text
   };
 }
 
-export function deleteTodo(id) {
+export function completeAll(allCompleted) {
   return {
-    type: types.DELETE_TODO,
-    id
-  };
-}
-
-export function editTodo(id, text) {
-  return {
-    type: types.EDIT_TODO,
-    id,
-    text
-  };
-}
-
-export function completeTodo(id) {
-  return {
-    type: types.COMPLETE_TODO,
-    id
-  };
-}
-
-export function completeAll() {
-  return {
-    type: types.COMPLETE_ALL
+    type: types.COMPLETE_ALL,
+    allCompleted
   };
 }
 
@@ -48,6 +27,36 @@ export function setEditStatus(id) {
   };
 }
 
+export function editTodo(id, text) {
+  return {
+    type: types.EDIT_TODO,
+    id, text
+  };
+}
+
+export function completeTodo(id) {
+  return {
+    type: types.COMPLETE_TODO,
+    id
+  };
+}
+
+export function deleteTodo(id) {
+  return {
+    type: types.DELETE_TODO,
+    id
+  };
+}
+
+export function replaceTodos(todos) {
+  return {
+    type: types.REPLACE_TODOS,
+    todos
+  };
+}
+
 export default {
-  addTodo, deleteTodo, editTodo, completeTodo, completeAll, clearCompleted, setEditStatus
+  addTodo, completeAll, clearCompleted,
+  setEditStatus, editTodo, completeTodo, deleteTodo,
+  replaceTodos
 };

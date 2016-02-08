@@ -6,7 +6,7 @@ import { routeReducer } from 'react-router-redux';
 const rootReducer = combineReducers({
   todos,
   form: formReducer,
-  routing: routeReducer,
+  routing: routeReducer
 });
 
 export default rootReducer;

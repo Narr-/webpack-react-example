@@ -1,15 +1,16 @@
 import fs from 'fs';
 import path from 'path';
 import winston from 'winston';
+import moment from 'moment';
 
-const logDir = path.join(__dirname, '../log');
+const logDir = path.join(__dirname, '../logs');
 try {
   fs.accessSync(logDir);
 } catch (e) {
   fs.mkdirSync(logDir);
 }
 
-export default function (module) {
+export default (module) => {
   const logger = new winston.Logger({
     transports: [
       new winston.transports.Console({
@@ -20,7 +21,8 @@ export default function (module) {
         depth: 0,
         handleExceptions: true,
         humanReadableUnhandledException: true,
-        colorize: 'all'
+        colorize: 'all',
+        timestamp: () => moment().format('YYYY-MM-DD HH:mm:ss.SSS')
       }),
       new winston.transports.File({
         label: module.filename,
@@ -32,7 +34,8 @@ export default function (module) {
         handleExceptions: true,
         humanReadableUnhandledException: true,
         maxsize: 5242880, // 5MB
-        maxFiles: 5
+        maxFiles: 5,
+        timestamp: () => moment().format('YYYY-MM-DD HH:mm:ss.SSS')
       })
     ],
     exitOnError: false
@@ -46,4 +49,4 @@ export default function (module) {
   };
 
   return logger;
-}
+};

@@ -4,7 +4,9 @@ import {
 from 'immutable';
 
 import {
-  ADD_TODO, DELETE_TODO, EDIT_TODO, COMPLETE_TODO, COMPLETE_ALL, CLEAR_COMPLETED, SET_EDITING_STATUS
+  ADD_TODO, COMPLETE_ALL, CLEAR_COMPLETED,
+  SET_EDITING_STATUS, EDIT_TODO, COMPLETE_TODO, DELETE_TODO,
+  REPLACE_TODOS
 }
 from '../constants/ActionTypes';
 
@@ -14,38 +16,46 @@ export default function todos(state = initialState, action) {
   switch (action.type) {
     case ADD_TODO:
       return state.unshift(iMap({
-        id: state.reduce((maxId, todo) => Math.max(todo.get('id'), maxId), -1) + 1,
-        completed: false,
-        text: action.text,
-        isEditing: false
+        todoId: action.id,
+        todoText: action.text,
+        todoIsEditing: false,
+        todoCompleted: false
       }));
 
-    case DELETE_TODO:
-      return state.filter(todo =>
-        todo.get('id') !== action.id
-      );
-
-    case EDIT_TODO:
-      return state.map(todo =>
-        todo.get('id') === action.id ? todo.set('text', action.text) : todo
-      );
-
-    case COMPLETE_TODO:
-      return state.map(todo =>
-        todo.get('id') === action.id ? todo.set('completed', !todo.get('completed')) : todo
-      );
-
-    case COMPLETE_ALL:
-      const areAllMarked = state.every(todo => todo.get('completed'));
-      return state.map(todo => todo.set('completed', !areAllMarked));
+    case COMPLETE_ALL: {
+      return state.map(todo => todo.set('todoCompleted', !action.allCompleted));
+    }
 
     case CLEAR_COMPLETED:
-      return state.filter(todo => todo.get('completed') === false);
+      return state.filter(todo => todo.get('todoCompleted') === false);
 
     case SET_EDITING_STATUS:
       return state.map(todo =>
-        todo.get('id') === action.id ? todo.set('isEditing', !todo.get('isEditing')) : todo
+        todo.get('todoId') === action.id ?
+          todo.set('todoIsEditing', !todo.get('todoIsEditing')) : todo
       );
+
+    case EDIT_TODO:
+      return state.map(todo => {
+        if (todo.get('todoId') === action.id) {
+          return todo.set('todoText', action.text).set('todoIsEditing', false);
+        }
+        return todo;
+      });
+
+    case COMPLETE_TODO:
+      return state.map(todo =>
+        todo.get('todoId') === action.id ?
+          todo.set('todoCompleted', !todo.get('todoCompleted')) : todo
+      );
+
+    case DELETE_TODO:
+      return state.filter(todo =>
+        todo.get('todoId') !== action.id
+      );
+
+    case REPLACE_TODOS:
+      return action.todos;
 
     default:
       return state;

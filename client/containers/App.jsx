@@ -5,13 +5,29 @@ import Immutable from 'immutable';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import todoActions from '../actions/todos';
+import uuid from 'node-uuid';
 
 class App extends Component {
+  constructor(props) {
+    super(props);
+    this.addTodo = this.addTodo.bind(this);
+    const completeAll = this.props.appActions.completeAll;
+    this.props.appActions.completeAll = () => completeAll(this.areAllMarked());
+  }
+
+  addTodo(text) {
+    this.props.appActions.addTodo(uuid.v1(), text);
+  }
+
+  areAllMarked() {
+    return this.props.todos.every(todo => todo.get('todoCompleted'));
+  }
+
   render() {
     const { todos, appActions, params } = this.props;
     return (
       <div style={{ color: 'orange' }}>
-        <Header addTodo={appActions.addTodo} />
+        <Header addTodo={this.addTodo} />
         <MainSection todos={todos} actions={appActions}
           filter={typeof params.status === 'undefined' ? 'all' : params.status}
         />

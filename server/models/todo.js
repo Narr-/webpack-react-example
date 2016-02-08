@@ -1,0 +1,30 @@
+export const TODO_TABLE_NAME = 'todo';
+export const TODO_KEY_COLUMN_NAME = '_id';
+export const TODO_ID_COLUMN_NAME = 'todo_id';
+export const TODO_TEXT_COLUMN_NAME = 'todo_text';
+export const TODO_COMPLETED_COLUMN_NAME = 'todo_completed';
+export const TODO_IS_EDITING_COLUMN_NAME = 'todo_is_editing';
+export const USER_ID_COLUMN_NAME = 'user_id';
+export const USER_IP_COLUMN_NAME = 'user_ip';
+
+export const CREATE_TODO_TABLE = `CREATE TABLE IF NOT EXISTS ${TODO_TABLE_NAME}(
+  ${TODO_KEY_COLUMN_NAME} serial PRIMARY KEY,
+  ${TODO_ID_COLUMN_NAME} text NOT NULL,
+  ${TODO_TEXT_COLUMN_NAME} text NOT NULL,
+  ${TODO_COMPLETED_COLUMN_NAME} boolean DEFAULT false,
+  ${TODO_IS_EDITING_COLUMN_NAME} boolean DEFAULT false,
+  ${USER_ID_COLUMN_NAME} text NOT NULL,
+  ${USER_IP_COLUMN_NAME} text NOT NULL
+)`;
+
+export default {
+  TODO_TABLE_NAME,
+  TODO_KEY_COLUMN_NAME,
+  TODO_ID_COLUMN_NAME,
+  TODO_TEXT_COLUMN_NAME,
+  TODO_COMPLETED_COLUMN_NAME,
+  TODO_IS_EDITING_COLUMN_NAME,
+  USER_ID_COLUMN_NAME,
+  USER_IP_COLUMN_NAME,
+  CREATE_TODO_TABLE
+};

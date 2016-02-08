@@ -19,9 +19,11 @@ export default function ({ dev }) {
     entry: {
       vendor: [
         'bootstrap-sass/assets/stylesheets/_bootstrap.scss',
-        'react', 'react-dom', 'react-redux', 'redux',
-        'redux-form', 'react-router', 'react-router-redux',
-        'immutable', 'classnames'
+        'babel-polyfill', // to use generator
+        'react', 'react-dom', 'react-redux', 'redux', 'immutable',
+        'react-router', 'react-router-redux', 'redux-saga', 'isomorphic-fetch',
+        'redux-form',
+        'classnames', 'humps', 'node-uuid'
       ],
       main: ['./index.js']
     },
@@ -110,7 +112,7 @@ export default function ({ dev }) {
         imgPath: path.join(__dirname, 'temp/res/imgs/icons/'),
         cssPath: path.join(__dirname, 'temp/res/imgs/icons/'),
         processor: 'scss',
-        multiFolders: true,
+        bundleMode: 'multiple',
         prefix: 'sprite-icon'
       })
     ],

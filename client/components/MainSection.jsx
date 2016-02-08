@@ -6,8 +6,8 @@ import Immutable from 'immutable';
 
 const TODO_FILTERS = {
   [SHOW_ALL]: () => true,
-  [SHOW_ACTIVE]: todo => !todo.get('completed'),
-  [SHOW_COMPLETED]: todo => todo.get('completed')
+  [SHOW_ACTIVE]: todo => !todo.get('todoCompleted'),
+  [SHOW_COMPLETED]: todo => todo.get('todoCompleted')
 };
 
 class MainSection extends Component {
@@ -17,7 +17,7 @@ class MainSection extends Component {
   }
 
   handleClearCompleted() {
-    const atLeastOneCompleted = this.props.todos.some(todo => todo.get('completed'));
+    const atLeastOneCompleted = this.props.todos.some(todo => todo.get('todoCompleted'));
     if (atLeastOneCompleted) {
       this.props.actions.clearCompleted();
     }
@@ -54,7 +54,7 @@ class MainSection extends Component {
   render() {
     const { todos, actions, filter } = this.props;
     const completedCount = todos.reduce((count, todo) =>
-      todo.get('completed') ? count + 1 : count, 0);
+      todo.get('todoCompleted') ? count + 1 : count, 0);
     const filteredTodos = todos.filter(TODO_FILTERS[`SHOW_${filter.toUpperCase()}`]);
 
     return (
@@ -62,7 +62,7 @@ class MainSection extends Component {
         {this.renderToggleAll(completedCount)}
         <ul className="todo-list">
           {filteredTodos.map(todo =>
-            <TodoItem key={todo.get('id')} todo={todo}
+            <TodoItem key={todo.get('todoId')} todo={todo}
               editTodo={actions.editTodo}
               deleteTodo={actions.deleteTodo}
               completeTodo={actions.completeTodo}

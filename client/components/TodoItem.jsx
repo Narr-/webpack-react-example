@@ -10,7 +10,7 @@ class TodoItem extends Component {
   }
 
   handleDoubleClick() {
-    this.props.setEditStatus(this.props.todo.get('id'));
+    this.props.setEditStatus(this.props.todo.get('todoId'));
   }
 
   handleSave(id, text) {
@@ -19,20 +19,19 @@ class TodoItem extends Component {
     } else {
       this.props.editTodo(id, text);
     }
-    this.props.setEditStatus(this.props.todo.get('id'));
   }
 
   render() {
     const { todo, completeTodo, deleteTodo } = this.props;
     const handleSave = this.handleSave;
     let element;
-    if (todo.get('isEditing')) {
+    if (todo.get('todoIsEditing')) {
       element = (
         <TodoEditInput
           onSave={function onSaveHandler(text) {
-            handleSave(todo.get('id'), text);
+            handleSave(todo.get('todoId'), text);
           }}
-          initialValues={{ todoEditInput: todo.get('text') }}
+          initialValues={{ todoEditInput: todo.get('todoText') }}
         />
       ); //
     } else {
@@ -41,17 +40,17 @@ class TodoItem extends Component {
           <input
             className="toggle"
             type="checkbox"
-            checked={todo.get('completed')}
+            checked={todo.get('todoCompleted')}
             onChange={function onChangeHandler() {
-              completeTodo(todo.get('id'));
+              completeTodo(todo.get('todoId'));
             }}
           />
           <label onDoubleClick={this.handleDoubleClick}>
-            {todo.get('text')}
+            {todo.get('todoText')}
           </label>
           <button className="destroy"
             onClick={function onClickHandler() {
-              deleteTodo(todo.get('id'));
+              deleteTodo(todo.get('todoId'));
             }}
           />
         </div>
@@ -60,8 +59,8 @@ class TodoItem extends Component {
 
     return (
       <li className={classnames({
-        completed: todo.get('completed'),
-        editing: todo.get('isEditing')
+        completed: todo.get('todoCompleted'),
+        editing: todo.get('todoIsEditing')
       })}
       >
         {element}
