@@ -1,0 +1,45 @@
+.header {
+  margin-top: 150px;
+
+  .icon-marvel-logo {
+    a {
+      cursor: pointer;
+    }
+  }
+}
+
+.marvel-header {
+  margin-top: 230px;
+}
+
+.header-marvel {
+  position: absolute;
+  top: -232px;
+  width: 100%;
+  line-height: 0;
+}
+
+.icon-marvel-logo {
+  @import './Spinner';
+  @include spinner-mixin();
+
+  font-family: 'MarvelLogo';
+  background-color: #f00;
+  position: absolute;
+  right: 0;
+  top: -42px;
+  font-size: 24px;
+  width: 74px;
+  height: 32px;
+
+  a {
+    color: #fff;
+    text-decoration: none;
+    margin: 5px 0 0 6px;
+    display: block;
+  }
+
+  a:before {
+    content: '\e000';
+  }
+}

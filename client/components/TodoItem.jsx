@@ -66,7 +66,7 @@ class TodoItem extends Component {
         {element}
       </li>
     );
-  }
+  } //
 }
 
 TodoItem.propTypes = {

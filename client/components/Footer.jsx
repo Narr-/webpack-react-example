@@ -36,15 +36,15 @@ class Footer extends Component {
         activeClassName="selected"
         to={`/${path}`}
         onClick={function onClickHandler(e) {
-          if (`SHOW_${selectedFilter.toUpperCase()}` === filter) {
-            e.preventDefault();
+          if (selectedFilter === path) {
+            e.preventDefault(); // to prevent re-rendering
           }
         }}
       >
         {title}
       </Link>
     );
-  }
+  } //
 
   renderClearButton() {
     const { completedCount, onClearCompleted } = this.props;
@@ -58,7 +58,7 @@ class Footer extends Component {
         </button>
       );
     }
-  }
+  } //
 
   render() {
     return (
@@ -74,7 +74,7 @@ class Footer extends Component {
         {this.renderClearButton()}
       </footer>
     );
-  }
+  } //
 }
 
 Footer.propTypes = {

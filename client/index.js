@@ -32,6 +32,6 @@ todoStoragePromise.then((todoStorage) => {
         {Router}
       </Provider>,
       document.getElementById('root')
-    );
+    ); //
   });
 });

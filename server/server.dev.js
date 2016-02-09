@@ -33,7 +33,8 @@ app.use(bodyParser.urlencoded({
 
 // @ webpack
 const wConfig = webpackConfig({
-  dev: true
+  dev: true,
+  publicPath: `http://localhost:${PORT}/` // * The last slash(/) is important
 });
 const compiler = webpack(wConfig);
 app.use(webpackDevMiddleware(compiler, {

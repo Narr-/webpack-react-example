@@ -55,8 +55,8 @@ class MainSection extends Component {
     const { todos, actions, filter } = this.props;
     const completedCount = todos.reduce((count, todo) =>
       todo.get('todoCompleted') ? count + 1 : count, 0);
-    const filteredTodos = todos.filter(TODO_FILTERS[`SHOW_${filter.toUpperCase()}`]);
-
+    const filterFn = TODO_FILTERS[`SHOW_${filter.toUpperCase()}`] || (() => true);
+    const filteredTodos = todos.filter(filterFn);
     return (
       <section className="main">
         {this.renderToggleAll(completedCount)}
@@ -73,7 +73,7 @@ class MainSection extends Component {
         {this.renderFooter(completedCount)}
       </section>
     );
-  }
+  } //
 }
 
 MainSection.propTypes = {

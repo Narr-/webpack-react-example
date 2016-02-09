@@ -7,8 +7,10 @@ import ExtractTextPlugin from 'extract-text-webpack-plugin';
 import webpack from 'webpack';
 import HtmlWebpackPlugin from 'html-webpack-plugin';
 import Sprite from 'sprite-webpack-plugin';
+import requireErrorHandlerPlugin from 'require-error-handler-webpack-plugin';
+import JsonpMainTemplatePlugin from 'webpack/lib/JsonpMainTemplatePlugin';
 
-export default function ({ dev }) {
+export default function ({ dev, publicPath }) {
   del.sync('./temp');
 
   const config = {
@@ -20,7 +22,8 @@ export default function ({ dev }) {
       vendor: [
         'bootstrap-sass/assets/stylesheets/_bootstrap.scss',
         'babel-polyfill', // to use generator
-        'react', 'react-dom', 'react-redux', 'redux', 'immutable',
+        'react', 'react-dom', 'react-addons-css-transition-group',
+        'react-redux', 'redux', 'immutable',
         'react-router', 'react-router-redux', 'redux-saga', 'isomorphic-fetch',
         'redux-form',
         'classnames', 'humps', 'node-uuid'
@@ -30,7 +33,7 @@ export default function ({ dev }) {
     output: {
       path: distPath,
       filename: '[name].bundle.js?[hash]',
-      chunkFilename: '[name].js?[hash]'
+      chunkFilename: '[name].chunk.js?[hash]'
     },
     module: {
       preLoaders: [{
@@ -114,7 +117,10 @@ export default function ({ dev }) {
         processor: 'scss',
         bundleMode: 'multiple',
         prefix: 'sprite-icon'
-      })
+      }),
+      new requireErrorHandlerPlugin.JsonpErrorHandlerPlugin(JsonpMainTemplatePlugin),
+      new requireErrorHandlerPlugin.RequireEnsureErrorHandlerPlugin(),
+      new requireErrorHandlerPlugin.AMDRequireErrorHandlerPlugin()
     ],
     resolve: {
       root: appPath, // for require
@@ -128,7 +134,7 @@ export default function ({ dev }) {
     // @ https://github.com/glenjamin/webpack-hot-middleware
     config.entry.vendor.push('webpack-hot-middleware/client?reload=true');
     config.entry.main.push('webpack-hot-middleware/client?reload=true');
-    // config.output.publicPath = publicPath; // https://webpack.github.io/docs/configuration.html#output-publicpath, for url in Blob CSS
+    config.output.publicPath = publicPath; // https://webpack.github.io/docs/configuration.html#output-publicpath, for url in Blob CSS
     config.plugins.push(new webpack.optimize.OccurenceOrderPlugin());
     config.plugins.push(new webpack.HotModuleReplacementPlugin());
     config.plugins.push(new webpack.NoErrorsPlugin());

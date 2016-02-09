@@ -24,22 +24,31 @@ class App extends Component {
   }
 
   render() {
-    const { todos, appActions, params } = this.props;
+    const { todos, appActions, params, route } = this.props;
+    const filter = typeof params.status === 'undefined' ? 'all' : params.status;
     return (
       <div style={{ color: 'orange' }}>
-        <Header addTodo={this.addTodo} />
+        <Header addTodo={this.addTodo} isFromMarvel={route.isFromMarvel}>
+          {this.props.children}
+        </Header>
         <MainSection todos={todos} actions={appActions}
-          filter={typeof params.status === 'undefined' ? 'all' : params.status}
+          filter={filter}
         />
       </div>
     );
   }
-}
+} //
 
 App.propTypes = {
   todos: PropTypes.instanceOf(Immutable.List).isRequired,
   appActions: PropTypes.object.isRequired,
-  params: PropTypes.object.isRequired
+  params: PropTypes.object.isRequired,
+  route: PropTypes.object.isRequired,
+  children: PropTypes.element
+  // children: PropTypes.oneOfType([
+  //   PropTypes.element, // React element
+  //   PropTypes.array
+  // ])
 };
 
 function mapStateToProps(state) { // select
