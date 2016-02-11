@@ -18,13 +18,15 @@ router.route('/')
           message: 'DB connection Error..!!'
         });
       } else {
+        // console.log(req.session.userId);
+        const userId = req.session.userId || req.query.userId;
         client.query(
           `SELECT ${todoModel.TODO_ID_COLUMN_NAME},
           ${todoModel.TODO_TEXT_COLUMN_NAME},
           ${todoModel.TODO_COMPLETED_COLUMN_NAME},
           ${todoModel.TODO_IS_EDITING_COLUMN_NAME}
           FROM ${todoModel.TODO_TABLE_NAME}
-          WHERE ${todoModel.USER_ID_COLUMN_NAME} = '${req.session.userId}'
+          WHERE ${todoModel.USER_ID_COLUMN_NAME} = '${userId}'
           ORDER BY ${todoModel.TODO_KEY_COLUMN_NAME} DESC;`
           , (queryErr, result) => {
           done();

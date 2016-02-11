@@ -45,10 +45,11 @@ router.post('/', (req, res) => {
         }
         done(); // should call done() to release a client to the pool of pg
       } else {
+        const reqIp = req.ip === '::ffff:127.0.0.1' ? '::1' : req.ip; // same localhost
         client.query(
           `SELECT ${todoModel.USER_ID_COLUMN_NAME}
           FROM ${todoModel.TODO_TABLE_NAME}
-          WHERE ${todoModel.USER_IP_COLUMN_NAME} = '${req.ip}'
+          WHERE ${todoModel.USER_IP_COLUMN_NAME} = '${reqIp}'
           ORDER BY ${todoModel.TODO_KEY_COLUMN_NAME} DESC;`
           , (queryErr, result) => {
           done();

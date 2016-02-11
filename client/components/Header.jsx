@@ -3,6 +3,7 @@ import TodoMakeInput from './TodoMakeInput';
 import { browserHistory } from 'react-router';
 import classnames from 'classnames';
 import Spinner from './Spinner';
+import ReactTransitionGroup from 'react-addons-transition-group';
 
 class Header extends Component {
   constructor() {
@@ -26,7 +27,11 @@ class Header extends Component {
   renderTitle(marvelHeaderTitle) {
     let dom;
     if (marvelHeaderTitle) {
-      dom = marvelHeaderTitle;
+      dom = (
+        <ReactTransitionGroup>
+          {marvelHeaderTitle}
+        </ReactTransitionGroup>
+      ); //
     } else {
       dom = (
         <h1>todos</h1>

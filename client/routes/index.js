@@ -1,28 +1,33 @@
 import React from 'react';
-import { Router, browserHistory, Route } from 'react-router';
+import { Route } from 'react-router';
 import App from '../containers/App';
 
-export default (
-  <Router history={browserHistory}>
-    {
-      /* pass props to App, and can get it by this.route.foo, this.route.foo2 */
-      /* <Route path="/" component={App} foo="bar" foo2 /> */
-    }
-    <Route path="/" component={App} />
-    {
-      /* // for highlighting problem in Sublime Text */
-    }
-    <Route path="/marvel" getComponent={function getComponent(location, callback) {
-      require.ensure([], require => { // can't use 'import' in require.ensure
-        const Marvel = require('../containers/Marvel').default;
-        callback(null, Marvel);
-      }, 'marvel');
-    }}
-      isFromMarvel
-    />
-    {
-      /* // for highlighting problem in Sublime Text */
-    }
-    <Route path="/:status" component={App} />
-  </Router>
-);
+// polyfill webpack require.ensure for server rendering
+if (typeof require.ensure !== 'function') {
+  require.ensure = (dependencies, callback) => {
+    callback(require);
+  };
+}
+
+// pass props to App, and can get it by this.route.foo, this.route.foo2
+// <Route path="\/" component={App} foo="bar" foo2 />
+export const root = (
+  <Route key="root" path="/" component={App} />
+); //
+
+export const marvel = (
+  <Route key="marvel" path="/marvel" getComponent={function getComponent(location, callback) {
+    require.ensure([], require => { // can't use 'import' in require.ensure
+      const Marvel = require('../containers/Marvel').default;
+      callback(null, Marvel);
+    }, 'marvel');
+  }}
+    isFromMarvel
+  />
+); //
+
+export const status = (
+  <Route key="status" path="/:status" component={App} />
+); //
+
+export default [root, marvel, status];

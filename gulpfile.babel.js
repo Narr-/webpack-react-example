@@ -6,8 +6,13 @@ import webpack from 'webpack';
 import gutil from 'gulp-util';
 import runSequence from 'run-sequence';
 import eslint from 'gulp-eslint';
+import webpackStream from 'webpack-stream';
 
 const spawn = childProcess.spawn;
+const distPath = './static';
+const hostname = 'localhost';
+const PORT = process.env.PORT || 3000;
+const publicPath = `http://${hostname}:${PORT}`;
 
 function runServer(env) {
   if (env === 'prod') {
@@ -15,6 +20,39 @@ function runServer(env) {
   }
   spawn('node', ['./server'], {
     stdio: 'inherit'
+  });
+}
+
+function build(cb, env) {
+  del.sync(distPath);
+
+  let webpackConfigObj;
+  if (env === 'prod') {
+    webpackConfigObj = {};
+  } else {
+    webpackConfigObj = {
+      dev: true,
+      publicPath: `${publicPath}/` // * The last slash(/) is important
+    };
+  }
+  const config = webpackConfig(webpackConfigObj);
+  const compiler = webpack(config);
+
+  compiler.run((err, stats) => {
+    if (err) {
+      // show the file name where error occured
+      console.log(err.module.resource); // eslint-disable-line
+      if (err.module.errors.length > 0) {
+        // show the error detail e.g. eslint loader
+        console.log(err.module.errors[0].error); // eslint-disable-line
+      }
+      throw new gutil.PluginError('webpack:build', err);
+      // process.exit(1);
+    }
+    gutil.log('[build:prod]', stats.toString({
+      colors: true
+    }));
+    cb();
   });
 }
 
@@ -45,30 +83,31 @@ gulp.task('dev', () => {
 gulp.task('default', ['dev']);
 
 // //////////////////////
+// dev build => to use watch mode without the dev server or dev middleware
+gulp.task('build', () => {
+  del.sync(distPath);
+  const webpackConfigObj = {
+    dev: true,
+    publicPath: `${publicPath}/` // * The last slash(/) is important
+  };
+  const config = webpackConfig(webpackConfigObj);
+  config.watch = true; // only for webpackStream
+  config.verbose = true; // only for webpackStream
+  return gulp.src('./client/index.js')
+    .pipe(webpackStream(config))
+    .on('error', (err) => { // dummy fn to handle error
+      console.log(err); // eslint-disable-line no-console
+       // as of now, if error occurs, the build process won't rewrite files
+       // should check this later again, for now just exit
+      process.exit(1);
+    })
+    .pipe(gulp.dest(distPath));
+});
+
+// //////////////////////
 // production build
-gulp.task('build', cb => {
-  process.env.NODE_ENV = 'production';
-  del.sync('./static');
-
-  const config = webpackConfig({});
-  const compiler = webpack(config);
-
-  compiler.run((err, stats) => {
-    if (err) {
-      // show the file name where error occured
-      console.log(err.module.resource); // eslint-disable-line
-      if (err.module.errors.length > 0) {
-        // show the error detail e.g. eslint loader
-        console.log(err.module.errors[0].error); // eslint-disable-line
-      }
-      throw new gutil.PluginError('webpack:build', err);
-      // process.exit(1);
-    }
-    gutil.log('[build:prod]', stats.toString({
-      colors: true
-    }));
-    cb();
-  });
+gulp.task('prod-build', cb => {
+  build(cb, 'prod');
 });
 
 // //////////////////////
@@ -80,7 +119,7 @@ gulp.task('server', () => {
 // //////////////////////
 // production build and server
 gulp.task('prod', cb => {
-  runSequence('build', 'server', cb);
+  runSequence('prod-build', 'server', cb);
 });
 
 

@@ -1,0 +1,21 @@
+// http://pm2.keymetrics.io/docs/usage/application-declaration/#ecosystem-json
+// node ./node_modules/pm2/bin/pm2 list
+// node ./node_modules/pm2/bin/pm2 delete all
+// node ./node_modules/pm2/bin/pm2-dev run ./ecosystem.json
+// NODE_ENV=production node ./node_modules/pm2/bin/pm2-dev run ./server
+
+{
+  "cwd": "./",
+  "script": "server/index.js",
+  "ignore_watch": [
+    "*", // root files like package.json
+    "client",
+    "node_modules",
+    "server/logs",
+    "temp",
+    "tmp"
+  ],
+  "env": {
+    "NODE_ENV": "production"
+  }
+}

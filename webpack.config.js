@@ -10,7 +10,30 @@ import Sprite from 'sprite-webpack-plugin';
 import requireErrorHandlerPlugin from 'require-error-handler-webpack-plugin';
 import JsonpMainTemplatePlugin from 'webpack/lib/JsonpMainTemplatePlugin';
 
-export default function ({ dev, publicPath }) {
+// to insert some strings at the bottom of body tag
+const afterHtmlProcessingPlugin = {
+  apply: (compiler) => {
+    compiler.plugin('compilation', (compilation) => {
+      compilation.plugin('html-webpack-plugin-after-html-processing',
+        (htmlPluginData, callback) => {
+          const matchedStr = htmlPluginData.assets.js[0].match(/\?(.*?)$/);
+          let hash = '';
+          if (matchedStr) {
+            hash = matchedStr[1];
+          }
+          // console.log('html-webpack-plugin-after-html-processing');
+          htmlPluginData.html = // eslint-disable-line no-param-reassign
+            htmlPluginData.html.replace(/<\/body>/,
+              `\n  <% scriptTags.forEach(function(tagSrc) { %>` +
+              `<script src="<%= tagSrc %>?${hash}"></script>\n` +
+              `  <% }); %></body>`);
+          callback();
+        });
+    });
+  }
+};
+
+export default function ({ dev, publicPath, devMiddleware }) {
   del.sync('./temp');
 
   const config = {
@@ -22,10 +45,12 @@ export default function ({ dev, publicPath }) {
       vendor: [
         'bootstrap-sass/assets/stylesheets/_bootstrap.scss',
         'babel-polyfill', // to use generator
-        'react', 'react-dom', 'react-addons-css-transition-group',
+        'react', 'react-dom', 'react-addons-transition-group',
+        // 'react-addons-css-transition-group',
         'react-redux', 'redux', 'immutable',
         'react-router', 'react-router-redux', 'redux-saga', 'isomorphic-fetch',
         'redux-form',
+        'd3',
         'classnames', 'humps', 'node-uuid'
       ],
       main: ['./index.js']
@@ -63,7 +88,8 @@ export default function ({ dev, publicPath }) {
       }, {
         test: /\.jsx?$/,
         exclude: /node_modules/,
-        loaders: ['babel'] // the queries are included by .babelrc
+        // the queries are also merged by .babelrc
+        loaders: [`babel${devMiddleware ? '?presets[]=react-hmre' : ''}`]
       }]
     },
     eslint: {
@@ -105,9 +131,10 @@ export default function ({ dev, publicPath }) {
           collapseWhitespace: true
         },
         template: path.join(appPath, 'index.html'),
+        inject: 'body',
         forEjs: {
-          reactDom: '<%= reactDom %>',
-          reduxState: '<%= reduxState %>'
+          reactDom: devMiddleware ? '' : '<%- reactDom %>', // <%- unescape HTML, <%= escape HTML
+          reduxState: devMiddleware ? 'null' : '<%- reduxState %>'
         }
       }),
       new Sprite({
@@ -131,14 +158,18 @@ export default function ({ dev, publicPath }) {
   if (dev) {
     config.devtool = 'source-map';
     config.debug = true; // Switch loaders to debug mode.
-    // @ https://github.com/glenjamin/webpack-hot-middleware
-    config.entry.vendor.push('webpack-hot-middleware/client?reload=true');
-    config.entry.main.push('webpack-hot-middleware/client?reload=true');
     config.output.publicPath = publicPath; // https://webpack.github.io/docs/configuration.html#output-publicpath, for url in Blob CSS
-    config.plugins.push(new webpack.optimize.OccurenceOrderPlugin());
-    config.plugins.push(new webpack.HotModuleReplacementPlugin());
-    config.plugins.push(new webpack.NoErrorsPlugin());
-    // https://github.com/glenjamin/webpack-hot-middleware @
+    if (devMiddleware) {
+      // @ https://github.com/glenjamin/webpack-hot-middleware
+      config.entry.vendor.push('webpack-hot-middleware/client?reload=true');
+      config.entry.main.push('webpack-hot-middleware/client?reload=true');
+      config.plugins.push(new webpack.optimize.OccurenceOrderPlugin());
+      config.plugins.push(new webpack.HotModuleReplacementPlugin());
+      config.plugins.push(new webpack.NoErrorsPlugin());
+      // https://github.com/glenjamin/webpack-hot-middleware @
+    } else {
+      config.plugins.push(afterHtmlProcessingPlugin);
+    }
   } else {
     config.bail = true; // Report the first error as a hard error instead of tolerating it.
     config.plugins.push(new webpack.optimize.DedupePlugin()); // https://github.com/webpack/docs/wiki/optimization#deduplication
@@ -147,6 +178,7 @@ export default function ({ dev, publicPath }) {
       // beautify: true,
       // mangle: false
     }));
+    config.plugins.push(afterHtmlProcessingPlugin);
   }
 
   return config;

@@ -9,6 +9,8 @@ import routers from './routes';
 import path from 'path';
 import http from 'http';
 
+import ejs from 'ejs';
+
 const logger = loggerMaker(module);
 const app = express();
 
@@ -26,11 +28,16 @@ app.use(bodyParser.urlencoded({
   extended: false
 }));
 
+// @ react dom rendering
+app.set('view engine', 'html');
+app.engine('html', ejs.renderFile);
+app.use(routers.domRenderer);
+// react dom rendering @
 app.use(express.static(path.join(__dirname, '../static')));
 
 app.use('/api', routers.api);
 app.get('*', (req, res) => {
-  res.sendFile(path.join(__dirname, '../static', 'index.html'));
+  res.sendFile(path.join(__dirname, './views/404.html'));
 });
 
 const server = http.createServer(app);

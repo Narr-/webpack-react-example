@@ -1,0 +1,26 @@
+[Commands]
+
+npm shrinkwrap --dev
+npm install --production
+docker run -e POSTGRES_USER=narr -e POSTGRES_DB=todo_db -p 5432:5432 -d postgres
+psql -h 192.168.99.100 -U narr todo_db
+./node_modules/pm2/bin/pm2 list
+./node_modules/pm2/bin/pm2 delete all
+node ./node_modules/pm2/bin/pm2-dev run ./Ecosystem.json
+NODE_ENV=production node ./node_modules/pm2/bin/pm2-dev run ./server
+
+
+
+
+[Ref]
+
+http://rackt.org/redux/docs/api/bindActionCreators.html
+https://github.com/facebook/react/wiki/Complementary-Tools
+https://github.com/xgrommx/awesome-redux
+http://teropa.info/blog/2015/09/10/full-stack-redux-tutorial.html#project-setup
+https://github.com/mz026/universal-redux-template
+https://www.codementor.io/reactjs/tutorial/redux-server-rendering-react-router-universal-web-app
+https://medium.com/front-end-developers/handcrafting-an-isomorphic-redux-application-with-love-40ada4468af4#.d9i92jite
+http://spencerdixon.com/blog/test-driven-react-tutorial.html
+https://egghead.io/series/getting-started-with-redux
+https://github.com/rackt/example-react-router-server-rendering-lazy-routes

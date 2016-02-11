@@ -1,15 +1,14 @@
 <!doctype html>
 <html lang="en">
   <head>
-    <meta charset="utf-8">
-    <title>Redux TodoMVC example</title>
-    <link rel="icon" type="image/x-icon" href="<%= require('./res/imgs/favicon.ico') %>">
+  <meta charset="utf-8">
+  <title>Redux TodoMVC example</title>
+  <link rel="icon" type="image/x-icon" href="<%= require('./res/imgs/favicon.ico') %>">
   </head>
   <body>
-    <%= htmlWebpackPlugin.options.forEjs.reactDom %>
-    <%= htmlWebpackPlugin.options.forEjs.reduxState %>
-    <div id="bg-img">
-      <div class="todoapp" id="root"></div>
-    </div>
+  <div id="bg-img">
+    <div class="todoapp" id="root"><%= htmlWebpackPlugin.options.forEjs.reactDom %></div>
+  </div>
+  <script>window.__INITIAL_STATE__ = <%= htmlWebpackPlugin.options.forEjs.reduxState %>;</script>
   </body>
 </html>

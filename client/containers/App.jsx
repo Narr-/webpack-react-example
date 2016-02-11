@@ -6,6 +6,13 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import todoActions from '../actions/todos';
 import uuid from 'node-uuid';
+import { todoStoragePromise, todoStorage } from '../services';
+import todoApi from '../services/api';
+import {
+  Map as iMap, List as iList,
+}
+from 'immutable';
+import humps from 'humps';
 
 class App extends Component {
   constructor(props) {
@@ -13,6 +20,41 @@ class App extends Component {
     this.addTodo = this.addTodo.bind(this);
     const completeAll = this.props.appActions.completeAll;
     this.props.appActions.completeAll = () => completeAll(this.areAllMarked());
+  }
+
+  componentDidMount() { // only client
+    todoStorage.getTodos().then(result => {
+      if (!result.error) {
+        // console.log(result);
+        const immutableList = iList();
+        const todos = result.data.reduce((pre, curr) =>
+          pre.push(iMap(humps.camelizeKeys(curr))), immutableList);
+        this.props.appActions.replaceTodos(todos);
+      }
+    });
+  }
+
+  static fetchTodos(uri) { // this will be invoked from server. so just api not localstorage
+    todoApi.setUris(uri);
+    return todoStoragePromise().then(({ result, api }) => {
+      // console.log(result);
+      if (api) {
+        return api.getTodos(result.data.userId);
+      }
+      return result;
+    })
+    .then((result) => {
+      // console.log(result);
+      if (result.error) {
+        return result;
+      }
+      const newResult = Object.assign({}, result);
+      const immutableList = iList();
+      const todos = result.data.reduce((pre, curr) =>
+        pre.push(iMap(humps.camelizeKeys(curr))), immutableList);
+      newResult.todos = todos;
+      return newResult;
+    });
   }
 
   addTodo(text) {
