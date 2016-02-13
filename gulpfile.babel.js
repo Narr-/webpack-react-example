@@ -150,7 +150,7 @@ gulp.task('gh', cb => {
     cb,
     distPath: './gh-pages',
     indexHtmlName: 'index.tmpl',
-    rootUrl: 'https://narr-.github.io/webpack-react-example/', // * The last slash(/) is important
+    rootUrl: 'http://narr-.github.io/webpack-react-example/', // * The last slash(/) is important
     extraWork: reactHtmlGenerator
   });
 });
