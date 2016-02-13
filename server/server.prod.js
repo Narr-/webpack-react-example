@@ -37,7 +37,7 @@ app.use(express.static(path.join(__dirname, '../static')));
 
 app.use('/api', routers.api);
 app.get('*', (req, res) => {
-  res.sendFile(path.join(__dirname, './views/404.html'));
+  res.sendFile(path.join(__dirname, '../static/404.html'));
 });
 
 const server = http.createServer(app);

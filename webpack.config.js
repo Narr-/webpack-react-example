@@ -1,7 +1,7 @@
 import del from 'del';
 import path from 'path';
 const appPath = path.join(__dirname, 'client');
-const distPath = path.join(__dirname, 'static');
+const defaultDistPath = path.join(__dirname, 'static');
 import autoprefixer from 'autoprefixer';
 import ExtractTextPlugin from 'extract-text-webpack-plugin';
 import webpack from 'webpack';
@@ -33,7 +33,8 @@ const afterHtmlProcessingPlugin = {
   }
 };
 
-export default function ({ dev, publicPath, devMiddleware }) {
+export default function ({ dev, publicPath, devMiddleware,
+  distPath = defaultDistPath, indexHtmlName }) {
   del.sync('./temp');
 
   const config = {
@@ -44,7 +45,10 @@ export default function ({ dev, publicPath, devMiddleware }) {
     entry: {
       vendor: [
         'bootstrap-sass/assets/stylesheets/_bootstrap.scss',
-        'babel-polyfill', // to use generator
+        /*
+        // to use generator => replace this to babel-runtime(transform-runtime in .babelrc)
+        // 'babel-polyfill',
+        */
         'react', 'react-dom', 'react-addons-transition-group',
         // 'react-addons-css-transition-group',
         'react-redux', 'redux', 'immutable',
@@ -124,6 +128,7 @@ export default function ({ dev, publicPath, devMiddleware }) {
         }
       }),
       new HtmlWebpackPlugin({
+        filename: indexHtmlName || 'index.html',
         minify: dev ? '' : {
           minifyCSS: true,
           minifyJS: true,

@@ -7,37 +7,28 @@ import gutil from 'gulp-util';
 import runSequence from 'run-sequence';
 import eslint from 'gulp-eslint';
 import webpackStream from 'webpack-stream';
+import reactHtmlGenerator from './react-html-generator';
 
 const spawn = childProcess.spawn;
-const distPath = './static';
+const defaultDistPath = './static';
 const hostname = 'localhost';
 const PORT = process.env.PORT || 3000;
 const publicPath = `http://${hostname}:${PORT}`;
 
 function runServer(env) {
-  if (env === 'prod') {
-    process.env.NODE_ENV = 'production';
+  if (env) {
+    process.env.NODE_ENV = env;
   }
   spawn('node', ['./server'], {
     stdio: 'inherit'
   });
 }
 
-function build(cb, env) {
+function prodBuild({ cb, distPath = defaultDistPath, indexHtmlName, extraWork = f => f }) {
   del.sync(distPath);
 
-  let webpackConfigObj;
-  if (env === 'prod') {
-    webpackConfigObj = {};
-  } else {
-    webpackConfigObj = {
-      dev: true,
-      publicPath: `${publicPath}/` // * The last slash(/) is important
-    };
-  }
-  const config = webpackConfig(webpackConfigObj);
+  const config = webpackConfig({ distPath, indexHtmlName });
   const compiler = webpack(config);
-
   compiler.run((err, stats) => {
     if (err) {
       // show the file name where error occured
@@ -52,6 +43,14 @@ function build(cb, env) {
     gutil.log('[build:prod]', stats.toString({
       colors: true
     }));
+    extraWork();
+    // @ copy 404.html
+    gulp.src('./server/views/404.html')
+    .pipe(gulp.dest(distPath));
+    // copy 404.html @
+    if (indexHtmlName) {
+      del.sync(`${distPath}/${indexHtmlName}`);
+    }
     cb();
   });
 }
@@ -85,7 +84,7 @@ gulp.task('default', ['dev']);
 // //////////////////////
 // dev build => to use watch mode without the dev server or dev middleware
 gulp.task('build', () => {
-  del.sync(distPath);
+  del.sync(defaultDistPath);
   const webpackConfigObj = {
     dev: true,
     publicPath: `${publicPath}/` // * The last slash(/) is important
@@ -101,19 +100,19 @@ gulp.task('build', () => {
        // should check this later again, for now just exit
       process.exit(1);
     })
-    .pipe(gulp.dest(distPath));
+    .pipe(gulp.dest(defaultDistPath));
 });
 
 // //////////////////////
 // production build
 gulp.task('prod-build', cb => {
-  build(cb, 'prod');
+  prodBuild({ cb });
 });
 
 // //////////////////////
 // start server in production mode
 gulp.task('server', () => {
-  runServer('prod');
+  runServer('production');
 });
 
 // //////////////////////
@@ -124,9 +123,9 @@ gulp.task('prod', cb => {
 
 
 // //////////////////////
-// lint js files in project root folder
+// lint js files in project root folder and other folders
 gulp.task('lint-root', () =>
-  lint(['./*.js'])
+  lint(['./*.js', './react-html-generator/*.js'])
 );
 
 // //////////////////////
@@ -138,3 +137,27 @@ gulp.task('lint-server', () =>
 // //////////////////////
 // lint all js files
 gulp.task('lint', ['lint-root', 'lint-server']);
+
+
+// //////////////////////
+// generate static pages from react components
+gulp.task('gh', cb => {
+  prodBuild({
+    cb,
+    distPath: './gh-pages',
+    indexHtmlName: 'index.tmpl',
+    extraWork: reactHtmlGenerator
+  });
+});
+
+// //////////////////////
+// start gh-server
+gulp.task('gh-server', () => {
+  runServer('gh-pages');
+});
+
+// //////////////////////
+// generate static pages from react components
+gulp.task('gh-all', cb => {
+  runSequence('gh', 'gh-server', cb);
+});

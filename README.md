@@ -16,3 +16,11 @@ npm install -g gulp
 npm install
 gulp
 ```
+<br>
+
+## Generate static pages and Run the server
+```sh
+npm install -g gulp
+npm install
+gulp gh-all
+```
