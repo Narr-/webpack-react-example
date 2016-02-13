@@ -23,7 +23,7 @@ export default function (req, res, next) {
         let innermostApp = renderProps.components[renderProps.components.length - 1];
         innermostApp = innermostApp.WrappedComponent ? innermostApp.WrappedComponent : innermostApp;
         // console.log(innermostApp);
-        const serverUrl = `${req.protocol}://${req.get('host')}`;
+        const serverUrl = `${req.protocol}://${req.get('host')}/`; // * The last slash(/) is important
         // console.log(serverUrl);
         innermostApp.fetchTodos(serverUrl).then(result => {
           // console.log(result);
@@ -45,9 +45,21 @@ export default function (req, res, next) {
 
             const indexPath = path.join(__dirname, '../../static/index.html');
             res.render(indexPath, {
+              baseTag: serverUrl,
               reactDom: htmlString,
               reduxState: JSON.stringify(finalState),
               scriptTags: chunks
+            }, (err, html) => {
+              // console.log(html);
+              res.send(html);
+            });
+          } else if (reqUrl === '/') {
+            const indexPath = path.join(__dirname, '../../static/index.html');
+            res.render(indexPath, {
+              baseTag: serverUrl,
+              reactDom: '',
+              reduxState: 'null',
+              scriptTags: []
             }, (err, html) => {
               // console.log(html);
               res.send(html);

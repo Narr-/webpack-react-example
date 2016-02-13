@@ -1,8 +1,8 @@
 import fetch from 'isomorphic-fetch';
 
 let isUriSet = false;
-let API_ROOT_URI = '/api';
-let TODOS_URI = '/api/todos';
+let API_ROOT_URI = 'api';
+let TODOS_URI = 'api/todos';
 const HEADERS_FOR_JSON = {
   Accept: 'application/json',
   'Content-Type': 'application/json'
@@ -13,12 +13,11 @@ function setUris(uri) {
     // can't use "path.join" cos if uri is like "http://localhost:3000" and
     // the result will be http:/localhost:3000/api => bug?
     if (uri.slice(-1) === '/') { // http://localhost:3000/
-      const newUri = uri.slice(0, -1); // => http://localhost:3000
-      API_ROOT_URI = newUri + API_ROOT_URI;
-      TODOS_URI = newUri + TODOS_URI;
-    } else {
       API_ROOT_URI = uri + API_ROOT_URI;
       TODOS_URI = uri + TODOS_URI;
+    } else { // http://localhost:3000
+      API_ROOT_URI = `${uri}/${API_ROOT_URI}`;
+      TODOS_URI = `${uri}/${TODOS_URI}`;
     }
     isUriSet = true;
   }

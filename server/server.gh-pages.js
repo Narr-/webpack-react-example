@@ -11,7 +11,7 @@ const app = express();
 app.use(compression());
 app.use(express.static(path.join(__dirname, '../gh-pages')));
 app.get('*', (req, res) => {
-  res.sendFile(path.join(__dirname, './gh-pages/404.html'));
+  res.sendFile(path.join(__dirname, '../gh-pages/404.html'));
 });
 
 const server = http.createServer(app);

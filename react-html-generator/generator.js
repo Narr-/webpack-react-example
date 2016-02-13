@@ -8,7 +8,7 @@ import fs from 'fs';
 import ejs from 'ejs';
 import path from 'path';
 
-function generator({ routes, store, targets, indexPath }) {
+function generator({ routes, store, targets, indexPath, rootUrl }) {
   targets.forEach((target) => {
     // console.log(target);
     match({ routes, location: target }, (error, redirectLocation, renderProps) => {
@@ -35,6 +35,7 @@ function generator({ routes, store, targets, indexPath }) {
         }
 
         const finalHtml = ejs.render(fs.readFileSync(`${indexPath}/index.tmpl`, 'utf8'), {
+          baseTag: rootUrl,
           reactDom: htmlString,
           reduxState: JSON.stringify(finalState),
           scriptTags: chunks

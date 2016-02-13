@@ -138,6 +138,7 @@ export default function ({ dev, publicPath, devMiddleware,
         template: path.join(appPath, 'index.html'),
         inject: 'body',
         forEjs: {
+          baseTag: devMiddleware ? '' : '<base href="<%- baseTag %>">',
           reactDom: devMiddleware ? '' : '<%- reactDom %>', // <%- unescape HTML, <%= escape HTML
           reduxState: devMiddleware ? 'null' : '<%- reduxState %>'
         }

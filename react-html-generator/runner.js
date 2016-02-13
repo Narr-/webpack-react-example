@@ -11,8 +11,8 @@ const targets = [
 ];
 const indexPath = path.join(__dirname, '../gh-pages');
 
-export default function runner() {
+export default function runner(rootUrl) {
   generator({
-    routes, store, targets, indexPath
+    routes, store, targets, indexPath, rootUrl
   });
 }

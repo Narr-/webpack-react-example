@@ -3,6 +3,6 @@ require('babel-core/register')({
   extensions: ['.jsx', '.js']
 });
 
-export default function starter() {
-  require('./runner').default();
+export default function starter(rootUrl) {
+  require('./runner').default(rootUrl);
 }

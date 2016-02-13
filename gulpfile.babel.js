@@ -8,12 +8,13 @@ import runSequence from 'run-sequence';
 import eslint from 'gulp-eslint';
 import webpackStream from 'webpack-stream';
 import reactHtmlGenerator from './react-html-generator';
+import replace from 'gulp-replace';
 
 const spawn = childProcess.spawn;
 const defaultDistPath = './static';
 const hostname = 'localhost';
 const PORT = process.env.PORT || 3000;
-const publicPath = `http://${hostname}:${PORT}`;
+const publicPath = `http://${hostname}:${PORT}/`;
 
 function runServer(env) {
   if (env) {
@@ -24,7 +25,8 @@ function runServer(env) {
   });
 }
 
-function prodBuild({ cb, distPath = defaultDistPath, indexHtmlName, extraWork = f => f }) {
+function prodBuild({ cb, distPath = defaultDistPath, indexHtmlName,
+  rootUrl = publicPath, extraWork = f => f }) {
   del.sync(distPath);
 
   const config = webpackConfig({ distPath, indexHtmlName });
@@ -43,9 +45,11 @@ function prodBuild({ cb, distPath = defaultDistPath, indexHtmlName, extraWork = 
     gutil.log('[build:prod]', stats.toString({
       colors: true
     }));
-    extraWork();
+
+    extraWork(rootUrl);
     // @ copy 404.html
     gulp.src('./server/views/404.html')
+    .pipe(replace(/href="\/"/g, `href="${rootUrl}"`))
     .pipe(gulp.dest(distPath));
     // copy 404.html @
     if (indexHtmlName) {
@@ -87,7 +91,7 @@ gulp.task('build', () => {
   del.sync(defaultDistPath);
   const webpackConfigObj = {
     dev: true,
-    publicPath: `${publicPath}/` // * The last slash(/) is important
+    publicPath: `${publicPath}` // * The last slash(/) is important
   };
   const config = webpackConfig(webpackConfigObj);
   config.watch = true; // only for webpackStream
@@ -146,6 +150,7 @@ gulp.task('gh', cb => {
     cb,
     distPath: './gh-pages',
     indexHtmlName: 'index.tmpl',
+    rootUrl: 'https://narr-.github.io/webpack-react-example/', // * The last slash(/) is important
     extraWork: reactHtmlGenerator
   });
 });
