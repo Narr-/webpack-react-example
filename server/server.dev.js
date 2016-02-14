@@ -39,7 +39,7 @@ app.use(bodyParser.urlencoded({
   extended: false
 }));
 
-const serverUrl = `http://localhost:${PORT}/`;
+const serverUrl = `http://localhost:${PORT}/`; // add protocol for url in Blob CSS
 
 // @ webpack
 const wConfig = webpackConfig({

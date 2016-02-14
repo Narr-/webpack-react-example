@@ -12,22 +12,23 @@ if (typeof require.ensure !== 'function') {
 // pass props to App, and can get it by this.route.foo, this.route.foo2
 // <Route path="\/" component={App} foo="bar" foo2 />
 export const root = (
-  <Route key="root" path="/" component={App} />
+  <Route key="root" path="/(index.html)" component={App} />
 ); //
 
 export const marvel = (
-  <Route key="marvel" path="/marvel" getComponent={function getComponent(location, callback) {
-    require.ensure([], require => { // can't use 'import' in require.ensure
-      const Marvel = require('../containers/Marvel').default;
-      callback(null, Marvel);
-    }, 'marvel');
-  }}
+  <Route key="marvel" path="/marvel(/index.html)"
+    getComponent={function getComponent(location, callback) {
+      require.ensure([], require => { // can't use 'import' in require.ensure
+        const Marvel = require('../containers/Marvel').default;
+        callback(null, Marvel);
+      }, 'marvel');
+    }}
     isFromMarvel
   />
 ); //
 
 export const status = (
-  <Route key="status" path="/:status" component={App} />
+  <Route key="status" path="/:status(/index.html)" component={App} />
 ); //
 
 export default [root, marvel, status];

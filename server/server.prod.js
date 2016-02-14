@@ -33,11 +33,14 @@ app.set('view engine', 'html');
 app.engine('html', ejs.renderFile);
 app.use(routers.domRenderer);
 // react dom rendering @
+app.get(/^\/*$/, (req, res) => { // handle 'root-url//, root-url///, root-url//// and so on'
+  res.sendFile(path.join(__dirname, './views/404.html'));
+});
 app.use(express.static(path.join(__dirname, '../static')));
 
 app.use('/api', routers.api);
 app.get('*', (req, res) => {
-  res.sendFile(path.join(__dirname, '../static/404.html'));
+  res.sendFile(path.join(__dirname, './views/404.html'));
 });
 
 const server = http.createServer(app);

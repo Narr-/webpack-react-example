@@ -34,10 +34,12 @@ class Footer extends Component {
     return (
       <Link
         activeClassName="selected"
-        to={`/${path}`}
+        to={path ? `/${path}/` : '/'}
         onClick={function onClickHandler(e) {
           if (selectedFilter === path) {
             e.preventDefault(); // to prevent re-rendering
+          } else if (selectedFilter === 'all' && path === '') {
+            e.preventDefault();
           }
         }}
       >

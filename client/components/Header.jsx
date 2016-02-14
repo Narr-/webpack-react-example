@@ -55,7 +55,7 @@ class Header extends Component {
               // }, 2000);
               // test code @
               require.ensure(['../containers/Marvel'], () => {
-                browserHistory.push('/marvel');
+                browserHistory.push('/marvel/');
               }, () => { // error callback
                 that.setState({ loadingMarvel: false });
               }, 'marvel');

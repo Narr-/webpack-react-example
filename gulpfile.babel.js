@@ -14,7 +14,7 @@ const spawn = childProcess.spawn;
 const defaultDistPath = './static';
 const hostname = 'localhost';
 const PORT = process.env.PORT || 3000;
-const publicPath = `http://${hostname}:${PORT}/`;
+const publicPath = `//${hostname}:${PORT}/`;
 
 function runServer(env) {
   if (env) {
@@ -47,12 +47,12 @@ function prodBuild({ cb, distPath = defaultDistPath, indexHtmlName,
     }));
 
     extraWork(rootUrl);
-    // @ copy 404.html
-    gulp.src('./server/views/404.html')
-    .pipe(replace(/href="\/"/g, `href="${rootUrl}"`))
-    .pipe(gulp.dest(distPath));
-    // copy 404.html @
     if (indexHtmlName) {
+      // @ copy 404.html
+      gulp.src('./server/views/404.html')
+      .pipe(replace(/href="\/"/g, `href="${rootUrl}"`))
+      .pipe(gulp.dest(distPath));
+      // copy 404.html @
       del.sync(`${distPath}/${indexHtmlName}`);
     }
     cb();
@@ -91,7 +91,8 @@ gulp.task('build', () => {
   del.sync(defaultDistPath);
   const webpackConfigObj = {
     dev: true,
-    publicPath: `${publicPath}` // * The last slash(/) is important
+    // // add protocol for url in Blob CSS
+    publicPath: `http:${publicPath}` // * The last slash(/) is important
   };
   const config = webpackConfig(webpackConfigObj);
   config.watch = true; // only for webpackStream
@@ -150,7 +151,8 @@ gulp.task('gh', cb => {
     cb,
     distPath: './gh-pages',
     indexHtmlName: 'index.tmpl',
-    rootUrl: 'http://narr-.github.io/webpack-react-example/', // * The last slash(/) is important
+    // * The last slash(/) is important and first // is to support both http and https
+    rootUrl: '//narr-.github.io/webpack-react-example/',
     extraWork: reactHtmlGenerator
   });
 });

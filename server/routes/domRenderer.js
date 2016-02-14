@@ -9,8 +9,10 @@ import path from 'path';
 
 export default function (req, res, next) {
   const reqUrl = req.url;
-  // for /, /active, /completed, /marvel
-  if (reqUrl.match(/(\/|\/(active|completed|marvel))$/) === null) {
+  // for /, /index.html, /active, /active/, /active/index.html,
+  // /completed, /completed/, /completed/index.html /marvel, /marvel/, /marvel/index.html
+  if (reqUrl.match(/^(\/(index\.html)?|\/(active|completed|marvel)(\/|\/index\.html)?)$/)
+    === null) {
     next();
   } else {
     match({ routes, location: reqUrl }, (error, redirectLocation, renderProps) => {
@@ -22,10 +24,11 @@ export default function (req, res, next) {
         // the leaf node (if the routing is nested, the innermost one)
         let innermostApp = renderProps.components[renderProps.components.length - 1];
         innermostApp = innermostApp.WrappedComponent ? innermostApp.WrappedComponent : innermostApp;
-        // console.log(innermostApp);
-        const serverUrl = `${req.protocol}://${req.get('host')}/`; // * The last slash(/) is important
-        // console.log(serverUrl);
-        innermostApp.fetchTodos(serverUrl).then(result => {
+        // to support both http and https removes req.protocol
+        const serverUrl = `//${req.get('host')}/`; // * The last slash(/) is important
+        // console.log(renderProps);
+        // if req.protocol is not specified, fetch api changes // to https://
+        innermostApp.fetchTodos(`${req.protocol}:${serverUrl}`).then(result => {
           // console.log(result);
           if (!result.error) {
             const store = configureStore({
