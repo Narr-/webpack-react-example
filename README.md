@@ -1,2 +1,2 @@
 # webpack-react-example
-Project Site <http://narr-.github.io/webpack-react-example/>
+Project Site <https://narr-.github.io/webpack-react-example/>
