@@ -136,7 +136,7 @@ gulp.task('lint-root', () =>
 // //////////////////////
 // lint js files in server folder
 gulp.task('lint-server', () =>
-  lint(['./server/**/*.js', '!./server/**/*.spec.js'])
+  lint(['./server/**/*.js'])
 );
 
 // //////////////////////
@@ -152,7 +152,7 @@ gulp.task('gh', cb => {
     distPath: './gh-pages',
     indexHtmlName: 'index.tmpl',
     // * The last slash(/) is important and first // is to support both http and https
-    rootUrl: '//narr-.github.io/webpack-react-example/',
+    rootUrl: '//narr.github.io/webpack-react-example/',
     extraWork: reactHtmlGenerator
   });
 });

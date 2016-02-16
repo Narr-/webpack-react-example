@@ -1,0 +1,30 @@
+# https://docs.docker.com/compose/compose-file/
+node:
+  cpuset: 0-3 # 0,1,2,3 CPUs in which to allow execution - https://docs.docker.com/engine/reference/run/
+  build: .
+  dockerfile: ./docker/Dockerfile_node
+  ports:
+   - "80:3000" # "HOST_PORT:CONTAINER_PORT"
+  volumes:
+   - ./server:/server-src
+  links:
+   - redis
+   - postgres
+  environment:
+   - NODE_ENV=docker
+  container_name: wre-node
+
+redis:
+  image: redis
+  ports:
+   - "6379:6379"
+  container_name: wre-redis
+
+postgres:
+  image: postgres
+  ports:
+   - "5432:5432"
+  environment:
+   - POSTGRES_USER=narr
+   - POSTGRES_DB=todo_db
+  container_name: wre-postgres

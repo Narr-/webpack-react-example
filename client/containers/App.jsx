@@ -67,7 +67,12 @@ class App extends Component {
 
   render() {
     const { todos, appActions, params, route } = this.props;
-    const filter = typeof params.status === 'undefined' ? 'all' : params.status;
+    let filter;
+    if (route.isFromMarvel) {
+      filter = 'marvel';
+    } else {
+      filter = typeof params.status === 'undefined' ? 'all' : params.status;
+    }
     return (
       <div style={{ color: 'orange' }}>
         <Header addTodo={this.addTodo} isFromMarvel={route.isFromMarvel}>

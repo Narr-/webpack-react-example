@@ -1,6 +1,6 @@
 /* eslint-disable no-constant-condition */
 
-import { take, put, call, fork } from 'redux-saga'; // eslint-disable-line no-unused-vars
+import { take, put, call, fork } from 'redux-saga/effects'; // eslint-disable-line no-unused-vars
 import actionTypes from '../constants/ActionTypes';
 import todoActions from '../actions/todos';
 

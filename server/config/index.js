@@ -1,13 +1,23 @@
 const env = process.env;
 export const NODE_ENV = env.NODE_ENV;
 export const PORT = env.PORT || 3000;
-export const DOCKER_MACHINE_IP = '192.168.99.100';
-const POSTGRESQL_USERNAME = 'narr';
-export const POSTGRESQL_URI =
-`postgres:\/\/${POSTGRESQL_USERNAME}@${DOCKER_MACHINE_IP}:5432/todo_db`;
+export let POSTGRESQL_URI;
+export let REDIS_URL;
+
+if (env.DOCKER_ENV) {
+  POSTGRESQL_URI = `postgres://${env.POSTGRES_ENV_POSTGRES_USER}@postgres:5432/${env.WRE_POSTGRES_ENV_POSTGRES_DB}`;
+  REDIS_URL = 'redis://redis:6379';
+} else if (env.DYNO) { // HEROKU
+  POSTGRESQL_URI = env.DATABASE_URL;
+  REDIS_URL = env.REDIS_URL;
+} else {
+  POSTGRESQL_URI = 'postgres://narr@192.168.99.100:5432/todo_db';
+  REDIS_URL = 'redis://192.168.99.100:6379';
+}
 
 export default {
   NODE_ENV,
   PORT,
-  POSTGRESQL_URI
+  POSTGRESQL_URI,
+  REDIS_URL
 };

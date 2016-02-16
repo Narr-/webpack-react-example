@@ -1,0 +1,63 @@
+FROM ubuntu:14.04
+
+# downloads the package lists from the repositories and "updates" them to get information
+RUN sudo apt-get update
+
+# Install curl
+RUN apt-get -y install curl
+
+# Replace shell with bash so we can source files
+RUN rm /bin/sh && ln -s /bin/bash /bin/sh
+
+# Declare constants
+ENV NVM_VERSION v0.31.0
+ENV NODE_VERSION v4.2.4
+
+# Install NVM
+RUN curl -o- https://raw.githubusercontent.com/creationix/nvm/${NVM_VERSION}/install.sh | bash
+
+# Install NODE
+# source ~/.nvm/nvm.sh; ==> to use nvm
+RUN source ~/.nvm/nvm.sh; \
+    nvm install $NODE_VERSION
+
+# Copy app sources
+# add the last slash to make the folder and copy the file into the folder.
+# Otherwise, it recognizes that as a file and creates the webpack-react-example file
+COPY ./package.json /webpack-react-example/
+COPY ./npm-shrinkwrap.prod.json /webpack-react-example/npm-shrinkwrap.json
+COPY ./.babelrc /webpack-react-example
+COPY ./client /webpack-react-example/client
+COPY ./server /webpack-react-example/server
+COPY ./static /webpack-react-example/static
+
+# @ to build some npm modules like socket.io
+# Install Python
+RUN sudo apt-get -y install python2.7
+WORKDIR /usr/bin
+RUN ln -s ./python2.7 ./python
+
+# Install make and gcc
+RUN sudo apt-get -y install build-essential
+
+# Install libkrb5-dev for kerberos that is one of mongodb's sub-modules
+RUN sudo apt-get -y install libkrb5-dev
+# to build some npm modules like socket.io @
+
+RUN sudo apt-get -y install libpq-dev # to build a npm module like pq
+
+# Install global plugins
+# RUN source ~/.nvm/nvm.sh; \
+#     npm install -g pm2
+
+# Install app dependencies
+# source ~/.nvm/nvm.sh; ==> to use nvm
+RUN source ~/.nvm/nvm.sh; \
+    cd /webpack-react-example; \
+    npm install --production
+
+# CMD ["executable", "param1", "param2"]
+# CMD ["npm", "start"]
+WORKDIR /webpack-react-example
+CMD source ~/.nvm/nvm.sh; \
+    node ./node_modules/pm2/bin/pm2 start ./server/index.js -i 4 --no-daemon

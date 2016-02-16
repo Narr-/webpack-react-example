@@ -30,46 +30,35 @@ export default function (req, res, next) {
         // if req.protocol is not specified, fetch api changes // to https://
         innermostApp.fetchTodos(`${req.protocol}:${serverUrl}`).then(result => {
           // console.log(result);
+          let initStore;
           if (!result.error) {
-            const store = configureStore({
+            initStore = {
               todos: result.todos
-            });
-            const htmlString = renderToString(
-              <Provider store={store}>
-                {<RouterContext {...renderProps} />}
-              </Provider>
-            );
-            const finalState = store.getState();
-
-            let chunks = [];
-            if (innermostApp.getChunks) {
-              chunks = innermostApp.getChunks();
-            }
-
-            const indexPath = path.join(__dirname, '../../static/index.html');
-            res.render(indexPath, {
-              baseTag: serverUrl,
-              reactDom: htmlString,
-              reduxState: JSON.stringify(finalState),
-              scriptTags: chunks
-            }, (err, html) => {
-              // console.log(html);
-              res.send(html);
-            });
-          } else if (reqUrl === '/') {
-            const indexPath = path.join(__dirname, '../../static/index.html');
-            res.render(indexPath, {
-              baseTag: serverUrl,
-              reactDom: '',
-              reduxState: 'null',
-              scriptTags: []
-            }, (err, html) => {
-              // console.log(html);
-              res.send(html);
-            });
-          } else {
-            next();
+            };
           }
+          const store = configureStore(initStore);
+          const htmlString = renderToString(
+            <Provider store={store}>
+              {<RouterContext {...renderProps} />}
+            </Provider>
+          );
+          const finalState = store.getState();
+
+          let chunks = [];
+          if (innermostApp.getChunks) {
+            chunks = innermostApp.getChunks();
+          }
+
+          const indexPath = path.join(__dirname, '../../static/index.html');
+          res.render(indexPath, {
+            baseTag: serverUrl,
+            reactDom: htmlString,
+            reduxState: JSON.stringify(finalState),
+            scriptTags: chunks
+          }, (err, html) => {
+            // console.log(html);
+            res.send(html);
+          });
         });
       } else {
         next();

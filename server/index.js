@@ -4,11 +4,14 @@ require('babel-core/register');
 // replace this to babel-runtime(transform-runtime in .babelrc)
 // require('babel-polyfill');
 */
-const env = process.env;
-if (env.NODE_ENV === 'gh-pages') {
+const config = require('./config');
+const NODE_ENV = config.NODE_ENV;
+if (NODE_ENV === 'gh-pages') {
   require('./server.gh-pages.js');
-} else if (env.NODE_ENV === 'production') {
+} else if (NODE_ENV === 'production') {
   require('./server.prod');
+} else if (NODE_ENV === 'docker') {
+  require('./server.docker');
 } else {
   require('./server.dev');
 }
