@@ -1,6 +1,6 @@
 # webpack-react-example
 An example of using Gulp, Webpack, React, and Redux
-
+<br>
 <br>
 
 ## Install and Run in Production Mode
