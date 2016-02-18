@@ -6,6 +6,7 @@ import { render } from 'react-dom';
 import { Provider } from 'react-redux';
 import configureStore from './store';
 import { match, Router, browserHistory } from 'react-router';
+import { syncHistoryWithStore } from 'react-router-redux';
 import routes from './routes';
 import { todoStoragePromise } from './services';
 import Immutable from 'immutable';
@@ -26,11 +27,12 @@ match({ routes, location: entryUrl }, () => {
       initialState.todos = Immutable.fromJS(initialState.todos);
     }
     const store = configureStore(initialState);
+    const history = syncHistoryWithStore(browserHistory, store);
 
     // routes is array whose chilren have each key id
     render(
       <Provider store={store}>
-        <Router history={browserHistory}>
+        <Router history={history}>
           {routes}
         </Router>
       </Provider>,

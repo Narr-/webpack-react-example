@@ -140,7 +140,8 @@ export default function ({ dev, publicPath, devMiddleware,
         forEjs: {
           baseTag: devMiddleware ? `<base href="${publicPath}">` : '<base href="<%- baseTag %>">',
           reactDom: devMiddleware ? '' : '<%- reactDom %>', // <%- unescape HTML, <%= escape HTML
-          reduxState: devMiddleware ? 'null' : '<%- reduxState %>'
+          reduxState: devMiddleware ? 'null' : '<%- reduxState %>',
+          trackingID: indexHtmlName ? 'UA-69400538-4' : 'UA-69400538-5'
         }
       }),
       new Sprite({

@@ -1,5 +1,6 @@
 import { createStore, compose, applyMiddleware } from 'redux';
-import reduxRouterMiddleware from '../middlewares/reduxRouterMiddleware';
+// since react-router 4.0, it doesn't need reduxRouterMiddleware
+// import reduxRouterMiddleware from '../middlewares/reduxRouterMiddleware';
 import rootReducer from '../reducers';
 import saga from 'redux-saga';
 import rootSaga from '../sagas';
@@ -13,7 +14,7 @@ export default function configureStore(initialState) {
       // example: dispatch first, return last
       // example2: dispacth last, return first
       // applyMiddleware(example, reduxRouterMiddleware, saga(rootSaga), example2),
-      applyMiddleware(reduxRouterMiddleware, saga(...rootSaga)),
+      applyMiddleware(saga(...rootSaga)),
       // @ https://github.com/zalmoxisus/redux-devtools-extension
       typeof window === 'object' && typeof window.devToolsExtension !== 'undefined' ?
       window.devToolsExtension() : f => f
@@ -32,7 +33,7 @@ export default function configureStore(initialState) {
   // Enable Webpack hot module replacement for reducers @
 
   // Required for replaying actions from devtools to work
-  reduxRouterMiddleware.listenForReplays(store);
+  // reduxRouterMiddleware.listenForReplays(store);
 
   return store;
 }
