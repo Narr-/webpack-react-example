@@ -1,4 +1,5 @@
 import fetch from 'isomorphic-fetch';
+import { socket } from '../services';
 
 let isUriSet = false;
 let API_ROOT_URI = 'api';
@@ -68,7 +69,8 @@ function addTodo(todoId, todoText) {
     method: 'POST',
     headers: HEADERS_FOR_JSON,
     body: JSON.stringify({
-      todoId, todoText
+      todoId, todoText,
+      socketId: socket && socket().id
     })
   })
   .then(handleResponse, error => ({ error }));
@@ -81,7 +83,8 @@ function completeAll(todoAllCompleted) {
     method: 'PUT',
     headers: HEADERS_FOR_JSON,
     body: JSON.stringify({
-      todoAllCompleted
+      todoAllCompleted,
+      socketId: socket && socket().id
     })
   })
   .then(handleResponse, error => ({ error }));
@@ -93,7 +96,19 @@ function clearCompleted() {
     credentials: 'same-origin',
     method: 'DELETE'
   })
-  .then(handleResponse, error => ({ error }));
+  .then(handleResponse, error => ({ error }))
+  .then(result => {
+    const userId = localStorage.getItem('todoUserId');
+    if (userId && socket) {
+      socket().emit('dbChange', {
+        message: 'Data deleted',
+        dataObj: {
+          userId
+        }
+      });
+    }
+    return result;
+  });
   return promise;
 }
 
@@ -103,7 +118,8 @@ function updateTodo(id, todoText, todoIsEditing, todoCompleted) {
     method: 'PUT',
     headers: HEADERS_FOR_JSON,
     body: JSON.stringify({
-      todoText, todoIsEditing, todoCompleted
+      todoText, todoIsEditing, todoCompleted,
+      socketId: socket && socket().id
     })
   })
   .then(handleResponse, error => ({ error }));
@@ -115,7 +131,20 @@ function deleteTodo(id) {
     credentials: 'same-origin',
     method: 'DELETE'
   })
-  .then(handleResponse, error => ({ error }));
+  .then(handleResponse, error => ({ error }))
+  .then(result => {
+    const userId = localStorage.getItem('todoUserId');
+    if (userId && socket) {
+      // socket emits here cos can't add postData(payload) to DELETE Method
+      socket().emit('dbChange', {
+        message: 'Data deleted',
+        dataObj: {
+          userId
+        }
+      });
+    }
+    return result;
+  });
   return promise;
 }
 

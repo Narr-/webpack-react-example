@@ -24,9 +24,9 @@ const afterHtmlProcessingPlugin = {
           // console.log('html-webpack-plugin-after-html-processing');
           htmlPluginData.html = // eslint-disable-line no-param-reassign
             htmlPluginData.html.replace(/<\/body>/,
-              `\n  <% scriptTags.forEach(function(tagSrc) { %>` +
+              '\n  <% scriptTags.forEach(function(tagSrc) { %>' +
               `<script src="<%= tagSrc %>?${hash}"></script>\n` +
-              `  <% }); %></body>`);
+              '  <% }); %></body>');
           callback();
         });
     });
@@ -46,7 +46,7 @@ export default function ({ dev, publicPath, devMiddleware,
       vendor: [
         'bootstrap-sass/assets/stylesheets/_bootstrap.scss',
         /*
-        // to use generator => replace this to babel-runtime(transform-runtime in .babelrc)
+        // to use generator => replace this with babel-runtime(transform-runtime in .babelrc)
         // 'babel-polyfill',
         */
         'react', 'react-dom', 'react-addons-transition-group',
@@ -54,7 +54,7 @@ export default function ({ dev, publicPath, devMiddleware,
         'react-redux', 'redux', 'immutable',
         'react-router', 'react-router-redux', 'redux-saga', 'isomorphic-fetch',
         'redux-form',
-        'd3',
+        'd3', 'socket.io-client',
         'classnames', 'humps', 'node-uuid'
       ],
       main: ['./index.js']

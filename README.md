@@ -1,5 +1,7 @@
 # webpack-react-example
 An example of using Gulp, Webpack, React, and Redux
+<br>Github page link: <https://narr.github.io/webpack-react-example/>
+<br>Heroku site lint: <https://webpack-ng-example.herokuapp.com/>
 <br>
 <br>
 <br>
@@ -8,6 +10,7 @@ An example of using Gulp, Webpack, React, and Redux
 Delete npm-shrinkwrap.json and Install node modules for production and Run
 ```sh
 rm -rf ./npm-shrinkwrap.json
+cp ./npm-shrinkwrap.prod.json ./npm-shrinkwrap.json
 npm install --production
 npm start
 ```

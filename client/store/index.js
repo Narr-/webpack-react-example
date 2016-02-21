@@ -8,4 +8,15 @@ if (process.env.NODE_ENV === 'production') {
   configureStore = dev;
 }
 
+let savedStore;
+export function setStore(store) {
+  if (!savedStore) {
+    savedStore = store;
+  }
+}
+
+export function getStore() {
+  return savedStore;
+}
+
 export default configureStore;

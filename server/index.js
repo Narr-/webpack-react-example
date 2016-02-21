@@ -8,10 +8,8 @@ const config = require('./config');
 const NODE_ENV = config.NODE_ENV;
 if (NODE_ENV === 'gh-pages') {
   require('./server.gh-pages.js');
-} else if (NODE_ENV === 'production') {
+} else if (NODE_ENV === 'production' || NODE_ENV === 'docker') {
   require('./server.prod');
-} else if (NODE_ENV === 'docker') {
-  require('./server.docker');
 } else {
   require('./server.dev');
 }

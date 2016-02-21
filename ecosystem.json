@@ -17,5 +17,6 @@
   ],
   "env": {
     "NODE_ENV": "production"
-  }
+  },
+  "instances": 4
 }

@@ -1,6 +1,8 @@
 import api from './api';
 import ls from './localStorage';
+import socketInit from './socket';
 
+export const socket = socketInit;
 export let todoStorage;
 
 export const todoStoragePromise = () => { // eslint-disable-line arrow-body-style
@@ -14,6 +16,7 @@ export const todoStoragePromise = () => { // eslint-disable-line arrow-body-styl
       }
     }
     todoStorage = api;
+    socketInit();
     return { result, api };
   });
 };

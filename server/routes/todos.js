@@ -3,8 +3,8 @@ import { POSTGRESQL_URI } from '../config';
 import express from 'express';
 import { pgNative as pg } from '../models';
 import todoModel from '../models/todo';
-
 import { todoRouter } from './todo';
+import { socketIo as io } from '../socket';
 
 const logger = loggerMaker(module);
 const router = express.Router(); // eslint-disable-line new-cap
@@ -82,6 +82,15 @@ router.route('/')
               todoId: result.rows[0][todoModel.TODO_ID_COLUMN_NAME],
               message: 'Data added'
             });
+
+            // emit to the all sockets in the room including the sender socket
+            // and handle it on the client side by adding the sender socket id to the message
+            if (io) {
+              io.to(req.session.userId).emit('dbChange', {
+                message: 'Data added',
+                senderId: req.body.socketId
+              });
+            }
           }
         });
       }
@@ -110,6 +119,13 @@ router.route('/')
               updatedTodosNum: result.rowCount,
               message: 'Datas updated'
             });
+
+            if (io) {
+              io.to(req.session.userId).emit('dbChange', {
+                message: 'Data updated',
+                senderId: req.body.socketId
+              });
+            }
           }
         });
       }

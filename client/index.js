@@ -4,7 +4,7 @@ import './index.scss';
 import React from 'react';
 import { render } from 'react-dom';
 import { Provider } from 'react-redux';
-import configureStore from './store';
+import configureStore, { setStore } from './store';
 import { match, Router, browserHistory } from 'react-router';
 import { syncHistoryWithStore } from 'react-router-redux';
 import routes from './routes';
@@ -27,6 +27,7 @@ match({ routes, location: entryUrl }, () => {
       initialState.todos = Immutable.fromJS(initialState.todos);
     }
     const store = configureStore(initialState);
+    setStore(store);
     const history = syncHistoryWithStore(browserHistory, store);
 
     // routes is array whose chilren have each key id
