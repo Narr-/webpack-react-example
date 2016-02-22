@@ -1,8 +1,8 @@
 # webpack-react-example
 An example of using Gulp, Webpack, React, and Redux
-[![Build Status](https://travis-ci.org/narr/webpack-react-example.svg?branch=master)](https://travis-ci.org/narr/webpack-react-example)
+<br>[![Build Status](https://travis-ci.org/narr/webpack-react-example.svg?branch=master)](https://travis-ci.org/narr/webpack-react-example)
 <br>Github page link: <https://narr.github.io/webpack-react-example/>
-<br>Heroku site lint: <https://webpack-react-example.herokuapp.com/>
+<br>Heroku site link: <https://webpack-react-example.herokuapp.com/>
 <br>
 <br>
 <br>
