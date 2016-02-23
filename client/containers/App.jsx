@@ -11,9 +11,9 @@ import todoApi from '../services/api';
 import humps from 'humps';
 
 class App extends Component {
-  static fetchTodos(uri) { // this will be invoked from server. so just api not localstorage
+  static fetchTodos(uri, userIp) { // this will be invoked from server. so just api not localstorage
     todoApi.setUris(uri);
-    return todoStoragePromise().then(({ result, api }) => {
+    return todoStoragePromise(userIp).then(({ result, api }) => {
       // console.log(result);
       if (api) {
         return api.getTodos(result.data.userId);

@@ -1,14 +1,16 @@
 {
   "extends": "airbnb",
-  "ecmaFeatures": {
-    "generators": true
+  "env": {
+    "mocha": true
+  },
+  "globals": {
+    "expect": true,
+    "sinon": true
   },
   "rules": {
     // disable requiring trailing commas because it might be nice to revert to
     // being JSON at some point, and I don't want to make big changes now.
     "comma-dangle": 0,
-    "newline-per-chained-call": 0,
-    "consistent-return": 0,
-    "no-confusing-arrow": 0
+    "consistent-return": 0
   }
 }

@@ -9,8 +9,9 @@ class Marvel extends Component {
     ];
   }
 
-  static fetchTodos(uri) {
-    return App.WrappedComponent ? App.WrappedComponent.fetchTodos(uri) : App.fetchTodos(uri);
+  static fetchTodos(uri, userIp) {
+    return App.WrappedComponent ? App.WrappedComponent.fetchTodos(uri, userIp)
+     : App.fetchTodos(uri, userIp);
   }
 
 

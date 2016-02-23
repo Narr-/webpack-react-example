@@ -9,6 +9,8 @@ import eslint from 'gulp-eslint';
 import webpackStream from 'webpack-stream';
 import reactHtmlGenerator from './react-html-generator';
 import replace from 'gulp-replace';
+import karma from 'karma';
+import { argv } from 'yargs';
 
 const spawn = childProcess.spawn;
 const defaultDistPath = './static';
@@ -134,6 +136,15 @@ gulp.task('lint-root', () =>
 );
 
 // //////////////////////
+// lint Test files
+gulp.task('lint-test', () =>
+  lint(['./test/client/*.js', './test/client/specs/*.js',
+    './test/server/*.js', './test/server/specs/*.js',
+    './test/e2e/*.js', './test/e2e/specs/*.js'
+  ])
+);
+
+// //////////////////////
 // lint js files in server folder
 gulp.task('lint-server', () =>
   lint(['./server/**/*.js'])
@@ -141,7 +152,9 @@ gulp.task('lint-server', () =>
 
 // //////////////////////
 // lint all js files
-gulp.task('lint', ['lint-root', 'lint-server']);
+gulp.task('lint', cb => {
+  runSequence('lint-root', 'lint-test', 'lint-server', cb);
+});
 
 
 // //////////////////////
@@ -168,3 +181,41 @@ gulp.task('gh-server', () => {
 gulp.task('gh-all', cb => {
   runSequence('gh', 'gh-server', cb);
 });
+
+
+// //////////////////////
+// Client Unit Test
+gulp.task('unit-client', (cb) => {
+  let watch = argv.watch;
+  if (watch && watch === 'false') {
+    watch = false;
+  }
+  // console.log(watch);
+  new karma.Server({
+    configFile: `${__dirname}/test/client/index`,
+    singleRun: !watch
+  }, cb).start();
+});
+
+// //////////////////////
+// Server Unit Test
+// gulp.task('unit-server', (cb) => {
+//   let watch = argv.watch;
+//   if (watch && watch === 'false') {
+//     watch = false;
+//   }
+//   // console.log(watch);
+//   new karma.Server({
+//     configFile: `${__dirname}/test/client/index`,
+//     singleRun: !watch
+//   }, cb).start();
+// });
+
+// gulp.task('unit', cb => { // lint, unit and build
+//   runSequence('unit-clinet', 'unit-server', cb);
+// });
+
+
+// gulp.task('lub', cb => { // lint, unit and build
+//   runSequence('lint', 'unit', 'prod-build', cb);
+// });

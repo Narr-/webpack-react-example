@@ -28,7 +28,7 @@ export default function (req, res, next) {
         const serverUrl = `//${req.get('host')}/`; // * The last slash(/) is important
         // console.log(renderProps);
         // if req.protocol is not specified, fetch api changes // to https://
-        innermostApp.fetchTodos(`${req.protocol}:${serverUrl}`).then(result => {
+        innermostApp.fetchTodos(`${req.protocol}:${serverUrl}`, req.ip).then(result => {
           // console.log(result);
           let initStore;
           if (!result.error) {

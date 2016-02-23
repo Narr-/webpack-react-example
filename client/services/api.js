@@ -35,13 +35,14 @@ function handleResponse(response) {
 }
 
 
-function checkApi() {
+function checkApi(userIp) {
   const promise = fetch(API_ROOT_URI, {
     credentials: 'same-origin', // to use session - https://github.com/github/fetch#caveats
     method: 'POST', // default GET
     headers: HEADERS_FOR_JSON,
     body: JSON.stringify({
-      userId: typeof localStorage === 'undefined' ? null : localStorage.getItem('todoUserId')
+      userId: typeof localStorage === 'undefined' ? null : localStorage.getItem('todoUserId'),
+      userIp
     })
   })
   .then(handleResponse)

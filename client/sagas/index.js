@@ -1,6 +1,7 @@
 /* eslint-disable no-constant-condition */
 
-import { take, put, call, fork } from 'redux-saga/effects'; // eslint-disable-line no-unused-vars
+import { take, put, call, fork, select } // eslint-disable-line no-unused-vars
+from 'redux-saga/effects';
 import actionTypes from '../constants/ActionTypes';
 import todoActions from '../actions/todos';
 
@@ -8,9 +9,9 @@ import todoActions from '../actions/todos';
 // when it is used in generator functions
 import { todoStorage } from '../services';
 
-function* addTodo(getState) {
+function* addTodo() {
   while (true) {
-    const prevTodos = getState().todos;
+    const { todos: prevTodos } = yield select(); // To get the entire Store's state
     const action = yield take(actionTypes.ADD_TODO);
     const { data, error, response } = yield call( // eslint-disable-line no-unused-vars
       todoStorage.addTodo, action.id, action.text);
@@ -20,9 +21,9 @@ function* addTodo(getState) {
   }
 }
 
-function* completeAll(getState) {
+function* completeAll() {
   while (true) {
-    const prevTodos = getState().todos;
+    const { todos: prevTodos } = yield select();
     const action = yield take(actionTypes.COMPLETE_ALL);
     const { error } = yield call(todoStorage.completeAll, !action.allCompleted);
     if (error) {
@@ -31,9 +32,9 @@ function* completeAll(getState) {
   }
 }
 
-function* clearCompleted(getState) {
+function* clearCompleted() {
   while (true) {
-    const prevTodos = getState().todos;
+    const { todos: prevTodos } = yield select();
     yield take(actionTypes.CLEAR_COMPLETED);
     const { error } = yield call(todoStorage.clearCompleted);
     if (error) {
@@ -42,12 +43,13 @@ function* clearCompleted(getState) {
   }
 }
 
-function* updateTodo(getState) {
+function* updateTodo() {
   while (true) {
-    const prevTodos = getState().todos;
+    const { todos: prevTodos } = yield select();
     const action = yield take([actionTypes.SET_EDITING_STATUS, actionTypes.EDIT_TODO,
      actionTypes.COMPLETE_TODO]);
-    const targetTodo = getState().todos.find(todo => todo.get('todoId') === action.id);
+    const { todos: changedTodos } = yield select();
+    const targetTodo = changedTodos.find(todo => todo.get('todoId') === action.id);
     const { error } = yield call(todoStorage.updateTodo,
      action.id, targetTodo.get('todoText'),
      targetTodo.get('todoIsEditing'), targetTodo.get('todoCompleted'));
@@ -57,9 +59,9 @@ function* updateTodo(getState) {
   }
 }
 
-function* deleteTodo(getState) {
+function* deleteTodo() {
   while (true) {
-    const prevTodos = getState().todos;
+    const { todos: prevTodos } = yield select();
     const action = yield take(actionTypes.DELETE_TODO);
     const { error } = yield call(todoStorage.deleteTodo, action.id);
     if (error) {
@@ -68,10 +70,10 @@ function* deleteTodo(getState) {
   }
 }
 
-// export default function* root(getState) {
-//   yield fork(addTodo, getState);
-//   yield fork(nextRedditChange, getState);
-//   yield fork(invalidateReddit, getState);
+// export default function* root() {
+//   yield fork(addTodo);
+//   yield fork(nextRedditChange);
+//   yield fork(invalidateReddit);
 // }
 
 export default [

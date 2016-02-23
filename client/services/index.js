@@ -5,8 +5,8 @@ import socketInit from './socket';
 export const socket = socketInit;
 export let todoStorage;
 
-export const todoStoragePromise = () => { // eslint-disable-line arrow-body-style
-  return api.checkApi().then(result => {
+export const todoStoragePromise = (userIp) => { // eslint-disable-line arrow-body-style
+  return api.checkApi(userIp).then(result => {
     if (result.error) {
       todoStorage = ls;
       return { result, ls };
