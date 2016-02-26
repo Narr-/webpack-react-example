@@ -9,7 +9,7 @@ describe('<Footer />', () => {
   let numOfActive = null;
   let statusOfFilter = null;
 
-  describe('is the initial state ', () => {
+  describe('is the initial state', () => {
     let wrapper;
     let onClearCompletedHandler;
     let mountedWrapper;

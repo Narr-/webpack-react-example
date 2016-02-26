@@ -54,11 +54,16 @@ class Header extends Component {
               //   browserHistory.push('/marvel');
               // }, 2000);
               // test code @
-              require.ensure(['../containers/Marvel'], () => {
-                browserHistory.push('/marvel/');
-              }, () => { // error callback
-                that.setState({ loadingMarvel: false });
-              }, 'marvel');
+
+              // @ for unit test(WEBPACK_VAR)
+              if (typeof WEBPACK_VAR !== 'undefined') {
+                require.ensure(['../containers/Marvel'], () => {
+                  browserHistory.push('/marvel/');
+                }, () => { // error callback
+                  that.setState({ loadingMarvel: false });
+                }, 'marvel');
+              }
+              // for unit test(WEBPACK_VAR) @
             }
           }}
         />
