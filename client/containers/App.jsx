@@ -10,7 +10,7 @@ import { todoStoragePromise, todoStorage } from '../services';
 import todoApi from '../services/api';
 import humps from 'humps';
 
-class App extends Component {
+export class App extends Component {
   static fetchTodos(uri, userIp) { // this will be invoked from server. so just api not localstorage
     todoApi.setUris(uri);
     return todoStoragePromise(userIp).then(({ result, api }) => {
