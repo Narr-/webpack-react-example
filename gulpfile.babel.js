@@ -186,6 +186,7 @@ gulp.task('gh-all', cb => {
 // //////////////////////
 // Client Unit Test
 gulp.task('unit-client', (cb) => {
+  process.env.BABEL_ENV = 'karma';
   let watch = argv.watch;
   if (watch && watch === 'false') {
     watch = false;

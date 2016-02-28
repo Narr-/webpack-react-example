@@ -55,6 +55,7 @@ export default (config) => {
             /node_modules/,
             srcBasePath
           ],
+          // the config on .babelrc is used as this is called by gulpfile.babel.js
           loaders: ['babel']
         }, {
           test: /\.jsx?$/,
@@ -71,6 +72,7 @@ export default (config) => {
           //     production: false
           //   }
           // }
+          KARMA_TEST: true
         })
       ],
       resolve: {

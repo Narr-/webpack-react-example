@@ -1,9 +1,9 @@
 {
   "presets": ["react", "es2015"],
-  "plugins": ["transform-runtime"]
-  // "env": {
-  //   "development": {
-  //     "presets": ["react-hmre"]
-  //   }
-  // }
+  "plugins": ["transform-runtime"],
+  "env": {
+    "karma": {
+      "plugins": ["rewire"]
+    }
+  }
 }

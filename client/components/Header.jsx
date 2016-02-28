@@ -5,6 +5,8 @@ import classnames from 'classnames';
 import Spinner from './Spinner';
 import ReactTransitionGroup from 'react-addons-transition-group';
 
+let rewireVar; // for unit-test @
+
 class Header extends Component {
   constructor() {
     super();
@@ -55,15 +57,17 @@ class Header extends Component {
               // }, 2000);
               // test code @
 
-              // @ for unit test(WEBPACK_VAR)
-              if (typeof WEBPACK_VAR !== 'undefined') {
-                require.ensure(['../containers/Marvel'], () => {
-                  browserHistory.push('/marvel/');
-                }, () => { // error callback
-                  that.setState({ loadingMarvel: false });
-                }, 'marvel');
+              // @ for unit-test
+              if (typeof KARMA_TEST !== 'undefined') {
+                require.ensure = rewireVar;
               }
-              // for unit test(WEBPACK_VAR) @
+              // for unit-test @
+
+              require.ensure(['../containers/Marvel'], () => { // eslint-disable-line
+                browserHistory.push('/marvel/');
+              }, () => { // error callback
+                that.setState({ loadingMarvel: false });
+              }, 'marvel');
             }
           }}
         />
