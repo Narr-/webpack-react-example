@@ -42,14 +42,15 @@ export class App extends Component {
   }
 
   componentDidMount() { // only client
-    todoStorage.getTodos().then(result => {
+    return todoStorage.getTodos().then(result => {
+      // console.log(result);
       if (!result.error) {
-        // console.log(result);
         const immutableList = iList();
         const todos = result.data.reduce((pre, curr) =>
           pre.push(iMap(humps.camelizeKeys(curr))), immutableList);
         this.props.appActions.replaceTodos(todos);
       }
+      return result;
     });
   }
 

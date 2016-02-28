@@ -4,6 +4,8 @@ import React from 'react';
 import { shallow } from 'enzyme';
 import { App } from 'containers/App';
 import Immutable from 'immutable';
+import fetchMock from 'fetch-mock';
+import api from 'services/api'; // to replace fetch with mocked fetch
 
 describe('<App />', () => {
   describe('is the initial state', () => {
@@ -30,6 +32,59 @@ describe('<App />', () => {
         route={{}}
       />
     ); //
+
+    //
+    it('fetch todos', (done) => {
+      const userId = 'narr';
+      // console.log(fetch); // before mock
+      fetchMock
+        .mock('http://localhost/api', 'POST', {
+          status: 200,
+          body: {
+            userId,
+            message: 'welcome..!!'
+          }
+        })
+        .mock(`http://localhost/api/todos?userId=${userId}`, 'GET', [{
+          todoId: 369,
+          todoText: 'fetched text',
+          todoIsEditing: false,
+          todoCompleted: true
+        }]);
+      // console.log(fetch); // after mock
+      api.__Rewire__('fetch', fetch);
+      App.fetchTodos('http://localhost/', 'userId').then(result => {
+        // console.log(result);
+        expect(result.todos.get(0).get('todoId')).to.equal(369);
+        // to.have.string('fetched') => "fetched" in "fetched text"
+        expect(result.todos.get(0).get('todoText')).to.have.string('fetched');
+        api.__ResetDependency__('fetch');
+        fetchMock.restore();
+        done();
+      });
+    });
+
+    //
+    it('run componentDidMount()', (done) => {
+      // console.log(fetch); // before mock
+      fetchMock
+        .mock(/http:\/\/localhost\/api\/todos\?userId=/, 'GET', {
+          status: 404,
+          body: {
+            error: 'intended error'
+          }
+        });
+      // console.log(fetch); // after mock
+      api.__Rewire__('fetch', fetch);
+      App.prototype.componentDidMount().then(result => {
+        // console.log(result);
+        expect(result.response.status).to.equal(404);
+        expect(result.error).to.be.ok;
+        api.__ResetDependency__('fetch');
+        fetchMock.restore();
+        done();
+      });
+    });
 
     //
     it('renders a <Header /> and a <MainSection />', () => {
