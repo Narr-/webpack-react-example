@@ -46,7 +46,7 @@
     "autoprefixer": "^6.3.3",
     "babel-istanbul-loader": "0.0.3",
     "babel-loader": "^6.2.4",
-    "babel-plugin-rewire": "^1.0.0-beta-4",
+    "babel-plugin-rewire": "^1.0.0-beta-5",
     "babel-plugin-syntax-jsx": "^6.5.0",
     "babel-preset-react-hmre": "^1.1.0",
     "babel-template": "^6.5.0",
