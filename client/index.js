@@ -10,6 +10,11 @@ import { syncHistoryWithStore } from 'react-router-redux';
 import routes from './routes';
 import { todoStoragePromise } from './services';
 import Immutable from 'immutable';
+import a11y from 'react-a11y'; // https://github.com/reactjs/react-a11y
+
+if (process.env.NODE_ENV === 'development') {
+  a11y(React);
+}
 
 const { pathname, search, hash } = window.location;
 const entryUrl = `${pathname}${search}${hash}`;
