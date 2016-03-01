@@ -9,10 +9,16 @@ import todoActions from '../actions/todos';
 // when it is used in generator functions
 import { todoStorage } from '../services';
 
-function* addTodo() {
+export function* addTodo() {
   while (true) {
     const { todos: prevTodos } = yield select(); // To get the entire Store's state
     const action = yield take(actionTypes.ADD_TODO);
+    /*
+      ***THIS IS A BLOCKING CALL***
+      It means that addTodo will ignore any ADD_TODO event until the current one completes
+      i.e. concurrent ADD_TODO are not allowed(This needs to be
+      enforced by the UI (e.g. disable button)
+    */
     const { data, error, response } = yield call( // eslint-disable-line no-unused-vars
       todoStorage.addTodo, action.id, action.text);
     if (error) {
@@ -21,7 +27,7 @@ function* addTodo() {
   }
 }
 
-function* completeAll() {
+export function* completeAll() {
   while (true) {
     const { todos: prevTodos } = yield select();
     const action = yield take(actionTypes.COMPLETE_ALL);
@@ -32,7 +38,7 @@ function* completeAll() {
   }
 }
 
-function* clearCompleted() {
+export function* clearCompleted() {
   while (true) {
     const { todos: prevTodos } = yield select();
     yield take(actionTypes.CLEAR_COMPLETED);
@@ -43,7 +49,7 @@ function* clearCompleted() {
   }
 }
 
-function* updateTodo() {
+export function* updateTodo() {
   while (true) {
     const { todos: prevTodos } = yield select();
     const action = yield take([actionTypes.SET_EDITING_STATUS, actionTypes.EDIT_TODO,
@@ -59,7 +65,7 @@ function* updateTodo() {
   }
 }
 
-function* deleteTodo() {
+export function* deleteTodo() {
   while (true) {
     const { todos: prevTodos } = yield select();
     const action = yield take(actionTypes.DELETE_TODO);

@@ -191,11 +191,24 @@ gulp.task('unit-client', (cb) => {
   if (watch && watch === 'false') {
     watch = false;
   }
-  // console.log(watch);
-  new karma.Server({
+
+  const server = new karma.Server({
     configFile: `${__dirname}/test/client/index`,
     singleRun: !watch
-  }, cb).start();
+  });
+
+  // This is faster to finsih this task when watch is false
+  server.on('run_complete', (browsers, results) => {
+    if (results.failed) {
+      throw new Error('Karma: Tests Failed');
+    }
+    gutil.log('Karma Run Complete: No Failures');
+    if (!watch) {
+      cb();
+    }
+  });
+
+  server.start();
 });
 
 // //////////////////////

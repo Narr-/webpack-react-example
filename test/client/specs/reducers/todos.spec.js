@@ -2,7 +2,7 @@ import reducer from 'reducers/todos';
 import types from 'actions/todos';
 import Immutable from 'immutable';
 
-describe('reducer - todos', () => {
+describe('reducers - todos', () => {
   it('should return the initial state', () => {
     expect(reducer(undefined, {})).to.equal(Immutable.fromJS([]));
   });
