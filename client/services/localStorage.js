@@ -5,7 +5,7 @@ function saveToLocalStorage() {
   localStorage.setItem(STORAGE_ID, JSON.stringify(todos));
 }
 
-function getTodos() {
+export function getTodos() {
   return new Promise((resolve, reject) => { // eslint-disable-line no-unused-vars
     const data = JSON.parse(localStorage.getItem(STORAGE_ID) || '[]');
     todos = data;
@@ -18,7 +18,7 @@ function getTodos() {
   .then(result => result, error => ({ error }));
 }
 
-function addTodo(todoId, todoText) {
+export function addTodo(todoId, todoText) {
   return new Promise((resolve) => {
     todos.unshift({
       todoId,
@@ -32,7 +32,7 @@ function addTodo(todoId, todoText) {
   .then(result => result, error => ({ error }));
 }
 
-function completeAll(todoAllCompleted) {
+export function completeAll(todoAllCompleted) {
   return new Promise((resolve) => {
     todos.forEach((todo, index) => { // eslint-disable-line no-unused-vars
       todo.todoCompleted = todoAllCompleted; // eslint-disable-line no-param-reassign
@@ -43,7 +43,7 @@ function completeAll(todoAllCompleted) {
   .then(result => result, error => ({ error }));
 }
 
-function clearCompleted() {
+export function clearCompleted() {
   return new Promise((resolve) => {
     for (let i = todos.length - 1; i > -1; i--) {
       if (todos[i].todoCompleted) {
@@ -56,7 +56,7 @@ function clearCompleted() {
   .then(result => result, error => ({ error }));
 }
 
-function updateTodo(id, todoText, todoIsEditing, todoCompleted) {
+export function updateTodo(id, todoText, todoIsEditing, todoCompleted) {
   return new Promise((resolve) => {
     // can't use break in forEach so used for loop
     for (let i = 0, len = todos.length; i < len; i++) {
@@ -74,7 +74,7 @@ function updateTodo(id, todoText, todoIsEditing, todoCompleted) {
   .then(result => result, error => ({ error }));
 }
 
-function deleteTodo(id) {
+export function deleteTodo(id) {
   return new Promise((resolve) => {
     for (let i = todos.length - 1; i > -1; i--) {
       if (todos[i].todoId === id) {
