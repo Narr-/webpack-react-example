@@ -198,15 +198,17 @@ gulp.task('unit-client', (cb) => {
   });
 
   // This is faster to finsih this task when watch is false
-  server.on('run_complete', (browsers, results) => {
-    if (results.failed) {
-      throw new Error('Karma: Tests Failed');
-    }
-    gutil.log('Karma Run Complete: No Failures');
-    if (!watch) {
+  if (!watch) {
+    server.on('run_complete', (browsers, results) => {
+      if (results.failed) {
+        // throw new Error('Karma: Tests Failed');
+        console.log('Karma: Tests Failed'); // eslint-disable-line no-console
+        process.exit(1);
+      }
+      gutil.log('Karma Run Complete: No Failures');
       cb();
-    }
-  });
+    });
+  }
 
   server.start();
 });
