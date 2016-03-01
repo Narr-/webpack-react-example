@@ -96,6 +96,8 @@ App.propTypes = {
   // ])
 };
 
+// can use https://github.com/reactjs/reselect if it is required to change state.todos
+// and do complicated works with state.todos to get todos
 function mapStateToProps(state) { // select
   return {
     todos: state.todos
