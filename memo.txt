@@ -34,3 +34,17 @@ https://github.com/xgrommx/awesome-redux
 https://github.com/rackt/example-react-router-server-rendering-lazy-routes
 http://spencerdixon.com/blog/test-driven-react-tutorial.html
 http://teropa.info/blog/2015/09/10/full-stack-redux-tutorial.html#project-setup
+
+
+
+
+[ETC]
+// https://facebook.github.io/react/docs/reusable-components.html#stateless-functions
+// https://medium.com/@joshblack/stateless-components-in-react-0-14-f9798f8b992d#.gksb1vrfq
+const Counter = (value, onIncrement, onDecrement) => ( // props
+  <div>
+    <h1>{value}<h1>
+    <button onClick={onIncrement}>+</button>
+    <button onClick={onDecrement}>-</button>
+  </div>
+);

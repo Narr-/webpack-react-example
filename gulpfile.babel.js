@@ -11,6 +11,9 @@ import reactHtmlGenerator from './react-html-generator';
 import replace from 'gulp-replace';
 import karma from 'karma';
 import { argv } from 'yargs';
+import mocha from 'gulp-mocha';
+import istanbul from 'gulp-istanbul';
+const isparta = require('isparta'); // this should be 'require'
 
 const spawn = childProcess.spawn;
 const defaultDistPath = './static';
@@ -78,6 +81,19 @@ function lint(src) {
     .pipe(eslint.failAfterError());
 }
 
+function unitServerWatch() {
+  gulp.src(['./test/server/specs/**/*.spec.js'], { read: false })
+    .pipe(mocha(
+      {
+        bail: true,
+        timeout: 5000
+      }
+    ))
+    .once('error', (err) => {
+      gutil.log(gutil.colors.red(err));
+    });
+}
+
 
 // //////////////////////
 // run dev server
@@ -138,9 +154,9 @@ gulp.task('lint-root', () =>
 // //////////////////////
 // lint Test files
 gulp.task('lint-test', () =>
-  lint(['./test/client/*.js', './test/client/specs/*.js',
-    './test/server/*.js', './test/server/specs/*.js',
-    './test/e2e/*.js', './test/e2e/specs/*.js'
+  lint(['./test/client/*.js', './test/client/specs/**/*.js',
+    './test/server/*.js', './test/server/specs/**/*.js',
+    './test/e2e/*.js', './test/e2e/specs/**/*.js'
   ])
 );
 
@@ -186,7 +202,7 @@ gulp.task('gh-all', cb => {
 // //////////////////////
 // Client Unit Test
 gulp.task('unit-client', (cb) => {
-  process.env.BABEL_ENV = 'karma';
+  process.env.BABEL_ENV = 'rewire';
   let watch = argv.watch;
   if (watch && watch === 'false') {
     watch = false;
@@ -214,24 +230,74 @@ gulp.task('unit-client', (cb) => {
 });
 
 // //////////////////////
-// Server Unit Test
-// gulp.task('unit-server', (cb) => {
-//   let watch = argv.watch;
-//   if (watch && watch === 'false') {
-//     watch = false;
-//   }
-//   // console.log(watch);
-//   new karma.Server({
-//     configFile: `${__dirname}/test/client/index`,
-//     singleRun: !watch
-//   }, cb).start();
-// });
+// Server Unit Test - gulp mocha has a problem with istanbul and watch. so divide the tasks
+gulp.task('unit-server-watch', () => {
+  process.env.BABEL_ENV = 'rewire';
+  unitServerWatch(); // run initial test
+  gulp.watch(['./server/**/*.js', './test/server/specs/**/*.spec.js'], () => {
+    unitServerWatch();
+  });
+});
 
-// gulp.task('unit', cb => { // lint, unit and build
-//   runSequence('unit-clinet', 'unit-server', cb);
-// });
+gulp.task('unit-server-cov', () => {
+  process.env.BABEL_ENV = 'rewire';
+  del.sync('./test/server/coverage');
+  return gulp.src(['./server/**/*.js'])
+      // Covering files
+      .pipe(istanbul(
+        {
+          instrumenter: isparta.Instrumenter,
+          includeUntested: true
+        }
+      ))
+      // Force `require` to return covered files
+      .pipe(istanbul.hookRequire())
+      // Enforce a coverage of at least 90%
+      // .pipe(istanbul.enforceThresholds({ thresholds: { global: 90 } }))
+      .on('finish', () => {
+        gulp.src(['./test/server/specs/**/*.spec.js'], { read: false })
+          .pipe(mocha(
+            {
+              bail: true,
+              timeout: 5000
+            }
+          ))
+          .pipe(istanbul.writeReports( // Creating the reports after tests ran
+            {
+              dir: './test/server/coverage',
+              reporters: ['html'],
+              reportOpts: { dir: './test/server/coverage' }
+            }
+          ))
+          .once('error', (err) => {
+            gutil.log(gutil.colors.red(err));
+            process.exit(1);
+          })
+          .once('end', () => {
+            process.exit();
+          });
+      });
+});
+
+gulp.task('unit-server', () => {
+  process.env.BABEL_ENV = 'rewire';
+  return gulp.src(['./test/server/specs/**/*.spec.js'], { read: false })
+    .pipe(mocha(
+      {
+        bail: true,
+        timeout: 5000
+      }
+    ))
+    .once('error', (err) => {
+      gutil.log(gutil.colors.red(err));
+      process.exit(1);
+    });
+});
 
 
-// gulp.task('lub', cb => { // lint, unit and build
-//   runSequence('lint', 'unit', 'prod-build', cb);
-// });
+// lint, unit and build
+gulp.task('lub', cb => {
+  // just for convenience
+  // the order matters and if the order is different, the task will not end or not executed well
+  runSequence('lint', 'prod-build', 'unit-server', 'unit-client', cb);
+});

@@ -83,10 +83,20 @@ function startApp(useRedis) {
         logger.error('The port is already in use..!!');
       }
     });
+
+  return server;
 }
 
-promise.then(() => {
-  startApp(true);
+export const start = promise.then(() => {
+  const server = startApp(true);
+  return {
+    server,
+    redis: true
+  };
 }, () => { // no redis
-  startApp(false);
+  const server = startApp(false);
+  return {
+    server,
+    redis: false
+  };
 });
