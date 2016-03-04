@@ -15,6 +15,7 @@ docker-compose up -d
 docker run -it "image" bash => a new container
 docker exec -it "image" bash => a running container
 docker-compose run node bash => a new container, node is a name in docker-compose.yml
+npm run e2e
 
 
 
