@@ -82,6 +82,7 @@
     "karma-spec-reporter": "0.0.24",
     "karma-webpack": "^1.7.0",
     "mocha": "^2.4.5",
+    "nightwatch": "^0.8.16",
     "node-sass": "^3.4.2",
     "null-loader": "^0.1.1",
     "phantomjs-prebuilt": "^2.1.4",
@@ -105,7 +106,8 @@
     "yargs": "^4.2.0"
   },
   "scripts": {
-    "start": "NODE_ENV=production pm2 start ./server/index.js -i 4 --no-daemon"
+    "start": "NODE_ENV=production pm2 start ./server/index.js -i 4 --no-daemon",
+    "e2e": "node ./test/e2e/nightwatch.js -c ./test/e2e/nightwatch.json"
   },
   "repository": {
     "type": "git",
