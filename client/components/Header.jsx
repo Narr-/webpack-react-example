@@ -66,10 +66,18 @@ class Header extends Component {
               // for unit-test @
 
               if (typeof KARMA_TEST === 'undefined') {
-                require.ensure(['../containers/Marvel'], () => { // eslint-disable-line
+                // @ require.ensure error handler doesn't work in IE 10
+                // Replace this with System.import later in webpack 2
+                // require.ensure(['../containers/Marvel'], () => { // eslint-disable-line
+                //   browserHistory.push('/marvel/');
+                // }, () => { // error callback
+                //   that.setState({ loadingMarvel: false });
+                // }, 'marvel');
+                // require.ensure error handler doesn't work in IE 10 @
+
+                // TODO: For now maybe setTimeout can be used for "loadingMarvel: false"
+                require.ensure(['../containers/Marvel'], () => {
                   browserHistory.push('/marvel/');
-                }, () => { // error callback
-                  that.setState({ loadingMarvel: false });
                 }, 'marvel');
               }
             }

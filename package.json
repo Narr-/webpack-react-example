@@ -72,6 +72,7 @@
     "gulp-util": "^3.0.7",
     "html-webpack-plugin": "^2.9.0",
     "image-webpack-loader": "^1.6.3",
+    "ip": "^1.1.2",
     "isparta": "^4.0.0",
     "karma": "^0.13.21",
     "karma-chai": "^0.1.0",

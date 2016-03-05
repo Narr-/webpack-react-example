@@ -37,8 +37,11 @@ export class App extends Component {
   constructor(props) {
     super(props);
     this.addTodo = this.addTodo.bind(this);
-    const completeAll = this.props.appActions.completeAll;
-    this.props.appActions.completeAll = () => completeAll(this.areAllMarked());
+    const completeAll = props.appActions.completeAll;
+    // @ IE 10 Issue - this.props => undefined, So change props directly from the argument, props
+    props.appActions.completeAll =  // eslint-disable-line no-param-reassign
+      () => completeAll(this.areAllMarked());
+    // IE 10 Issue @
   }
 
   componentDidMount() { // only client

@@ -10,6 +10,7 @@ class TodoMakeInput extends Component {
 
   handleSubmit(e) {
     if (e.which === 13) { // Enter Key
+      e.preventDefault(); // for IE 10 to propagate the event
       const { onSave, fields: { todoMakeInput } } = this.props;
       onSave(todoMakeInput.value.trim());
       todoMakeInput.onChange('');

@@ -42,7 +42,9 @@ class MarvelHeaderTitle extends Component {
 
   /* eslint-disable no-unused-vars */
   componentDidMount() {
-    console.log('MarvelHeaderTitle componentDidMount'); // eslint-disable-line no-console
+    if (typeof console !== 'undefined') {
+      console.log('MarvelHeaderTitle componentDidMount'); // eslint-disable-line no-console
+    }
     d3.select(this.headerMarvel).transition().style('opacity', 1).duration(5000);
     d3.select(this.headerTodos).transition().style('opacity', 0).duration(5000);
   }

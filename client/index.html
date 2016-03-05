@@ -1,7 +1,10 @@
 <!doctype html>
 <html lang="en">
   <head>
-  <%= htmlWebpackPlugin.options.forEjs.baseTag %>
+  <script>
+    var baseUrl = <%= htmlWebpackPlugin.options.forEjs.baseUrl %>;
+    document.write('<base href="' + baseUrl + '" />');
+  </script>
   <meta charset="utf-8">
   <title>Redux TodoMVC example</title>
   <link rel="icon" type="image/x-icon" href="<%= require('./res/imgs/favicon.ico') %>">

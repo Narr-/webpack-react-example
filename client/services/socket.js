@@ -30,7 +30,10 @@ export default function socket() {
           }
         });
       }
-      console.log(`socket id: ${todoSocket.id} is connected..!!`); // eslint-disable-line no-console
+      if (typeof console !== 'undefined') {
+        console.log(`socket id: ${todoSocket.id}` + // eslint-disable-line no-console
+         'is connected..!!');
+      }
     });
 
     todoSocket.on('dbChange', (data) => {

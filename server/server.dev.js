@@ -21,9 +21,11 @@ import bodyParser from 'body-parser';
 import routers from './routes';
 // import path from 'path';
 import http from 'http';
+import ip from 'ip';
 
 const logger = loggerMaker(module);
 const app = express();
+const myIp = ip.address();
 
 app.use(morgan('combined', {
   stream: logger.stream
@@ -39,7 +41,7 @@ app.use(bodyParser.urlencoded({
   extended: false
 }));
 
-const serverUrl = `http://localhost:${PORT}/`; // add protocol for url in Blob CSS
+const serverUrl = `http://${myIp}:${PORT}/`; // add protocol for url in Blob CSS
 
 // @ webpack
 const wConfig = webpackConfig({

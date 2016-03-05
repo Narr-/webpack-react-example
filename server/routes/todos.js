@@ -36,7 +36,12 @@ router.route('/')
               message: 'Error fetching data'
             });
           } else {
-            res.json(result.rows);
+            res.set({
+              'Cache-Control': 'no-cache',
+              Pragma: 'no-cache',
+              Expires: -1
+            })
+            .json(result.rows);
           }
         });
       }

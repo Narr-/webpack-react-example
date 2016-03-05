@@ -13,14 +13,17 @@ import Immutable from 'immutable';
 import a11y from 'react-a11y'; // https://github.com/reactjs/react-a11y
 
 if (process.env.NODE_ENV === 'development') {
-  a11y(React);
+  a11y(React); // TODO: should disable this with IE 9
 }
 
 const { pathname, search, hash } = window.location;
 const entryUrl = `${pathname}${search}${hash}`;
 
-console.log('Redux Initial State: %o', window.__INITIAL_STATE__); // eslint-disable-line no-console
-console.log('Entry URL is: %s', entryUrl); // eslint-disable-line no-console
+if (typeof console !== 'undefined') {
+  console.log('Redux Initial State: %o', // eslint-disable-line no-console
+    window.__INITIAL_STATE__);
+  console.log('Entry URL is: %s', entryUrl); // eslint-disable-line no-console
+}
 
 // https://github.com/rackt/example-react-router-server-rendering-lazy-routes/blob/master/modules/client.js
 match({ routes, location: entryUrl }, () => {

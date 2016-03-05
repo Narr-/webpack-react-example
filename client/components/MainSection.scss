@@ -10,10 +10,9 @@
 
 .toggle-all {
   position: absolute;
-  top: -50px;
-  left: -12px;
+  top: -38px;
+  left: -8px;
   width: 60px;
-  height: 34px;
   text-align: center;
   border: 0; // Mobile Safari
   cursor: pointer;
@@ -22,9 +21,9 @@
 
 .toggle-all:before {
   content: '❯';
+  display: inline;
   font-size: 22px;
   color: #e6e6e6;
-  padding: 10px 24px;
 }
 
 .toggle-all:checked:before {
@@ -63,11 +62,9 @@
 .todo-list li label.toggle {
   text-align: center;
   width: 40px;
-  // auto, since non-WebKit browsers doesn't support input styling
-  height: auto;
+  height: 34px;
   position: absolute;
-  top: 10px;
-  margin: auto 0;
+  top: 14px;
   border: 0; // Mobile Safari
   -webkit-appearance: none;
   appearance: none;

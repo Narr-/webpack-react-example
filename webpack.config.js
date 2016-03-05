@@ -7,8 +7,11 @@ import ExtractTextPlugin from 'extract-text-webpack-plugin';
 import webpack from 'webpack';
 import HtmlWebpackPlugin from 'html-webpack-plugin';
 import Sprite from 'sprite-webpack-plugin';
-import requireErrorHandlerPlugin from 'require-error-handler-webpack-plugin';
-import JsonpMainTemplatePlugin from 'webpack/lib/JsonpMainTemplatePlugin';
+// @ require.ensure error handler doesn't work in IE 10
+// Replace this with System.import later in webpack 2
+// import requireErrorHandlerPlugin from 'require-error-handler-webpack-plugin';
+// import JsonpMainTemplatePlugin from 'webpack/lib/JsonpMainTemplatePlugin';
+// require.ensure error handler doesn't work in IE 10 @
 
 // to insert some strings at the bottom of body tag
 const afterHtmlProcessingPlugin = {
@@ -45,10 +48,7 @@ export default function ({ dev, publicPath, devMiddleware,
     entry: {
       vendor: [
         'bootstrap-sass/assets/stylesheets/_bootstrap.scss',
-        /*
-        // to use generator => replace this with babel-runtime(transform-runtime in .babelrc)
-        // 'babel-polyfill',
-        */
+        'babel-polyfill', // IE11 still needs Promise polyfill. So add this
         'react', 'react-dom', 'react-addons-transition-group', 'react-a11y',
         // 'react-addons-css-transition-group',
         'react-redux', 'redux', 'immutable',
@@ -138,7 +138,7 @@ export default function ({ dev, publicPath, devMiddleware,
         template: path.join(appPath, 'index.html'),
         inject: 'body',
         forEjs: {
-          baseTag: devMiddleware ? `<base href="${publicPath}">` : '<base href="<%- baseTag %>">',
+          baseUrl: devMiddleware ? `'${publicPath}'` : 'location.protocol + <%- baseUrl %>',
           reactDom: devMiddleware ? '' : '<%- reactDom %>', // <%- unescape HTML, <%= escape HTML
           reduxState: devMiddleware ? 'null' : '<%- reduxState %>',
           trackingID: indexHtmlName ? 'UA-69400538-4' : 'UA-69400538-5'
@@ -151,10 +151,10 @@ export default function ({ dev, publicPath, devMiddleware,
         processor: 'scss',
         bundleMode: 'multiple',
         prefix: 'sprite-icon'
-      }),
-      new requireErrorHandlerPlugin.JsonpErrorHandlerPlugin(JsonpMainTemplatePlugin),
-      new requireErrorHandlerPlugin.RequireEnsureErrorHandlerPlugin(),
-      new requireErrorHandlerPlugin.AMDRequireErrorHandlerPlugin()
+      })
+      // new requireErrorHandlerPlugin.JsonpErrorHandlerPlugin(JsonpMainTemplatePlugin),
+      // new requireErrorHandlerPlugin.RequireEnsureErrorHandlerPlugin(),
+      // new requireErrorHandlerPlugin.AMDRequireErrorHandlerPlugin()
     ],
     resolve: {
       root: appPath, // for require
