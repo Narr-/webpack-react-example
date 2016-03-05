@@ -49,7 +49,7 @@ export default function ({ dev, publicPath, devMiddleware,
         // to use generator => replace this with babel-runtime(transform-runtime in .babelrc)
         // 'babel-polyfill',
         */
-        'react', 'react-dom', 'react-addons-transition-group',
+        'react', 'react-dom', 'react-addons-transition-group', 'react-a11y',
         // 'react-addons-css-transition-group',
         'react-redux', 'redux', 'immutable',
         'react-router', 'react-router-redux', 'redux-saga', 'isomorphic-fetch',

@@ -1,6 +1,7 @@
 import React, { Component, PropTypes } from 'react';
 import TodoEditInput from './TodoEditInput';
 import classnames from 'classnames';
+import uuid from 'node-uuid';
 
 class TodoItem extends Component {
   constructor() {
@@ -25,6 +26,7 @@ class TodoItem extends Component {
     const { todo, completeTodo, deleteTodo } = this.props;
     const handleSave = this.handleSave;
     let element;
+    const inputId = uuid.v1(); // to allocate a different id to input
     if (todo.get('todoIsEditing')) {
       element = (
         <TodoEditInput
@@ -37,15 +39,22 @@ class TodoItem extends Component {
     } else {
       element = (
         <div className="view">
+          <label
+            className={classnames({
+              toggle: true,
+              checked: todo.get('todoCompleted'),
+            })}
+            htmlFor={inputId}
+          />
           <input
-            className="toggle"
+            id={inputId}
             type="checkbox"
             checked={todo.get('todoCompleted')}
             onChange={function onChangeHandler() {
               completeTodo(todo.get('todoId'));
             }}
           />
-          <label onDoubleClick={this.handleDoubleClick}>
+          <label className="text" onDoubleClick={this.handleDoubleClick}>
             {todo.get('todoText')}
           </label>
           <button className="destroy"

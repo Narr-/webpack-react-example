@@ -25,13 +25,21 @@ class MainSection extends Component {
 
   renderToggleAll(completedCount) {
     const { todos, actions } = this.props;
+    const inputId = 'toggle-all';
     if (todos.size > 0) {
       return (
-        <input className="toggle-all"
-          type="checkbox"
-          checked={completedCount === todos.size}
-          onChange={actions.completeAll}
-        />
+        <div>
+          <label
+            className="toggle-all"
+            htmlFor={inputId}
+          />
+          <input
+            id={inputId}
+            type="checkbox"
+            checked={completedCount === todos.size}
+            onChange={actions.completeAll}
+          />
+        </div>
       );
     }
   } //

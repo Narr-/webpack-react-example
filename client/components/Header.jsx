@@ -5,8 +5,6 @@ import classnames from 'classnames';
 import Spinner from './Spinner';
 import ReactTransitionGroup from 'react-addons-transition-group';
 
-let rewireVar; // for unit-test @
-
 class Header extends Component {
   constructor() {
     super();
@@ -58,16 +56,22 @@ class Header extends Component {
               // test code @
 
               // @ for unit-test
-              if (typeof KARMA_TEST !== 'undefined') {
-                require.ensure = rewireVar;
-              }
+              // if (typeof KARMA_TEST !== 'undefined') {
+                // can't mock require.ensure. If tried it, require's cotext would change and
+                // load unrequired scss files in the components folder
+                // if (!require.ensure) {
+                  // require.ensure = rewireVar;
+                // }
+              // }
               // for unit-test @
 
-              require.ensure(['../containers/Marvel'], () => { // eslint-disable-line
-                browserHistory.push('/marvel/');
-              }, () => { // error callback
-                that.setState({ loadingMarvel: false });
-              }, 'marvel');
+              if (typeof KARMA_TEST === 'undefined') {
+                require.ensure(['../containers/Marvel'], () => { // eslint-disable-line
+                  browserHistory.push('/marvel/');
+                }, () => { // error callback
+                  that.setState({ loadingMarvel: false });
+                }, 'marvel');
+              }
             }
           }}
         />

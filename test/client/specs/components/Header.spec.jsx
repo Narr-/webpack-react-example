@@ -37,30 +37,10 @@ describe('<Header />', () => {
       // console.log(marvelLink.debug());
       expect(wrapper.state().loadingMarvel).to.equal(false);
       // console.log(wrapper.debug());
-      Header.__Rewire__('rewireVar',
-        (deps, success, fail) => { // eslint-disable-line no-unused-vars
-          success();
-        });
       marvelLink.simulate('click');
-      expect(window.location.pathname).to.equal('/marvel/');
       expect(wrapper.state('loadingMarvel')).to.equal(true);
       // console.log(wrapper.debug());
       expect(wrapper.find('Spinner')).to.have.length(1);
-    });
-
-    //
-    it('when simulating a click event on mavelLink, it fails to go to Marvel Link', () => {
-      wrapper.setState({ loadingMarvel: false });
-      expect(wrapper.state().loadingMarvel).to.equal(false);
-      const marvelLink = wrapper.find({ className: 'icon-marvel-logo' }).find('a');
-      Header.__Rewire__('rewireVar',
-        (deps, success, fail) => { // eslint-disable-line no-unused-vars
-          fail();
-        });
-      marvelLink.simulate('click');
-      expect(wrapper.state('loadingMarvel')).to.equal(false);
-      expect(wrapper.find('Spinner')).to.have.length(0);
-      Header.__ResetDependency__('rewireVar');
     });
 
     //

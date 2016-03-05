@@ -65,7 +65,7 @@ describe('<MainSection />', () => {
 
     //
     it('renders a .toggle-all input', () => {
-      expect(wrapper.find('.toggle-all').type()).to.equal('input');
+      expect(wrapper.find('#toggle-all').type()).to.equal('input');
     });
 
     //

@@ -28,15 +28,15 @@ describe('<TodoItem />', () => {
     //
     it('renders a .view and a label for todoText', () => {
       // console.log(wrapper.debug());
-      expect(wrapper.find('.view').find('label').text()).to.equal('first text');
+      expect(wrapper.find('.view').find('label.text').text()).to.equal('first text');
     });
 
     //
     it('simulates events on .view\'s children', () => {
-      wrapper.find('.toggle').simulate('change');
+      wrapper.find('input').simulate('change');
       expect(completeTodo.lastCall.args[0]).to.equal(todo.get('todoId'));
 
-      wrapper.find('.view').children('label').simulate('doubleClick');
+      wrapper.find('.view').children('label.text').simulate('doubleClick');
       expect(setEditStatus.lastCall.args[0]).to.equal(todo.get('todoId'));
 
       wrapper.find('.destroy').simulate('click');
