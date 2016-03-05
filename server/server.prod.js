@@ -101,3 +101,19 @@ export const start = promise.then(() => {
     redis: false
   };
 });
+
+
+// test
+const server = http.createServer(app);
+server
+  .listen(PORT, () => {
+    logger.info(`==> 🌎  Listening on port ${PORT}.` +
+      ` Open up http:\/\/localhost:${PORT} in your browser.`);
+  })
+  .on('error', err => {
+    if (err.code === 'EADDRINUSE') {
+      logger.error('The port is already in use..!!');
+    }
+  });
+
+export default app;
