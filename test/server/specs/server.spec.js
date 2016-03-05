@@ -5,11 +5,12 @@ import serverProd, // eslint-disable-line no-unused-vars
 
 describe('##### SERVER #### server.prod.js:', () => {
   // console.log(serverProd.__Rewire__);
-  let server;
+  let server = serverProd(false);
   before(() => {
     console.log('start..@@!!');
     console.log(start.then);
     start.then((result) => {
+      console.log('result..!!');
       console.log(result);
       server = result.server;
       // done();
@@ -26,7 +27,7 @@ describe('##### SERVER #### server.prod.js:', () => {
 
   describe('GET /', () => {
     it('/ should respond with index.html', (done) => {
-      request(serverProd)
+      request(server)
         .get('/')
         .expect('Content-Type', /text\/html/)
         .expect((res) => {

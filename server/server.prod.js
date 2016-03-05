@@ -13,9 +13,11 @@ import routers from './routes';
 import http from 'http';
 import socket from './socket';
 
+console.log('server.prod..!!');
 const logger = loggerMaker(module);
 const redisClient = redis.createClient(REDIS_URL);
 const promise = new Promise((resolve, reject) => {
+  console.log('Promise..!!!!');
   let reconTry = 0;
 
   redisClient.on('connect', () => {
@@ -32,7 +34,7 @@ const promise = new Promise((resolve, reject) => {
 });
 const app = express();
 
-function startApp(useRedis) {
+export default function startApp(useRedis) {
   console.log('start22..@@!!');
   app.use(morgan('combined', {
     stream: logger.stream
@@ -115,5 +117,3 @@ server
       logger.error('The port is already in use..!!');
     }
   });
-
-export default app;
