@@ -8,12 +8,12 @@ describe('##### SERVER #### server.prod.js:', () => {
   let server;
   before(() => {
     console.log('start..@@!!');
-    console.log(start);
-    // start.then((result) => {
-    //   // console.log(result);
-    //   server = result.server;
-    //   done();
-    // });
+    console.log(start.then);
+    start.then((result) => {
+      console.log(result);
+      server = result.server;
+      // done();
+    });
   });
 
   after(() => {
