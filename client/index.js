@@ -10,10 +10,10 @@ import { syncHistoryWithStore } from 'react-router-redux';
 import routes from './routes';
 import { todoStoragePromise } from './services';
 import Immutable from 'immutable';
-import a11y from 'react-a11y'; // https://github.com/reactjs/react-a11y
 
 if (process.env.NODE_ENV === 'development') {
-  a11y(React); // TODO: should disable this with IE 9
+  // https://github.com/reactjs/react-a11y
+  require('react-a11y')(React); // TODO: should disable this with IE 9
 }
 
 const { pathname, search, hash } = window.location;

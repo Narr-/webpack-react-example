@@ -41,10 +41,10 @@ RUN ln -s ./python2.7 ./python
 RUN sudo apt-get -y install build-essential
 
 # Install libkrb5-dev for kerberos that is one of mongodb's sub-modules
-RUN sudo apt-get -y install libkrb5-dev
+# RUN sudo apt-get -y install libkrb5-dev
 # to build some npm modules like socket.io @
 
-RUN sudo apt-get -y install libpq-dev # to build a npm module like pq
+RUN sudo apt-get update --fix-missing && sudo apt-get -y install libpq-dev # to build a npm module like pq
 
 # Install global plugins
 # RUN source ~/.nvm/nvm.sh; \
