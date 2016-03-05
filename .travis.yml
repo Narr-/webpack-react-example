@@ -34,21 +34,21 @@ script:
   - gulp unit-client
   - gulp prod-build
   - gulp unit-server
-  - gulp server & # run a command in the background by appending '&'
-  - sleep 3 # give a server some time for it to start
-  - npm run e2e
+#  - gulp server & # run a command in the background by appending '&'
+#  - sleep 3 # give a server some time for it to start
+#  - npm run e2e
 
 # Note that pull request builds skip deployment step altogether.
-before_deploy:
- - rm -rf ./server/log
- - mkdir ./heroku
- - mv ./.babelrc ./.nvmrc ./package.json ./server ./static ./heroku
- - mv ./npm-shrinkwrap.prod.json ./heroku/npm-shrinkwrap.json
- - cd ./heroku # a directory that will be deployed
+#before_deploy:
+# - rm -rf ./server/log
+# - mkdir ./heroku
+# - mv ./.babelrc ./.nvmrc ./package.json ./server ./static ./heroku
+# - mv ./npm-shrinkwrap.prod.json ./heroku/npm-shrinkwrap.json
+# - cd ./heroku # a directory that will be deployed
 
-deploy:
-  provider: heroku
-  api_key:
-    secure: Cvy1IJpRpe4Udn/VwXu/wbbus1Ee9Ql6BzbFekS4fSL1PwIogDmuh5Pz3QRYCN06i9gBoeRjc61dbN/74q8d5oQBPS5+MBp3GCl/Zl1LMTGqvOGqQohUnZWjmJ82oj3O4B35xMot6vZBCdaJf+f7yp0M6cUffmR6lQ5qP51SW4dO9m9YkKZmAurGSNM5BYSLZGcCx2+oWkbJum4AFiCFMW8vy2vZ/uZDPL39r/n4nnBHBDGhMl+HfhlHowQr3PfYd0NszdqCJFHFd18+8h5LySXDL6ZoQqb8CffHjXbys1Nyhv6BCchgXHNxteSJxeNFgT9lTjNXP9VrksxSscXokxnonNHGZujZxaZfLWfZ/XTw6LkKkYiYGxROJXhnTWHATBbSimVAtVCYMG4LREod3BavwyXhM204CP7a8R1QaZnToweI/P48YXLY20fyDYcB1yPA8GSReoE2oGXnWvg5qNchfhu/Ipika82FzC6gwvrYuGaboHnnSqu0N7TlmNy8ueiv1piLJ3Z9dt3VKraqVGgs26yIj7nZNZRtpSPGgtntwXrw/dIIBIOxRCXryXDQ04LhBust7/7WyuY5iyk60CYGFwqU+m2XlCmYwLmfqWvEdZbOASQfoCWJUUKx62kA5zyE23hOGrFgV/9sRgH68Yelh5dFY70orWonFJA0SHY=
-  app: webpack-react-example
-  skip_cleanup: true
+#deploy:
+#  provider: heroku
+#  api_key:
+#    secure: Cvy1IJpRpe4Udn/VwXu/wbbus1Ee9Ql6BzbFekS4fSL1PwIogDmuh5Pz3QRYCN06i9gBoeRjc61dbN/74q8d5oQBPS5+MBp3GCl/Zl1LMTGqvOGqQohUnZWjmJ82oj3O4B35xMot6vZBCdaJf+f7yp0M6cUffmR6lQ5qP51SW4dO9m9YkKZmAurGSNM5BYSLZGcCx2+oWkbJum4AFiCFMW8vy2vZ/uZDPL39r/n4nnBHBDGhMl+HfhlHowQr3PfYd0NszdqCJFHFd18+8h5LySXDL6ZoQqb8CffHjXbys1Nyhv6BCchgXHNxteSJxeNFgT9lTjNXP9VrksxSscXokxnonNHGZujZxaZfLWfZ/XTw6LkKkYiYGxROJXhnTWHATBbSimVAtVCYMG4LREod3BavwyXhM204CP7a8R1QaZnToweI/P48YXLY20fyDYcB1yPA8GSReoE2oGXnWvg5qNchfhu/Ipika82FzC6gwvrYuGaboHnnSqu0N7TlmNy8ueiv1piLJ3Z9dt3VKraqVGgs26yIj7nZNZRtpSPGgtntwXrw/dIIBIOxRCXryXDQ04LhBust7/7WyuY5iyk60CYGFwqU+m2XlCmYwLmfqWvEdZbOASQfoCWJUUKx62kA5zyE23hOGrFgV/9sRgH68Yelh5dFY70orWonFJA0SHY=
+#  app: webpack-react-example
+#  skip_cleanup: true

@@ -33,6 +33,7 @@ const promise = new Promise((resolve, reject) => {
 const app = express();
 
 function startApp(useRedis) {
+  console.log('start22..@@!!');
   app.use(morgan('combined', {
     stream: logger.stream
   }));

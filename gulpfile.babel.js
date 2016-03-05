@@ -285,7 +285,7 @@ gulp.task('unit-server', () => {
     .pipe(mocha(
       {
         bail: true,
-        timeout: 5000
+        timeout: 60000
       }
     ))
     .once('error', (err) => {

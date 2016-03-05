@@ -7,6 +7,7 @@ describe('##### SERVER #### server.prod.js:', () => {
   // console.log(serverProd.__Rewire__);
   let server;
   before((done) => {
+    console.log('start..@@!!');
     start.then((result) => {
       // console.log(result);
       server = result.server;
