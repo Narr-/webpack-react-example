@@ -42,7 +42,7 @@ script:
 #before_deploy:
 # - rm -rf ./server/log
 # - mkdir ./heroku
-# - mv ./.babelrc ./.nvmrc ./package.json ./server ./static ./heroku
+# - mv ./.babelrc ./package.json ./server ./static ./heroku
 # - mv ./npm-shrinkwrap.prod.json ./heroku/npm-shrinkwrap.json
 # - cd ./heroku # a directory that will be deployed
 
