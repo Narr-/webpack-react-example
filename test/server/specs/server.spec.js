@@ -4,25 +4,25 @@ import start from '../../../server/server.prod';
 
 describe('##### SERVER #### server.prod.js:', () => {
   // console.log(start.__Rewire__);
-  // const server = start(false);
+  const server = start(false);
   // @ Promise is not resolved in Travis
-  let server;
-  before((done) => {
-    start().then((result) => {
-      // console.log(result);
-      server = result.server;
-      done();
-    });
-  });
+  // let server;
+  // before((done) => {
+  //   start().then((result) => {
+  //     // console.log(result);
+  //     server = result.server;
+  //     done();
+  //   });
+  // });
+  //
+  // after(() => {
+  //   // use "process.removeAllListeners('uncaughtException');" to handle below error
+  //   // (node) warning: possible EventEmitter memory leak detected.
+  //   // 11 uncaughtException listeners added. Use emitter.setMaxListeners() to increase limit.
+  //   process.removeAllListeners('uncaughtException');
+  //   server.close();
+  // });
   // Promise is not resolved in Travis @
-
-  after(() => {
-    // use "process.removeAllListeners('uncaughtException');" to handle below error
-    // (node) warning: possible EventEmitter memory leak detected.
-    // 11 uncaughtException listeners added. Use emitter.setMaxListeners() to increase limit.
-    process.removeAllListeners('uncaughtException');
-    server.close();
-  });
 
   describe('GET /', () => {
     it('/ should respond with index.html', (done) => {
