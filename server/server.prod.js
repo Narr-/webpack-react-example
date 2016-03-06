@@ -16,7 +16,6 @@ import socket from './socket';
 const logger = loggerMaker(module);
 const redisClient = redis.createClient(REDIS_URL);
 const promise = new Promise((resolve, reject) => {
-  console.log('Promise..!!!!');
   let reconTry = 0;
 
   redisClient.on('connect', () => {
@@ -24,7 +23,6 @@ const promise = new Promise((resolve, reject) => {
   });
 
   redisClient.on('error', (err) => {
-    console.log('redis retry.~~');
     logger.error(err);
     if (++reconTry === 3) {
       redisClient.end();
@@ -34,8 +32,7 @@ const promise = new Promise((resolve, reject) => {
 });
 const app = express();
 
-export default function startApp(useRedis) {
-  console.log('startApp..@@!! ' + useRedis);
+function startApp(useRedis) {
   app.use(morgan('combined', {
     stream: logger.stream
   }));
@@ -90,18 +87,21 @@ export default function startApp(useRedis) {
   return server;
 }
 
-export const start = promise.then(() => {
-  console.log('promise success..!!');
-  const server = startApp(true);
-  return {
-    server,
-    redis: true
-  };
-}, () => { // no redis
-  console.log('promise fail..!!');
-  const server = startApp(false);
-  return {
-    server,
-    redis: false
-  };
-});
+export default function start(useRedis) {
+  if (typeof useRedis === 'undefined') {
+    return promise.then(() => {
+      const server = startApp(true);
+      return {
+        server,
+        redis: true
+      };
+    }, () => {
+      const server = startApp(false);
+      return {
+        server,
+        redis: false
+      };
+    });
+  }
+  return startApp(useRedis);
+}

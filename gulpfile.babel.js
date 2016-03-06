@@ -272,10 +272,10 @@ gulp.task('unit-server-cov', () => {
           .once('error', (err) => {
             gutil.log(gutil.colors.red(err));
             process.exit(1);
-          })
-          .once('end', () => {
-            process.exit();
           });
+          // .once('end', () => {
+          //   process.exit();
+          // });
       });
 });
 
@@ -285,12 +285,15 @@ gulp.task('unit-server', () => {
     .pipe(mocha(
       {
         bail: true,
-        timeout: 60000
+        timeout: 5000
       }
     ))
     .once('error', (err) => {
       gutil.log(gutil.colors.red(err));
       process.exit(1);
+    })
+    .once('end', () => {
+      process.exit();
     });
 });
 
@@ -299,5 +302,5 @@ gulp.task('unit-server', () => {
 gulp.task('lub', cb => {
   // just for convenience
   // the order matters and if the order is different, the task will not end or not executed well
-  runSequence('lint', 'prod-build', 'unit-server', 'unit-client', cb);
+  runSequence('lint', 'prod-build', 'unit-server-cov', 'unit-client', cb);
 });

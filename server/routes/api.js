@@ -16,7 +16,6 @@ router.use(timeout('5s'));
 router.post('/', (req, res) => {
   pg.connect(POSTGRESQL_URI, (err, client, done) => {
     if (err) {
-      logger.error('ddfdfdfaa');
       logger.error(err);
       res.status(503).json({
         message: 'DB connection Error..!!'

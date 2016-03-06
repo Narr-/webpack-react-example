@@ -1,22 +1,20 @@
 import { expect } from 'chai';
 import request from 'supertest';
-import serverProd, // eslint-disable-line no-unused-vars
-{ start } from '../../../server/server.prod';
+import start from '../../../server/server.prod';
 
 describe('##### SERVER #### server.prod.js:', () => {
-  // console.log(serverProd.__Rewire__);
-  let server = serverProd(false);
+  // console.log(start.__Rewire__);
+  // const server = start(false);
+  // @ Promise is not resolved in Travis
+  let server;
   before((done) => {
-    console.log('start..@@!!');
-    start.then((result) => {
-      console.log('result..!!');
-      console.log(result);
+    start().then((result) => {
+      // console.log(result);
       server = result.server;
       done();
-    }, (err) => {
-      console.log('error..!!');
     });
   });
+  // Promise is not resolved in Travis @
 
   after(() => {
     // use "process.removeAllListeners('uncaughtException');" to handle below error
@@ -32,7 +30,7 @@ describe('##### SERVER #### server.prod.js:', () => {
         .get('/')
         .expect('Content-Type', /text\/html/)
         .expect((res) => {
-          console.log(res);
+          // console.log(res);
           expect(res.text).to.be.a('string');
           expect(res.text).to.have.string('<title>Redux TodoMVC example<\/title>');
         })
