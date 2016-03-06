@@ -8,20 +8,20 @@ node_js:
   - "4.2.4"
 
 # @ Node.js v4 (or io.js v3) compiler requirements
-#env:
-#  - CXX=g++-4.8
+env:
+  - CXX=g++-4.8
 
-#addons:
-#  apt:
-#    sources:
-#      - ubuntu-toolchain-r-test
-#    packages:
-#      - g++-4.8
+addons:
+  apt:
+    sources:
+      - ubuntu-toolchain-r-test
+    packages:
+      - g++-4.8
 # Node.js v4 (or io.js v3) compiler requirements @
 
-#install:
-#  - npm install -g gulp@3.9.1
-#  - npm install
+install:
+ - npm install -g gulp@3.9.1
+ - npm install
 
 #before_script:
   # @ open FireFox
