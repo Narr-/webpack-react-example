@@ -1,19 +1,20 @@
 import { expect } from 'chai';
 import request from 'supertest';
-import start from '../../../server/server.prod';
+import serverProd, // eslint-disable-line no-unused-vars
+{ start } from '../../../server/server.prod';
 
 describe('##### SERVER #### server.prod.js:', () => {
-  // console.log(start.__Rewire__);
+  // console.log(serverProd.__Rewire__);
   // const server = start(false);
   // @ Promise is not resolved in Travis
-  // let server;
-  // before((done) => {
-  //   start().then((result) => {
-  //     // console.log(result);
-  //     server = result.server;
-  //     done();
-  //   });
-  // });
+  let server;
+  before((done) => {
+    start.then((result) => {
+      // console.log(result);
+      server = result.server;
+      done();
+    });
+  });
   //
   // after(() => {
   //   // use "process.removeAllListeners('uncaughtException');" to handle below error
@@ -24,17 +25,17 @@ describe('##### SERVER #### server.prod.js:', () => {
   // });
   // Promise is not resolved in Travis @
 
-  let server;
-  before((done) => {
-    const promise = new Promise((resolve) => {
-      resolve(true);
-    });
-    promise.then((result) => {
-      console.log(result);
-      server = start(false);
-      done();
-    });
-  });
+  // let server;
+  // before((done) => {
+  //   const promise = new Promise((resolve) => {
+  //     resolve(true);
+  //   });
+  //   promise.then((result) => {
+  //     console.log(result);
+  //     server = start(false);
+  //     done();
+  //   });
+  // });
 
   describe('GET /', () => {
     it('/ should respond with index.html', (done) => {
