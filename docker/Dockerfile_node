@@ -26,7 +26,7 @@ RUN source ~/.nvm/nvm.sh; \
 # Otherwise, it recognizes that as a file and creates the webpack-react-example file
 COPY ./package.json /webpack-react-example/
 COPY ./npm-shrinkwrap.prod.json /webpack-react-example/npm-shrinkwrap.json
-COPY ./.babelrc /webpack-react-example
+COPY ./.babelrc /webpack-react-example/
 COPY ./server /webpack-react-example/server
 COPY ./client /webpack-react-example/client
 COPY ./static /webpack-react-example/static
