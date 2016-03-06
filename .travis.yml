@@ -2,13 +2,18 @@ branches:
   only:
     - master
 
+services:
+  - redis-server
+
 language: node_js
 
 node_js:
   - "4.2.4"
 
-# @ Node.js v4 (or io.js v3) compiler requirements
 env:
+  - REDIS_URL=redis
+  - REDIS_URL2=redis-server
+  # @ Node.js v4 (or io.js v3) compiler requirements
   - CXX=g++-4.8
 
 addons:
