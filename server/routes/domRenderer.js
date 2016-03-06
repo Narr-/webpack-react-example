@@ -29,38 +29,62 @@ export default function (req, res, next) {
         const serverUrl = `//${req.get('host')}/`; // * The last slash(/) is important
         // console.log(renderProps);
         // if req.protocol is not specified, fetch api changes // to https://
-        innermostApp.fetchTodos(`${req.protocol}:${serverUrl}`, req.ip).then(result => {
+        // innermostApp.fetchTodos(`${req.protocol}:${serverUrl}`, req.ip).then(result => {
+        //   console.log('match2..!! match2..!! match2..!! match2..!! match2..!! match2..!!');
+        //   // console.log(result);
+        //   let initStore;
+        //   if (!result.error) {
+        //     initStore = {
+        //       todos: result.todos
+        //     };
+        //   }
+        //   const store = configureStore(initStore);
+        //   const htmlString = renderToString(
+        //     <Provider store={store}>
+        //       {<RouterContext {...renderProps} />}
+        //     </Provider>
+        //   );
+        //   const finalState = store.getState();
+
+        //   let chunks = [];
+        //   if (innermostApp.getChunks) {
+        //     chunks = innermostApp.getChunks();
+        //   }
+
+        //   const indexPath = path.join(__dirname, '../../static/index.html');
+        //   res.render(indexPath, {
+        //     baseUrl: `'${serverUrl}'`,
+        //     reactDom: htmlString,
+        //     reduxState: JSON.stringify(finalState),
+        //     scriptTags: chunks
+        //   }, (err, html) => {
+        //     // console.log(html);
+        //     res.send(html);
+        //   });
+        // });
+
+        const store = configureStore();
+        const htmlString = renderToString(
+          <Provider store={store}>
+            {<RouterContext {...renderProps} />}
+          </Provider>
+        );
+        const finalState = store.getState();
+
+        let chunks = [];
+        if (innermostApp.getChunks) {
+          chunks = innermostApp.getChunks();
+        }
+
+        const indexPath = path.join(__dirname, '../../static/index.html');
+        res.render(indexPath, {
+          baseUrl: `'${serverUrl}'`,
+          reactDom: htmlString,
+          reduxState: JSON.stringify(finalState),
+          scriptTags: chunks
+        }, (err, html) => {
           console.log('match2..!! match2..!! match2..!! match2..!! match2..!! match2..!!');
-          // console.log(result);
-          let initStore;
-          if (!result.error) {
-            initStore = {
-              todos: result.todos
-            };
-          }
-          const store = configureStore(initStore);
-          const htmlString = renderToString(
-            <Provider store={store}>
-              {<RouterContext {...renderProps} />}
-            </Provider>
-          );
-          const finalState = store.getState();
-
-          let chunks = [];
-          if (innermostApp.getChunks) {
-            chunks = innermostApp.getChunks();
-          }
-
-          const indexPath = path.join(__dirname, '../../static/index.html');
-          res.render(indexPath, {
-            baseUrl: `'${serverUrl}'`,
-            reactDom: htmlString,
-            reduxState: JSON.stringify(finalState),
-            scriptTags: chunks
-          }, (err, html) => {
-            // console.log(html);
-            res.send(html);
-          });
+          res.send(html);
         });
       } else {
         next();
