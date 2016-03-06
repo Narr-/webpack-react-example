@@ -23,7 +23,7 @@ redis:
 postgres:
   image: postgres
   ports:
-   - "5433:5432"
+   - "5433:5432" # HOST_PORT 5432 is used in Travis. So change it to 5433
   environment:
    - POSTGRES_USER=narr
    - POSTGRES_DB=todo_db

@@ -1,0 +1,4 @@
+# override docker-compose.yml - https://docs.docker.com/compose/reference/overview/
+node:
+  cpuset: 0
+  command: node -v
