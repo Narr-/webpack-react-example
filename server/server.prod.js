@@ -24,6 +24,7 @@ const promise = new Promise((resolve, reject) => {
   });
 
   redisClient.on('error', (err) => {
+    console.log('redis retry.~~');
     logger.error(err);
     if (++reconTry === 3) {
       redisClient.end();

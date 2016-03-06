@@ -6,13 +6,13 @@ import serverProd, // eslint-disable-line no-unused-vars
 describe('##### SERVER #### server.prod.js:', () => {
   // console.log(serverProd.__Rewire__);
   let server = serverProd(false);
-  before(() => {
+  before((done) => {
     console.log('start..@@!!');
     start.then((result) => {
       console.log('result..!!');
       console.log(result);
       server = result.server;
-      // done();
+      done();
     }, (err) => {
       console.log('error..!!');
     });
@@ -32,7 +32,7 @@ describe('##### SERVER #### server.prod.js:', () => {
         .get('/')
         .expect('Content-Type', /text\/html/)
         .expect((res) => {
-          // console.log(res);
+          console.log(res);
           expect(res.text).to.be.a('string');
           expect(res.text).to.have.string('<title>Redux TodoMVC example<\/title>');
         })
