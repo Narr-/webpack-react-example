@@ -21,6 +21,7 @@ export default function (req, res, next) {
       } else if (redirectLocation) {
         res.redirect(302, redirectLocation.pathname + redirectLocation.search);
       } else if (renderProps) {
+        console.log('match..!! match..!! match..!! match..!! match..!! match..!!');
         // the leaf node (if the routing is nested, the innermost one)
         let innermostApp = renderProps.components[renderProps.components.length - 1];
         innermostApp = innermostApp.WrappedComponent ? innermostApp.WrappedComponent : innermostApp;
@@ -29,6 +30,7 @@ export default function (req, res, next) {
         // console.log(renderProps);
         // if req.protocol is not specified, fetch api changes // to https://
         innermostApp.fetchTodos(`${req.protocol}:${serverUrl}`, req.ip).then(result => {
+          console.log('match2..!! match2..!! match2..!! match2..!! match2..!! match2..!!');
           // console.log(result);
           let initStore;
           if (!result.error) {

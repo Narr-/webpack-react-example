@@ -4,7 +4,7 @@ import start from '../../../server/server.prod';
 
 describe('##### SERVER #### server.prod.js:', () => {
   // console.log(start.__Rewire__);
-  const server = start(false);
+  // const server = start(false);
   // @ Promise is not resolved in Travis
   // let server;
   // before((done) => {
@@ -24,25 +24,37 @@ describe('##### SERVER #### server.prod.js:', () => {
   // });
   // Promise is not resolved in Travis @
 
-  // describe('GET /', () => {
-  //   it('/ should respond with index.html', (done) => {
-  //     request(server)
-  //       .get('/')
-  //       .expect('Content-Type', /text\/html/)
-  //       .expect((res) => {
-  //         console.log(res);
-  //         expect(res.text).to.be.a('string');
-  //         expect(res.text).to.have.string('<title>Redux TodoMVC example<\/title>');
-  //       })
-  //       .end((err, res) => { // eslint-disable-line no-unused-vars
-  //         console.log('end..!!!!');
-  //         if (err) {
-  //           return done(err);
-  //         }
-  //         return done();
-  //       });
-  //   });
-  // });
+  let server;
+  before((done) => {
+    const promise = new Promise((resolve) => {
+      resolve(true);
+    });
+    promise.then((result) => {
+      console.log(result);
+      server = start(false);
+      done();
+    });
+  });
+
+  describe('GET /', () => {
+    it('/ should respond with index.html', (done) => {
+      request(server)
+        .get('/')
+        .expect('Content-Type', /text\/html/)
+        .expect((res) => {
+          console.log(res);
+          expect(res.text).to.be.a('string');
+          expect(res.text).to.have.string('<title>Redux TodoMVC example<\/title>');
+        })
+        .end((err, res) => { // eslint-disable-line no-unused-vars
+          console.log('end..!!!!');
+          if (err) {
+            return done(err);
+          }
+          return done();
+        });
+    });
+  });
 
   describe('GET *', () => {
     it('/merong should respond with 404.html', (done) => {
@@ -50,12 +62,11 @@ describe('##### SERVER #### server.prod.js:', () => {
         .get('/merong')
         .expect('Content-Type', /text\/html/)
         .expect((res) => {
-          console.log(res);
+          // console.log(res);
           expect(res.text).to.be.a('string');
           expect(res.text).to.have.string('<title>- ooops! -<\/title>');
         })
         .end((err) => {
-          console.log(`err: ${err}`);
           if (err) {
             return done(err);
           }
