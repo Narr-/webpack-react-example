@@ -1,4 +1,31 @@
-# override docker-compose.yml - https://docs.docker.com/compose/reference/overview/
+# https://docs.docker.com/compose/compose-file/
 node:
-  cpuset: 0-1
+  cpuset: 0-1 # 0,1,2,3 CPUs in which to allow execution - https://docs.docker.com/engine/reference/run/
+  build: .
+  dockerfile: ./docker/Dockerfile_node
+  ports:
+   - "80:3000" # "HOST_PORT:CONTAINER_PORT"
+  volumes:
+   - ./server:/server-src
+  links:
+   - redis
+   - postgres
+  environment:
+   - NODE_ENV=docker
+  container_name: wre-node
   command: node -v
+
+redis:
+  image: redis
+  ports:
+   - "6379:6379"
+  container_name: wre-redis
+
+postgres:
+  image: postgres
+  ports:
+   - "5433:5432" # HOST_PORT 5432 is used in Travis. So change it to 5433
+  environment:
+   - POSTGRES_USER=narr
+   - POSTGRES_DB=todo_db
+  container_name: wre-postgres
