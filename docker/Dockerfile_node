@@ -42,35 +42,37 @@ COPY ./ /webpack-react-example/
 # @ for e2e test
 # sudo apt-get -y install openjdk-7-jdk => for selenium
 # sudo apt-get -y install xvfb => for selenium
+# sudo apt-get -y install xfonts-cyrillic xfonts-100dpi xfonts-75dpi xfonts-scalable => for xvfb
 # for e2e test @
-RUN sudo apt-get update --fix-missing && \
-    apt-get -y install curl && \
-    rm /bin/sh && ln -s /bin/bash /bin/sh && \
-    export NVM_VERSION=v0.31.0 && \
-    curl -o- https://raw.githubusercontent.com/creationix/nvm/${NVM_VERSION}/install.sh | bash && \
+RUN sudo apt-get update --fix-missing \
+    && apt-get -y install curl \
+    && rm /bin/sh && ln -s /bin/bash /bin/sh \
+    && export NVM_VERSION=v0.31.0 \
+    && curl -o- https://raw.githubusercontent.com/creationix/nvm/${NVM_VERSION}/install.sh | bash \
 
-    sudo apt-get -y install python2.7 && \
-    ln -s /usr/bin/python2.7 /usr/bin/python && \
-    sudo apt-get -y install build-essential && \
-    sudo apt-get -y install libpq-dev && \
-    sudo apt-get -y install libfontconfig && \
+    && sudo apt-get -y install python2.7 \
+    && ln -s /usr/bin/python2.7 /usr/bin/python \
+    && sudo apt-get -y install build-essential \
+    && sudo apt-get -y install libpq-dev \
+    && sudo apt-get -y install libfontconfig \
 
-    sudo apt-get -y install openjdk-7-jdk && \
-    sudo apt-get -y install firefox && \
-    sudo apt-get -y install xvfb
+    && sudo apt-get -y install openjdk-7-jdk \
+    && sudo apt-get -y install firefox \
+    && sudo apt-get -y install xvfb \
+    && sudo apt-get -y install xfonts-cyrillic xfonts-100dpi xfonts-75dpi xfonts-scalable
 
 
 # source ~/.nvm/nvm.sh; ==> to use nvm and install Node
-RUN export NODE_VERSION=v4.2.4 && \
-    source ~/.nvm/nvm.sh && \
-    nvm install $NODE_VERSION && \
-    cd /webpack-react-example && \
-    npm install -g gulp@3.9.1 && \
-    npm install && \
-    gulp prod-build
+RUN export NODE_VERSION=v4.2.4 \
+    && source ~/.nvm/nvm.sh \
+    && nvm install $NODE_VERSION \
+    && cd /webpack-react-example \
+    && npm install -g gulp@3.9.1 \
+    && npm install \
+    && gulp prod-build
 
 
 # CMD ["executable", "param1", "param2"]
-CMD source ~/.nvm/nvm.sh && \
-    cd /webpack-react-example && \
-    node ./node_modules/pm2/bin/pm2 start ./server/index.js -i 4 --no-daemon
+CMD source ~/.nvm/nvm.sh \
+    && cd /webpack-react-example \
+    && node ./node_modules/pm2/bin/pm2 start ./server/index.js -i 4 --no-daemon
