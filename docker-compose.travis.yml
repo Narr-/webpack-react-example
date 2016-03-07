@@ -13,7 +13,9 @@ node:
   environment:
    - NODE_ENV=docker
   container_name: wre-node
-  command: bash --help
+  command:
+  bash -c "source ~/.nvm/nvm.sh && \
+    node -v"
 
 redis:
   image: redis
