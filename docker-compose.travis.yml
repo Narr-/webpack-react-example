@@ -14,6 +14,7 @@ node:
    - NODE_ENV=docker
    - DISPLAY=:99 # xvfb => for selenium
   container_name: wre-node
+  # sleep 10 => make some time for loading the server
   command: [
     bash, -c,
     "source ~/.nvm/nvm.sh \
@@ -23,7 +24,7 @@ node:
     & Xvfb :99 -ac \
     & source ~/.nvm/nvm.sh \
     && cd /webpack-react-example \
-    && sleep 4 \
+    && sleep 10 \
     && npm run e2e)"
   ]
 
