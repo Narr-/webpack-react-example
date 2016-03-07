@@ -10,6 +10,8 @@ services:
 before_install:
   - docker-compose -f ./docker-compose.travis.yml up
 
+install: true # to avoid the default step of the buiding process of ruby
+
 # Builds triggered from Pull Requests will never trigger a deploy.
 # before_deploy:
 #   - mkdir ./heroku
