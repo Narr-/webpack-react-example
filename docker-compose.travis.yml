@@ -15,13 +15,7 @@ node:
   container_name: wre-node
   command: bash -c "source ~/.nvm/nvm.sh \
                     && cd /webpack-react-example \
-                    && gulp lint \
-                    && gulp unit-client \
-                    && gulp unit-server-cov \
-                    && gulp server \
-                    & export DISPLAY=:99 \
-                    && Xvfb :99 -ac \
-                    && npm run e2e"
+                    && gulp lint
 
 redis:
   image: redis
