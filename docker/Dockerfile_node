@@ -37,6 +37,7 @@ COPY ./ /webpack-react-example/
 # sudo apt-get -y install libkrb5-dev => for kerberos that is one of mongodb's sub-modules
 # sudo apt-get -y install libpq-dev => for pq
 # sudo apt-get -y install libfontconfig => phantomjs
+# sudo apt-get -y install openjdk-7-jdk => selenium
 # to build some npm modules @
 RUN sudo apt-get update --fix-missing && \
     apt-get -y install curl && \
@@ -48,7 +49,7 @@ RUN sudo apt-get update --fix-missing && \
     sudo apt-get -y install build-essential && \
     sudo apt-get -y install libpq-dev && \
     sudo apt-get -y install libfontconfig
-
+    sudo apt-get -y install openjdk-7-jdk
 
 # source ~/.nvm/nvm.sh; ==> to use nvm and install Node
 RUN export NODE_VERSION=v4.2.4 && \
