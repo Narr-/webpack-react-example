@@ -21,7 +21,6 @@ node:
                     && gulp server \
                     & export DISPLAY=:99 \
                     && Xvfb :99 -ac \
-                    & sleep '4' \
                     && npm run e2e"
 
 redis:
