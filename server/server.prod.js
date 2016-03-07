@@ -29,7 +29,6 @@ const promise = new Promise((resolve, reject) => {
       reject();
     }
   });
-  reject();
 });
 const app = express();
 
@@ -58,7 +57,7 @@ function startApp(useRedis) {
   // @ react dom rendering
   app.set('view engine', 'html');
   app.engine('html', ejs.renderFile);
-  // app.use(routers.domRenderer);
+  app.use(routers.domRenderer);
   // react dom rendering @
   app.get(/^\/*$/, (req, res) => { // handle 'root-url//, root-url///, root-url//// and so on'
     res.sendFile(path.join(__dirname, './views/404.html'));

@@ -71,7 +71,8 @@ RUN export NODE_VERSION=v4.2.4 \
     && npm install \
     && gulp lint \
     && gulp unit-client \
-    && gulp prod-build
+    && gulp prod-build \
+    && gulp unit-server-cov
 
 
 # CMD ["executable", "param1", "param2"]
