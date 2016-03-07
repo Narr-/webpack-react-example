@@ -1,36 +1,35 @@
-// difficult to use console.log
-describe('/', () => {
-  const URL = 'http://localhost:3000';
-  // before((client, done) => {
-  //   done();
-  // });
+const URL = 'http://localhost:3000';
 
-  // beforeEach((client, done) => {
-  //   done();
-  // });
+module.exports = {
+  // before: (browser) => {
+  //   console.log('Setting up...');
+  // },
+  // after: (browser) => {
+  //   console.log('Closing down...');
+  // },
+  // beforeEach: function(browser, done) {
+  //   // performing an async operation
+  //   setTimeout(function() {
+  //     // finished async duties
+  //     done();
+  //   }, 100);
+  // },
+  // afterEach: function(browser, done) {
+  //   // performing an async operation
+  //   setTimeout(function() {
+  //     // finished async duties
+  //     done();
+  //   }, 200);
+  // }
 
-  // afterEach((client, done) => {
-  //   done();
-  // });
-
-  after((client, done) => { // this is required to end the task and close the browser
-    client.end(() => {
-      done();
+  '/ : should have a title, Redux TodoMVC example': (browser) => {
+    // console.log(browser.globals); // global variables
+    browser.url(URL).getTitle((title) => {
+      browser.expect(title).to.equal('Redux TodoMVC example');
     });
-  });
-
-  it('should have a title, Redux TodoMVC example', (client) => {
-    // console.log(client.globals);
-    client
-      .url(URL)
-      .getTitle((title) => {
-        client.expect(title).to.equal('Redux TodoMVC example');
-      });
-  });
-
-  it('header\'s h1 should have a text, todos', (client) => {
-    client
-      .url(URL)
-      .expect.element('.todoapp header h1').text.to.equal('todos');
-  });
-});
+  },
+  '/ : header\'s h1 should have a text, todos': (browser) => {
+    browser.expect.element('.todoapp header h1').text.to.equal('todos');
+    browser.end(); // this is required to end the task and close the browser
+  }
+};

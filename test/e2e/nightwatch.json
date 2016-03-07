@@ -1,7 +1,6 @@
 {
   "src_folders": ["test/e2e/specs"],
   "output_folder": "test/e2e/reports",
-  "test_runner": "mocha",
   "globals_path": "test/e2e/config.js",
   "selenium": {
     "server_path": "bin/selenium-server-standalone-2.52.0.jar",

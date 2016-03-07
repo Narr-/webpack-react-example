@@ -13,7 +13,7 @@ node:
   environment:
    - NODE_ENV=docker
   container_name: wre-node
-  command: source
+  command: bash --help
 
 redis:
   image: redis

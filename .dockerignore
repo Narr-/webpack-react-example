@@ -13,7 +13,6 @@ ecosystem.json
 memo.txt
 README.md
 
-bin
 # docker // This should not be ignored
 gh-pages
 node_modules
