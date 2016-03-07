@@ -13,9 +13,7 @@ node:
   environment:
    - NODE_ENV=docker
   container_name: wre-node
-  command: source ~/.nvm/nvm.sh && \
-    cd /webpack-react-example && \
-    node -v
+  command: node -v
 
 redis:
   image: redis

@@ -11,7 +11,7 @@ if (NODE_ENV === 'docker') {
   POSTGRESQL_URI = env.DATABASE_URL;
   REDIS_URL = env.REDIS_URL;
 } else {
-  POSTGRESQL_URI = 'postgres://narr@192.168.99.100:5432/todo_db';
+  POSTGRESQL_URI = 'postgres://narr@192.168.99.100:5433/todo_db';
   REDIS_URL = 'redis://192.168.99.100:6379';
 }
 
