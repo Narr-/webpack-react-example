@@ -1,6 +1,6 @@
 # https://docs.docker.com/compose/compose-file/
 node:
-  cpuset: 0-1 # less than 4 for Tavis
+  cpuset: 0-2 # less than 4 for Tavis
   build: .
   dockerfile: ./docker/Dockerfile_node
   ports:
