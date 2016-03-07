@@ -14,7 +14,7 @@ docker images -a
 docker-compose up -d
 docker run -it "image id" bash => a new container
 docker exec -it "container id" bash => a running container
-docker-compose run node bash => a new container, node is a name in docker-compose.yml
+docker-compose run --rm node bash => a new container, node is a name in docker-compose.yml and remove it after run
 npm run e2e
 
 
