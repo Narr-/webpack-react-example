@@ -1,1 +1,24 @@
+.dockerignore
+.editorconfig
+.eslintignore
+.gitattributes
+.gitignore
+.nvmrc
+.scss-lint.yml
+.travis.yml
+docker-compose.travis.yml
+docker-compose.yml
+ecosystem.json
+memo.txt
+README.md
+
+bin
+# docker // This should not be ignored
+gh-pages
+node_modules
 server/log
+static
+temp
+test/**/coverage
+test/**/screenshots
+tmp

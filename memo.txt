@@ -12,8 +12,8 @@ node -e 'process.env.NODE_ENV = \"production\"; require(\"./server\");'
 docker ps -a
 docker images -a
 docker-compose up -d
-docker run -it "image" bash => a new container
-docker exec -it "image" bash => a running container
+docker run -it "image id" bash => a new container
+docker exec -it "container id" bash => a running container
 docker-compose run node bash => a new container, node is a name in docker-compose.yml
 npm run e2e
 

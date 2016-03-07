@@ -6,7 +6,7 @@ node:
   ports:
    - "80:3000" # "HOST_PORT:CONTAINER_PORT"
   volumes:
-   - ./server:/server-src
+   - ./server:/server-src # "HOST_DIR:CONTAINER_DIR"
   links:
    - redis
    - postgres

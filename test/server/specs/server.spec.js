@@ -5,8 +5,6 @@ import serverProd, // eslint-disable-line no-unused-vars
 
 describe('##### SERVER #### server.prod.js:', () => {
   // console.log(serverProd.__Rewire__);
-  // const server = start(false);
-  // @ Promise is not resolved in Travis
   let server;
   before((done) => {
     start.then((result) => {
@@ -15,27 +13,14 @@ describe('##### SERVER #### server.prod.js:', () => {
       done();
     });
   });
-  //
-  // after(() => {
-  //   // use "process.removeAllListeners('uncaughtException');" to handle below error
-  //   // (node) warning: possible EventEmitter memory leak detected.
-  //   // 11 uncaughtException listeners added. Use emitter.setMaxListeners() to increase limit.
-  //   process.removeAllListeners('uncaughtException');
-  //   server.close();
-  // });
-  // Promise is not resolved in Travis @
 
-  // let server;
-  // before((done) => {
-  //   const promise = new Promise((resolve) => {
-  //     resolve(true);
-  //   });
-  //   promise.then((result) => {
-  //     console.log(result);
-  //     server = start(false);
-  //     done();
-  //   });
-  // });
+  after(() => {
+    // use "process.removeAllListeners('uncaughtException');" to handle below error
+    // (node) warning: possible EventEmitter memory leak detected.
+    // 11 uncaughtException listeners added. Use emitter.setMaxListeners() to increase limit.
+    process.removeAllListeners('uncaughtException');
+    server.close();
+  });
 
   describe('GET /', () => {
     it('/ should respond with index.html', (done) => {
@@ -43,12 +28,11 @@ describe('##### SERVER #### server.prod.js:', () => {
         .get('/')
         .expect('Content-Type', /text\/html/)
         .expect((res) => {
-          console.log(res);
+          // console.log(res);
           expect(res.text).to.be.a('string');
           expect(res.text).to.have.string('<title>Redux TodoMVC example<\/title>');
         })
         .end((err, res) => { // eslint-disable-line no-unused-vars
-          console.log('end..!!!!');
           if (err) {
             return done(err);
           }

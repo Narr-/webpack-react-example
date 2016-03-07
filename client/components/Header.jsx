@@ -18,6 +18,11 @@ class Header extends Component {
   //   return false;
   // }
 
+  componentWillUnmount() {
+    // Clear the timeout when the component unmounts
+    clearTimeout(this.spinnerTimeout);
+  }
+
   handleSave(text) {
     if (text.length !== 0) {
       this.props.addTodo(text);
@@ -76,8 +81,12 @@ class Header extends Component {
                 // require.ensure error handler doesn't work in IE 10 @
 
                 // TODO: For now maybe setTimeout can be used for "loadingMarvel: false"
+                // to handle an error
                 require.ensure(['../containers/Marvel'], () => {
-                  browserHistory.push('/marvel/');
+                  that.spinnerTimeout = setTimeout(() => {
+                    browserHistory.push('/marvel/');
+                  }, 2000);
+                  // browserHistory.push('/marvel/');
                 }, 'marvel');
               }
             }

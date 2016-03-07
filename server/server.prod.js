@@ -16,23 +16,19 @@ import socket from './socket';
 const logger = loggerMaker(module);
 const redisClient = redis.createClient(REDIS_URL);
 const promise = new Promise((resolve, reject) => {
-  console.log('1111111');
   let reconTry = 0;
 
   redisClient.on('connect', () => {
-    console.log('44444');
     resolve();
   });
 
   redisClient.on('error', (err) => {
-    console.log('3333');
     logger.error(err);
     if (++reconTry === 3) {
       redisClient.end();
       reject();
     }
   });
-  console.log('22222');
 });
 const app = express();
 
@@ -92,7 +88,6 @@ function startApp(useRedis) {
 }
 
 export const start = promise.then(() => {
-  console.log('start..!! start..!!');
   const server = startApp(true);
   return {
     server,
@@ -104,8 +99,4 @@ export const start = promise.then(() => {
     server,
     redis: false
   };
-})
-.catch(err => {
-  console.log('errr..!! eerr..!!');
-  console.log(err);
 });

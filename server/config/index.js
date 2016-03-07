@@ -4,15 +4,10 @@ export const PORT = env.PORT || 3000;
 export let POSTGRESQL_URI;
 export let REDIS_URL;
 
-console.log(env);
-
-if (env.DOCKER_ENV) {
+if (NODE_ENV === 'docker') {
   POSTGRESQL_URI = `postgres://${env.POSTGRES_ENV_POSTGRES_USER}@postgres:5432/${env.WRE_POSTGRES_ENV_POSTGRES_DB}`;
   REDIS_URL = 'redis://redis:6379';
 } else if (env.DYNO) { // HEROKU
-  POSTGRESQL_URI = env.DATABASE_URL;
-  REDIS_URL = env.REDIS_URL;
-} else if (env.TRAVIS) { // TRAVIS
   POSTGRESQL_URI = env.DATABASE_URL;
   REDIS_URL = env.REDIS_URL;
 } else {

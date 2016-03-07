@@ -14,7 +14,6 @@ class Marvel extends Component {
      : App.fetchTodos(uri, userIp);
   }
 
-
   render() {
     const { params, route } = this.props;
     return (
