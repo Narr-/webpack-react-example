@@ -10,9 +10,11 @@ services:
   - docker
 
 before_install:
-  - docker-compose -f ./docker-compose.travis.yml up
+  - docker-compose -f ./docker-compose.travis.yml up -d redis
+  - docker-compose -f ./docker-compose.travis.yml up -d postgres
+  - docker-compose -f ./docker-compose.travis.yml up node
 
-# install: true # to avoid the default step of the buiding process of ruby
+install: true # to avoid the default install step
 
 # Builds triggered from Pull Requests will never trigger a deploy.
 # before_deploy:
