@@ -15,7 +15,7 @@ node:
   container_name: wre-node
   command: bash -c "source ~/.nvm/nvm.sh \
                     && cd /webpack-react-example \
-                    && gulp lint"
+                    && gulp server"
 
 redis:
   image: redis
@@ -31,3 +31,8 @@ postgres:
    - POSTGRES_USER=narr
    - POSTGRES_DB=todo_db
   container_name: wre-postgres
+
+# & export DISPLAY=:99 \
+# && Xvfb :99 -ac \
+# & sleep 4 \
+# && npm run e2e"
