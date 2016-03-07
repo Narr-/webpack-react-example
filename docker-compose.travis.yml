@@ -1,5 +1,6 @@
 # https://docs.docker.com/compose/compose-file/
 node:
+  cpuset: 0-1 # less than 4 for Tavis
   build: .
   dockerfile: ./docker/Dockerfile_node
   ports:
@@ -12,7 +13,9 @@ node:
   environment:
    - NODE_ENV=docker
   container_name: wre-node
-  command: bash -c "source ~/.nvm/nvm.sh && cd /webpack-react-example && gulp unit-server"
+  # command: bash -c "source ~/.nvm/nvm.sh && cd /webpack-react-example \
+  # && sleep 4 \
+  # && gulp unit-server"
 
 redis:
   image: redis
