@@ -3,7 +3,7 @@
 npm shrinkwrap --dev
 npm install --production
 docker run -e POSTGRES_USER=narr -e POSTGRES_DB=todo_db -p 5432:5432 -d postgres
-psql -h 192.168.99.100 -U narr todo_db
+psql -h 192.168.99.100 -p 5433 -U narr todo_db
 ./node_modules/pm2/bin/pm2 list
 ./node_modules/pm2/bin/pm2 delete all
 node ./node_modules/pm2/bin/pm2-dev run ./ecosystem.json

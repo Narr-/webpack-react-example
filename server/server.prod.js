@@ -29,6 +29,7 @@ const promise = new Promise((resolve, reject) => {
       reject();
     }
   });
+  reject();
 });
 const app = express();
 
