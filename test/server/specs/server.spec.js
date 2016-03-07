@@ -7,11 +7,13 @@ describe('##### SERVER #### server.prod.js:', () => {
   // console.log(serverProd.__Rewire__);
   let server;
   before((done) => {
-    start.then((result) => {
-      // console.log(result);
-      server = result.server;
-      done();
-    });
+    setTimeout(() => { // to make time to create table on pg
+      start.then((result) => {
+        // console.log(result);
+        server = result.server;
+        done();
+      });
+    }, 2000);
   });
 
   after(() => {

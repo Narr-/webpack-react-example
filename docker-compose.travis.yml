@@ -12,10 +12,20 @@ node:
    - postgres
   environment:
    - NODE_ENV=docker
+   - DISPLAY=:99 # xvfb => for selenium
   container_name: wre-node
-  # command: bash -c "source ~/.nvm/nvm.sh && cd /webpack-react-example \
-  # && sleep 4 \
-  # && gulp unit-server"
+  command: [
+    bash, -c,
+    "source ~/.nvm/nvm.sh \
+    && cd /webpack-react-example \
+    && gulp unit-server \
+    && (gulp server \
+    & Xvfb :99 -ac \
+    & source ~/.nvm/nvm.sh \
+    && cd /webpack-react-example \
+    && sleep 4 \
+    && npm run e2e)"
+  ]
 
 redis:
   image: redis
@@ -31,9 +41,3 @@ postgres:
    - POSTGRES_USER=narr
    - POSTGRES_DB=todo_db
   container_name: wre-postgres
-
-# & export DISPLAY=:99 \
-# && Xvfb :99 -ac \
-# & sleep 4 \
-# && npm run e2e"
-# && gulp unit-server-cov
