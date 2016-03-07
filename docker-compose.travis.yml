@@ -13,7 +13,7 @@ node:
   environment:
    - NODE_ENV=docker
   container_name: wre-node
-  # command: bash -c "source ~/.nvm/nvm.sh && cd /webpack-react-example && gulp server"
+  command: bash -c "source ~/.nvm/nvm.sh && cd /webpack-react-example && gulp unit-server"
 
 redis:
   image: redis
@@ -34,3 +34,4 @@ postgres:
 # && Xvfb :99 -ac \
 # & sleep 4 \
 # && npm run e2e"
+# && gulp unit-server-cov

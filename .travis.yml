@@ -14,6 +14,9 @@ before_install:
 
 install: true # to avoid the default install step
 
+script:
+  - docker-compose run --rm node bash -c "source ~/.nvm/nvm.sh && cd /webpack-react-example && gulp unit-server"
+
 # Builds triggered from Pull Requests will never trigger a deploy.
 # before_deploy:
 #   - mkdir ./heroku
