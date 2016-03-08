@@ -32,7 +32,7 @@ describe('##### SERVER #### server.prod.js:', () => {
         .expect((res) => {
           // console.log(res);
           expect(res.text).to.be.a('string');
-          expect(res.text).to.have.string('<title>Redux TodoMVC example<\/title>');
+          expect(res.text).to.have.string('<title>Redux TodoMVC22 example<\/title>');
         })
         .end((err, res) => { // eslint-disable-line no-unused-vars
           if (err) {

@@ -23,7 +23,7 @@ node:
     && (node ./server \
     & Xvfb :99 -ac \
     & source ~/.nvm/nvm.sh \
-    && cd /webpack-react-example
+    && cd /webpack-react-example"
   ]
 
 redis:
