@@ -49,4 +49,3 @@ match({ routes, location: entryUrl }, () => {
     );
   });
 });
-invoke error
