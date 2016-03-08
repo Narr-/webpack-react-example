@@ -1,4 +1,4 @@
-const URL = 'http://www.google.com';
+const URL = 'http://localhost:3000';
 
 module.exports = {
   // before: (browser) => {
