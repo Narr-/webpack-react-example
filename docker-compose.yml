@@ -22,7 +22,7 @@ node:
     & Xvfb :99 -ac \
     & source ~/.nvm/nvm.sh \
     && cd /webpack-react-example \
-    && node ./node_modules/pm2/bin/pm2 start ./server/index.js -i 4 --no-daemon)"
+    && node ./node_modules/pm2/bin/pm2 start ./server/index.js -i 4 --no-daemon"
   ]
 
 redis:
