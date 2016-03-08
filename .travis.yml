@@ -13,6 +13,7 @@ before_install:
   - docker-compose -f ./docker-compose.travis.yml up -d node
   - docker-compose -f ./docker-compose.travis.yml logs &
   - docker exec -it wre-node bash -c "source ~/.nvm/nvm.sh && cd /webpack-react-example && gulp unit-server"
+  # - > to use multiple lines
   - >
     docker exec -it wre-node bash -c "source ~/.nvm/nvm.sh && cd /webpack-react-example
     && node ./node_modules/pm2/bin/pm2 start ./server/index.js -i 4"
