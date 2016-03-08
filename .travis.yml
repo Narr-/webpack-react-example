@@ -10,7 +10,8 @@ services:
   - docker
 
 before_install:
-  - docker-compose -f ./docker-compose.travis.yml up node &
+  - docker-compose -f ./docker-compose.travis.yml up node
+  - docker-compose -f ./docker-compose.travis.yml logs &
   - docker exec -it wre-node bash -c "source ~/.nvm/nvm.sh && cd /webpack-react-example && gulp unit-server"
   - docker exec -it wre-node bash -c "source ~/.nvm/nvm.sh && cd /webpack-react-example && npm run e2e"
 
