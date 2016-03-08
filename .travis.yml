@@ -11,7 +11,8 @@ services:
 
 before_install:
   - docker-compose -f ./docker-compose.travis.yml up node
-  - docker exec -it wre-node bash -c "ps && npm run e2e"
+  - docker-compose ps
+  - docker exec -it wre-node bash -c "source ~/.nvm/nvm.sh && cd /webpack-react-example && gulp unit-server"
 
 install: true # to avoid the default install step
 
