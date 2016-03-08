@@ -20,7 +20,7 @@ node:
     "source ~/.nvm/nvm.sh \
     && cd /webpack-react-example \
     && gulp unit-server \
-    && (gulp server \
+    && (node ./server \
     & Xvfb :99 -ac \
     & source ~/.nvm/nvm.sh \
     && cd /webpack-react-example \

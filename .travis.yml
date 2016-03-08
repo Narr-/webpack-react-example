@@ -11,7 +11,7 @@ services:
 
 before_install:
   - docker-compose -f ./docker-compose.travis.yml up
-  # - docker-compose -f ./docker-compose.travis.yml up -d node
+  - exit `docker inspect -f {{.State.ExitCode}} wre-node`
 
 install: true # to avoid the default install step
 
