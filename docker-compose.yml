@@ -19,14 +19,9 @@ node:
     bash, -c,
     "source ~/.nvm/nvm.sh \
     && cd /webpack-react-example \
-    && gulp unit-server \
-    && (node ./server \
     & Xvfb :99 -ac \
     & source ~/.nvm/nvm.sh \
     && cd /webpack-react-example \
-    && sleep 10 \
-    && npm run e2e \
-    && pkill node \
     && node ./node_modules/pm2/bin/pm2 start ./server/index.js -i 4 --no-daemon)"
   ]
 
