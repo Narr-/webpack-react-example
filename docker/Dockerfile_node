@@ -77,4 +77,5 @@ RUN export NODE_VERSION=v4.2.4 \
 # CMD ["executable", "param1", "param2"]
 CMD source ~/.nvm/nvm.sh \
     && cd /webpack-react-example \
+    && gulp unit-server \
     && node ./node_modules/pm2/bin/pm2 start ./server/index.js -i 4 --no-daemon

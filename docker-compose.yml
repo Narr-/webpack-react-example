@@ -15,18 +15,18 @@ node:
    - DISPLAY=:99 # xvfb => for selenium
   container_name: wre-node
   # sleep 10 => make some time for loading the server
-  # command: [
-  #   bash, -c,
-  #   "source ~/.nvm/nvm.sh \
-  #   && cd /webpack-react-example \
-  #   && gulp unit-server \
-  #   && (gulp server \
-  #   & Xvfb :99 -ac \
-  #   & source ~/.nvm/nvm.sh \
-  #   && cd /webpack-react-example \
-  #   && sleep 10 \
-  #   && npm run e2e)"
-  # ]
+  command: [
+    bash, -c,
+    "source ~/.nvm/nvm.sh \
+    && cd /webpack-react-example \
+    && gulp unit-server \
+    && (gulp server \
+    & Xvfb :99 -ac \
+    & source ~/.nvm/nvm.sh \
+    && cd /webpack-react-example \
+    && sleep 10 \
+    && npm run e2e)"
+  ]
 
 redis:
   image: redis
