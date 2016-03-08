@@ -1,10 +1,14 @@
 <!doctype html>
 <html lang="en">
   <head>
-  <script>
-    var baseUrl = <%= htmlWebpackPlugin.options.forEjs.baseUrl %>;
-    document.write('<base href="' + baseUrl + '" />');
+  <%= htmlWebpackPlugin.options.forEjs.baseTag %>
+  <!--[if IE 9]>
+  <script type="text/javascript">
+    var ie9 = true;
+    var baseTag = document.getElementsByTagName('base')[0];
+    baseTag.href = baseTag.href;
   </script>
+  <![endif]-->
   <meta charset="utf-8">
   <title>Redux TodoMVC example</title>
   <link rel="icon" type="image/x-icon" href="<%= require('./res/imgs/favicon.ico') %>">

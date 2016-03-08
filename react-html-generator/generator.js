@@ -35,7 +35,7 @@ function generator({ routes, store, targets, indexPath, rootUrl }) {
         }
 
         const finalHtml = ejs.render(fs.readFileSync(`${indexPath}/index.tmpl`, 'utf8'), {
-          baseUrl: `'${rootUrl}'`,
+          baseTag: rootUrl,
           reactDom: htmlString,
           reduxState: JSON.stringify(finalState),
           scriptTags: chunks

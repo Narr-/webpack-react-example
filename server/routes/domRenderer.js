@@ -51,7 +51,7 @@ export default function (req, res, next) {
 
           const indexPath = path.join(__dirname, '../../static/index.html');
           res.render(indexPath, {
-            baseUrl: `'${serverUrl}'`,
+            baseTag: serverUrl,
             reactDom: htmlString,
             reduxState: JSON.stringify(finalState),
             scriptTags: chunks

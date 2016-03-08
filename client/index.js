@@ -11,9 +11,9 @@ import routes from './routes';
 import { todoStoragePromise } from './services';
 import Immutable from 'immutable';
 
-if (process.env.NODE_ENV === 'development') {
+if (process.env.NODE_ENV === 'development' && !window.ie9) {
   // https://github.com/reactjs/react-a11y
-  require('react-a11y')(React); // TODO: should disable this with IE 9
+  require('react-a11y')(React);
 }
 
 const { pathname, search, hash } = window.location;
