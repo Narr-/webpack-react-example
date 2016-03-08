@@ -1,6 +1,6 @@
 # https://docs.docker.com/compose/compose-file/
 node:
-  cpuset: 0-2 # less than 4 for Tavis
+  cpuset: 0-1 # less than 4 for Tavis
   build: .
   dockerfile: ./docker/Dockerfile_node
   ports:
@@ -20,8 +20,8 @@ node:
     "source ~/.nvm/nvm.sh \
     && cd /webpack-react-example \
     && gulp unit-server \
-    && (gulp server \
-    & Xvfb :99 -ac \
+    && (Xvfb :99 -ac \
+    & gulp server \
     & source ~/.nvm/nvm.sh \
     && cd /webpack-react-example \
     && sleep 10 \
