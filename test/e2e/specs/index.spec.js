@@ -25,7 +25,7 @@ module.exports = {
   '/ : should have a title, Redux TodoMVC example': (browser) => {
     // console.log(browser.globals); // global variables
     browser.url(URL).getTitle((title) => {
-      browser.expect(title).to.equal('Redux2 TodoMVC example');
+      browser.expect(title).to.equal('Redux TodoMVC example');
     });
   },
   '/ : header\'s h1 should have a text, todos': (browser) => {

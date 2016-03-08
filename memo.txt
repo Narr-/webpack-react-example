@@ -16,6 +16,8 @@ docker run -it "image id" bash => a new container
 docker exec -it "container id" bash => a running container
 docker-compose run --rm node bash => a new container, node is a name in docker-compose.yml and remove it after run
 docker-compose create or build // to avoid a freezing situation during build with docker-compose up
+code=`docker inspect -f {{.State.ExitCode}} wre-redis`
+echo $code
 npm run e2e
 
 
