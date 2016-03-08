@@ -16,10 +16,7 @@ node:
   container_name: wre-node
   command: [
     bash, -c,
-    "source ~/.nvm/nvm.sh \
-    && node ./server \
-    & Xvfb :99 -ac \
-    &"
+    "Xvfb :99 -ac"
   ]
 
 redis:

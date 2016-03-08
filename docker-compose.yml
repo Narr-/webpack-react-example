@@ -15,15 +15,18 @@ node:
    - DISPLAY=:99 # xvfb => for selenium
   container_name: wre-node
   # sleep 10 => make some time for loading the server
-  command: [
-    bash, -c,
-    "source ~/.nvm/nvm.sh \
-    && cd /webpack-react-example \
-    & Xvfb :99 -ac \
-    & source ~/.nvm/nvm.sh \
-    && cd /webpack-react-example \
-    && node ./node_modules/pm2/bin/pm2 start ./server/index.js -i 4 --no-daemon"
-  ]
+  # command: [
+  #   bash, -c,
+  #   "source ~/.nvm/nvm.sh \
+  #   && cd /webpack-react-example \
+  #   && gulp unit-server \
+  #   && (node ./server \
+  #   & Xvfb :99 -ac \
+  #   & source ~/.nvm/nvm.sh \
+  #   && cd /webpack-react-example \
+  #   && sleep 10 \
+  #   && npm run e2e)"
+  # ]
 
 redis:
   image: redis
@@ -39,5 +42,3 @@ postgres:
    - POSTGRES_USER=narr
    - POSTGRES_DB=todo_db
   container_name: wre-postgres
-
-# && pkill Xvfb
