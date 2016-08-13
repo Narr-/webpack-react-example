@@ -25,18 +25,25 @@ export default function todos(state = initialState, action) {
       );
 
     case EDIT_TODO:
-      return state.map(todo =>
-        todo.get('id') === action.id ? todo.set('text', action.text) : todo
-      );
+      return state.map(todo => {
+        if (todo.get('id') === action.id) {
+          return todo.set('text', action.text);
+        }
+        return todo;
+      });
 
     case COMPLETE_TODO:
-      return state.map(todo =>
-        todo.get('id') === action.id ? todo.set('completed', !todo.get('completed')) : todo
-      );
+      return state.map(todo => {
+        if (todo.get('id') === action.id) {
+          return todo.set('completed', !todo.get('completed'));
+        }
+        return todo;
+      });
 
-    case COMPLETE_ALL:
+    case COMPLETE_ALL: {
       const areAllMarked = state.every(todo => todo.get('completed'));
       return state.map(todo => todo.set('completed', !areAllMarked));
+    }
 
     case CLEAR_COMPLETED:
       return state.filter(todo => todo.get('completed') === false);

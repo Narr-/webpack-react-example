@@ -1,6 +1,6 @@
 import React, { Component, PropTypes } from 'react';
-import TodoTextInput from './TodoTextInput';
 import classnames from 'classnames';
+import TodoTextInput from './TodoTextInput';
 
 class TodoItem extends Component {
   constructor() {
@@ -43,6 +43,7 @@ class TodoItem extends Component {
       element = (
         <div className="view">
           <input
+            id="toggleInput"
             className="toggle"
             type="checkbox"
             checked={todo.get('completed')}
@@ -50,10 +51,11 @@ class TodoItem extends Component {
               completeTodo(todo.get('id'));
             }}
           />
-          <label onDoubleClick={this.handleDoubleClick}>
+          <label htmlFor="toggleInput" onDoubleClick={this.handleDoubleClick}>
             {todo.get('text')}
           </label>
-          <button className="destroy"
+          <button
+            className="destroy"
             onClick={function onClickHandler() {
               deleteTodo(todo.get('id'));
             }}
@@ -63,9 +65,10 @@ class TodoItem extends Component {
     }
 
     return (
-      <li className={classnames({
-        completed: todo.get('completed'),
-        editing: this.state.editing })}
+      <li
+        className={classnames({
+          completed: todo.get('completed'),
+          editing: this.state.editing })}
       >
         {element}
       </li>

@@ -1,15 +1,16 @@
-import './index.scss';
-
 import React from 'react';
 import { render } from 'react-dom';
 import { Provider } from 'react-redux';
-import configureStore from './store';
-import App from './containers/App';
-
 import {
   Map as iMap, List as iList
 }
 from 'immutable';
+
+import './index.scss';
+
+import configureStore from './store';
+import App from './containers/App';
+
 import { SHOW_ALL, SHOW_ACTIVE, SHOW_COMPLETED } from './constants/TodoFilters'; // eslint-disable-line
 
 const initialTodos = iList([

@@ -8,4 +8,5 @@ if (process.env.NODE_ENV === 'production') {
   configureStore = dev;
 }
 
-export default configureStore;
+const store = configureStore;
+export default store;

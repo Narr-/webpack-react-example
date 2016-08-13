@@ -25,7 +25,8 @@ class Footer extends Component {
     const title = FILTER_TITLES[filter];
 
     return (
-      <a className={classnames({ selected: filter === selectedFilter })}
+      <a
+        className={classnames({ selected: filter === selectedFilter })}
         style={{ cursor: 'pointer' }}
         onClick={function onClickHandler() {
           if (filter !== selectedFilter) {
@@ -44,12 +45,13 @@ class Footer extends Component {
       return (
         <button
           className="clear-completed"
-          onClick={ onClearCompleted }
+          onClick={onClearCompleted}
         >
           Clear completed
         </button>
       );
     }
+    return null;
   }
 
   render() {

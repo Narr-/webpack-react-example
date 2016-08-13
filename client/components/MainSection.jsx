@@ -1,8 +1,8 @@
 import React, { Component, PropTypes } from 'react';
+import Immutable from 'immutable';
 import { SHOW_ALL, SHOW_COMPLETED, SHOW_ACTIVE } from '../constants/TodoFilters';
 import TodoItem from './TodoItem';
 import Footer from './Footer';
-import Immutable from 'immutable';
 
 const TODO_FILTERS = {
   [SHOW_ALL]: () => true,
@@ -32,13 +32,15 @@ class MainSection extends Component {
     const { todos, actions } = this.props;
     if (todos.size > 0) {
       return (
-        <input className="toggle-all"
+        <input
+          className="toggle-all"
           type="checkbox"
           checked={completedCount === todos.size}
           onChange={actions.completeAll}
         /> //
       );
     }
+    return null;
   }
 
   renderFooter(completedCount) {
@@ -55,27 +57,33 @@ class MainSection extends Component {
         /> //
       );
     }
+    return null;
   }
 
   render() {
     const { todos, actions, filter } = this.props;
-    const completedCount = todos.reduce((count, todo) =>
-      todo.get('completed') ? count + 1 : count, 0);
+    const completedCount = todos.reduce((count, todo) => {
+      if (todo.get('completed')) {
+        return count + 1;
+      }
+      return count;
+    }, 0);
     const filteredTodos = todos.filter(TODO_FILTERS[filter]);
 
     return (
       <section className="main">
-        {this.renderToggleAll(completedCount)}
+        {this.renderToggleAll(completedCount) }
         <ul className="todo-list">
           {filteredTodos.map(todo =>
-            <TodoItem key={todo.get('id')} todo={todo}
+            <TodoItem
+              key={todo.get('id')} todo={todo}
               editTodo={actions.editTodo}
               deleteTodo={actions.deleteTodo}
               completeTodo={actions.completeTodo}
             />
-          )}
+          ) }
         </ul>
-        {this.renderFooter(completedCount)}
+        {this.renderFooter(completedCount) }
       </section>
     );
   }
